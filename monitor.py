@@ -9,7 +9,12 @@ from typing import Dict, List, Tuple, Any
 
 # ===== CONFIG & CONSTANTS =====
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
-STATE_FILE = "state.json"
+
+# ⬇️ STATE PERSISTENCE SETTINGS ⬇️
+# Environment variable to read the state from (must match GitHub Secret name)
+STATE_ENV_VAR = "VESSEL_STATE_DATA" 
+# Temporary file to write the new state to for the CI job to pick up
+TEMP_OUTPUT_FILE = 'state_output.txt' 
 
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
@@ -25,39 +30,44 @@ STATUS_TO_REMOVE = {"EN RADE", "A QUAI", "DEPART"}
 # Ports to track
 ALLOWED_PORTS = {"17", "18"}
 
-# ===== STATE =====
+# ===== STATE (MODIFIED FOR PERSISTENCE) =====
 def load_state() -> Dict[str, str]:
-    """Loads the vessel status dictionary: {vessel_id: status}"""
-    print(f"DEBUG: Attempting to load state from {STATE_FILE}...")
-    if not os.path.exists(STATE_FILE):
-        print(f"DEBUG: {STATE_FILE} not found. Starting with empty state.")
+    """Loads the vessel status dictionary from the persistent environment variable."""
+    state_data = os.getenv(STATE_ENV_VAR)
+    print(f"DEBUG: Attempting to load state from env var '{STATE_ENV_VAR}'...")
+
+    if not state_data:
+        print("DEBUG: Environment variable is empty or not set. Starting with empty state.")
         return {}
     try:
-        with open(STATE_FILE, "r", encoding="utf-8") as f:
-            state = json.load(f)
-            print(f"DEBUG: State loaded successfully. Total tracked vessels: {len(state)}")
-            return state
+        # State data is stored as a JSON string in the environment variable
+        state = json.loads(state_data)
+        print(f"DEBUG: State loaded successfully (from environment). Tracked vessels: {len(state)}")
+        return state
     except json.JSONDecodeError:
-        print(f"DEBUG: WARNING! Could not decode {STATE_FILE}. File content may be corrupted. Starting with empty state.")
-        return {}
-    except IOError as e:
-        print(f"DEBUG: WARNING! Failed to read {STATE_FILE}. Error: {e}")
+        print("DEBUG: WARNING! Could not decode state from environment variable. Starting with empty state.")
         return {}
 
 
 def save_state(state: Dict[str, str]):
-    """Saves the current vessel status dictionary."""
-    print(f"DEBUG: Attempting to save new state to {STATE_FILE}...")
+    """Saves the current vessel status (as a JSON string) to a temporary file 
+       that will be used by the GitHub Actions workflow to update the secret."""
+    
+    updated_json_string = json.dumps(state)
+    
+    print(f"DEBUG: Saving new state ({len(state)} vessels) to temporary file '{TEMP_OUTPUT_FILE}'...")
     try:
-        with open(STATE_FILE, "w", encoding="utf-8") as f:
-            json.dump(state, f, indent=2)
-        print(f"DEBUG: State saved successfully. New tracked vessel count: {len(state)}")
+        # Write the new JSON string to a file in the temporary workspace
+        with open(TEMP_OUTPUT_FILE, "w", encoding="utf-8") as f:
+            f.write(updated_json_string)
+        print(f"DEBUG: State successfully written to '{TEMP_OUTPUT_FILE}' for CI update.")
     except IOError as e:
-        print(f"CRITICAL ERROR: Failed to write to {STATE_FILE}. Check file permissions and path. Details: {e}")
+        print(f"CRITICAL ERROR: Failed to write to temp file {TEMP_OUTPUT_FILE}. Check CI permissions. Details: {e}")
 
 
-# ===== HELPERS (No change needed here) =====
+# ===== HELPERS =====
 def json_date_to_ms(json_date: str) -> int:
+    """For sorting: '/Date(1764457200000+0100)/' -> ms int."""
     if not isinstance(json_date, str):
         return 0
     m = re.search(r"/Date\((\d+)", json_date)
@@ -67,6 +77,7 @@ def json_date_to_ms(json_date: str) -> int:
 
 
 def json_date_to_dt(json_date: str):
+    """For display: '/Date(1764457200000+0100)/' -> datetime with offset."""
     if not isinstance(json_date, str):
         return None
     m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", json_date)
@@ -88,6 +99,7 @@ def json_date_to_dt(json_date: str):
 
 
 def fmt_dt(json_date: str) -> str:
+    """Formats the JSON date to a display string, showing only the date."""
     dt = json_date_to_dt(json_date)
     if not dt:
         return "N/A"
@@ -106,6 +118,7 @@ def port_name(code: str) -> str:
 
 
 def get_vessel_id(entry: dict) -> str:
+    """Creates a unique ID from IMO number and Port Code."""
     imo = str(entry.get("nUMERO_LLOYDField", "NO_IMO"))
     port_code = str(entry.get("cODE_SOCIETEField", "NO_PORT"))
     return f"{imo}-{port_code}"
@@ -114,17 +127,19 @@ def get_vessel_id(entry: dict) -> str:
 # ===== DATA FETCH AND PROCESSING =====
 
 def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str], Dict[str, List[Dict[str, Any]]]]:
-    """
-    Fetches data, compares it against the stored state, and identifies new vessels.
-    """
+    """Fetches data, compares it against the stored state, and identifies new vessels."""
     print("Fetching ANP data...")
-    resp = requests.get(TARGET_URL, timeout=20)
-    resp.raise_for_status()
-    all_data = resp.json()
+    try:
+        resp = requests.get(TARGET_URL, timeout=20)
+        resp.raise_for_status()
+        all_data = resp.json()
+    except requests.exceptions.RequestException as e:
+        print(f"CRITICAL ERROR: Failed to fetch data from ANP. Details: {e}")
+        return current_state, {}
 
     live_vessels: Dict[str, Dict] = {}
     new_vessels_by_port: Dict[str, List[Dict[str, Any]]] = {}
-    next_state = {} # Temporary store for new PREVU vessels found
+    next_state = {} 
 
     for entry in all_data:
         port_code = str(entry.get("cODE_SOCIETEField", ""))
@@ -158,17 +173,12 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
             
             if live_status == TARGET_STATUS:
                 final_next_state[v_id] = live_status
-                
             elif live_status in STATUS_TO_REMOVE:
                 print(f"DEBUG: ✅ Vessel {live_entry.get('nOM_NAVIREField')} ({v_id}) changed status to {live_status}. REMOVING from tracking.")
                 vessels_removed_count += 1
-                
             else:
-                # Still tracking a vessel that was PREVU but is now in a different non-removal status
                 final_next_state[v_id] = live_status
-                
         else:
-            # Vessel is gone from the feed entirely (completed call). Remove from tracking.
             print(f"DEBUG: ❌ Vessel ID {v_id} no longer in live feed. REMOVING from tracking.")
             vessels_removed_count += 1
 
@@ -180,8 +190,10 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
     return final_next_state, new_vessels_by_port
 
 
-# ===== EMAIL GROUPING AND SENDING (No change needed here) =====
+# ===== EMAIL GROUPING AND SENDING =====
+
 def format_vessel_details(entry: dict) -> str:
+    """Formats a single vessel's details for the email body."""
     nom       = entry.get("nOM_NAVIREField", "")
     imo       = entry.get("nUMERO_LLOYDField", "N/A")
     cons      = entry.get("cONSIGNATAIREField", "N/A")
@@ -203,6 +215,7 @@ def format_vessel_details(entry: dict) -> str:
 
 
 def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
+    """Sends a separate email for each port that has new vessels."""
     if not new_vessels_by_port:
         print("DEBUG: No emails to send.")
         return
@@ -234,6 +247,7 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
             "Cordialement,",
         ])
 
+        # Simple HTML formatting: replace the first colon with bold closing tag
         body_html = "<br>".join(body_parts).replace(":", "</b>:", 1).replace(":", ":")
 
         msg = MIMEText(body_html, "html", "utf-8")
@@ -248,7 +262,7 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
                 server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
             print(f"Email sent successfully for Port: {port}")
         except Exception as e:
-            print(f"ERROR: Failed to send email for Port {port}. Details: {e}")
+            print(f"ERROR: Failed to send email for Port {port}. Check credentials/network. Details: {e}")
 
 
 # ===== MAIN EXECUTION =====
@@ -260,7 +274,7 @@ def main():
     try:
         next_state, new_vessels_by_port = fetch_and_process_data(current_state)
     except Exception as e:
-        print(f"Critical error during data fetching or processing: {e}")
+        print(f"Critical error during processing: {e}")
         return
 
     # Check for any state change (new vessels OR status removals)
@@ -273,7 +287,7 @@ def main():
         else:
             print("DEBUG: State change was due only to vessel removal/status change, no new emails sent.")
         
-        # 2. Save the updated state
+        # 2. Save the updated state to the temporary output file
         save_state(next_state)
     else:
         print("No new 'PREVU' vessels detected and no state changes required.")
