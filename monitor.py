@@ -20,6 +20,7 @@ EMAIL_PASS = os.getenv("EMAIL_PASS")
 EMAIL_TO = os.getenv("EMAIL_TO")
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
+EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "true").lower() == "true"
 
 # CallMeBot (WhatsApp) – all from GitHub Secrets
 CALLMEBOT_PHONE = os.getenv("CALLMEBOT_PHONE")
@@ -76,7 +77,10 @@ def json_date_to_ms(json_date: str) -> int:
 
 
 def json_date_to_dt(json_date: str):
-    """Converts ANP JSON date format to a Python datetime object."""
+    """
+    Convertit la date ANP en datetime SANS ré-appliquer l'offset (+0100),
+    pour éviter de rajouter +1h.
+    """
     if not isinstance(json_date, str):
         return None
     m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", json_date)
@@ -85,24 +89,28 @@ def json_date_to_dt(json_date: str):
 
     millis = int(m.group(1))
     dt = datetime.utcfromtimestamp(millis / 1000.0)
-
-    offset_str = m.group(2)
-    if offset_str:
-        sign = 1 if offset_str[0] == "+" else -1
-        hours = int(offset_str[1:3])
-        minutes = int(offset_str[3:5])
-        offset_delta = timedelta(hours=hours, minutes=minutes)
-        dt += sign * offset_delta
-
     return dt
 
 
 def fmt_dt(json_date: str) -> str:
-    """Formats DATE_SITUATION as full date only: 'Sunday, 30 November 2025'."""
+    """Formate DATE_SITUATION en français : 'Dimanche, 30 novembre 2025'."""
     dt = json_date_to_dt(json_date)
     if not dt:
         return "N/A"
-    return dt.strftime("%A, %d %B %Y")
+
+    jours = [
+        "lundi", "mardi", "mercredi", "jeudi",
+        "vendredi", "samedi", "dimanche"
+    ]
+    mois = [
+        "janvier", "février", "mars", "avril", "mai", "juin",
+        "juillet", "août", "septembre", "octobre", "novembre", "décembre"
+    ]
+
+    jour_nom = jours[dt.weekday()].capitalize()
+    mois_nom = mois[dt.month - 1]
+
+    return f"{jour_nom}, {dt.day:02d} {mois_nom} {dt.year}"
 
 
 def fmt_time_only(json_date: str) -> str:
@@ -183,7 +191,6 @@ def fetch_and_process_data(
                 )
                 vessels_removed_count += 1
             else:
-                # Keep tracking other statuses if you wish
                 final_next_state[v_id] = live_status
         else:
             print(
@@ -249,6 +256,10 @@ def format_vessel_for_whatsapp(entry: dict) -> str:
 # ===== EMAIL SENDING =====
 def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
     """Sends a separate email for each port that has new vessels."""
+    if not EMAIL_ENABLED:
+        print("DEBUG: Email notifications disabled.")
+        return
+
     if not new_vessels_by_port:
         print("DEBUG: No emails to send.")
         return
@@ -366,6 +377,7 @@ def main():
     print(f"Monitoring run started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"DEBUG: ENV CALLMEBOT_PHONE set? {bool(CALLMEBOT_PHONE)}")
     print(f"DEBUG: ENV CALLMEBOT_APIKEY set? {bool(CALLMEBOT_APIKEY)}")
+    print(f"DEBUG: EMAIL_ENABLED = {EMAIL_ENABLED}")
 
     current_state = load_state()
 
@@ -399,3 +411,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```0
