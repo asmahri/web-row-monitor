@@ -11,7 +11,7 @@ from typing import Dict, List, Tuple, Any
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
 
 # ⬇️ STATE PERSISTENCE SETTINGS FOR GITHUB ACTIONS ⬇️
-# Environment variable to read the state from (must match GitHub Secret name)
+# Environment variable to read the state from (must match GitHub Secret name: VESSEL_STATE_DATA)
 STATE_ENV_VAR = "VESSEL_STATE_DATA" 
 # Temporary file to write the new state to for the CI job to pick up
 TEMP_OUTPUT_FILE = 'state_output.txt' 
@@ -28,7 +28,7 @@ SMTP_PORT = 587
 TARGET_STATUS = "PREVU"
 # Statuses that signal the end of the port call (or removal from PREVU interest)
 STATUS_TO_REMOVE = {"EN RADE", "A QUAI", "DEPART"} 
-# Ports to track
+# Ports to track (17: Laâyoune, 18: Dakhla)
 ALLOWED_PORTS = {"17", "18"}
 
 # ===== STATE MANAGEMENT (PERSISTENT) =====
@@ -288,6 +288,7 @@ def main():
             print("DEBUG: State change was due only to vessel removal/status change, no new emails sent.")
         
         # 2. Save the updated state to the temporary output file
+        # This is CRUCIAL for the GitHub Actions workflow to update the secret.
         save_state(next_state)
     else:
         print("No new 'PREVU' vessels detected and no state changes required.")
