@@ -78,8 +78,7 @@ def json_date_to_ms(json_date: str) -> int:
 
 def json_date_to_dt(json_date: str):
     """
-    Convertit la date ANP en datetime SANS ré-appliquer l'offset (+0100),
-    pour éviter de rajouter +1h.
+    Convertit la date ANP en datetime locale en tenant compte de l'offset (+0100).
     """
     if not isinstance(json_date, str):
         return None
@@ -88,7 +87,16 @@ def json_date_to_dt(json_date: str):
         return None
 
     millis = int(m.group(1))
-    dt = datetime.utcfromtimestamp(millis / 1000.0)
+    dt = datetime.utcfromtimestamp(millis / 1000.0)  # base UTC
+
+    offset_str = m.group(2)
+    if offset_str:
+        sign = 1 if offset_str[0] == "+" else -1
+        hours = int(offset_str[1:3])
+        minutes = int(offset_str[3:5])
+        offset_delta = timedelta(hours=hours, minutes=minutes)
+        dt += sign * offset_delta  # applique l'offset une seule fois
+
     return dt
 
 
