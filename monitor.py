@@ -4,6 +4,7 @@ import re
 import requests
 import smtplib
 from email.mime.text import MIMEText
+from datetime import datetime, timedelta
 
 # ===== CONFIG =====
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
@@ -22,7 +23,7 @@ def load_state():
     if not os.path.exists(STATE_FILE):
         return {}
     with open(STATE_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+            return json.load(f)
 
 
 def save_state(state):
@@ -32,9 +33,7 @@ def save_state(state):
 
 # ===== HELPERS =====
 def json_date_to_ms(json_date: str) -> int:
-    """
-    Convert ANP style '/Date(1717106400000+0000)/' to milliseconds int.
-    """
+    """For sorting: '/Date(1764457200000+0100)/' -> ms int."""
     if not isinstance(json_date, str):
         return 0
     m = re.search(r"/Date\((\d+)", json_date)
@@ -43,7 +42,46 @@ def json_date_to_ms(json_date: str) -> int:
     return int(m.group(1))
 
 
-# ===== FETCH LATEST ENTRY (for ports 17 & 18) =====
+def json_date_to_dt(json_date: str):
+    """For display: '/Date(1764457200000+0100)/' -> datetime with offset."""
+    if not isinstance(json_date, str):
+        return None
+    m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", json_date)
+    if not m:
+        return None
+
+    millis = int(m.group(1))
+    dt = datetime.utcfromtimestamp(millis / 1000.0)
+
+    offset_str = m.group(2)
+    if offset_str:
+        sign = 1 if offset_str[0] == "+" else -1
+        hours = int(offset_str[1:3])
+        minutes = int(offset_str[3:5])
+        dt += sign * timedelta(hours=hours, minutes=minutes)
+
+    return dt
+
+
+def fmt_dt(json_date: str) -> str:
+    dt = json_date_to_dt(json_date)
+    if not dt:
+        return ""
+    return dt.strftime("%d/%m/%Y %H:%M")
+
+
+def fmt_time(json_date: str) -> str:
+    dt = json_date_to_dt(json_date)
+    if not dt:
+        return ""
+    return dt.strftime("%H:%M")
+
+
+def port_name(code: str) -> str:
+    return {"17": "Laâyoune", "18": "Dakhla"}.get(code, code)
+
+
+# ===== FETCH LATEST ENTRY (17 & 18) =====
 def fetch_latest_row_fingerprint():
     print("Fetching latest row from ANP JSON...")
 
@@ -64,7 +102,7 @@ def fetch_latest_row_fingerprint():
     if not filtered:
         raise RuntimeError("No entries for ports 17 or 18.")
 
-    # Newest by dATE_SITUATIONField
+    # Sort newest by dATE_SITUATIONField
     filtered.sort(
         key=lambda v: json_date_to_ms(v.get("dATE_SITUATIONField", "")),
         reverse=True,
@@ -72,34 +110,42 @@ def fetch_latest_row_fingerprint():
 
     latest = filtered[0]
 
-    # Fingerprint: full JSON of latest entry
     fingerprint = json.dumps(latest, sort_keys=True, ensure_ascii=False)
     return fingerprint, latest
 
 
 # ===== EMAIL =====
-def port_name(code: str) -> str:
-    return {"17": "Laâyoune", "18": "Dakhla"}.get(code, code)
-
-
 def send_email(entry: dict):
-    vessel = entry.get("nOM_NAVIREField", "Unknown")
-    port_code = str(entry.get("cODE_SOCIETEField", ""))
-    port = port_name(port_code)
-    situation = entry.get("sITUATIONField", "")
+    # Map JSON -> your columns
+    port      = port_name(str(entry.get("cODE_SOCIETEField", "")))   # no code, name only
+    nom       = entry.get("nOM_NAVIREField", "")
+    imo       = entry.get("nUMERO_LLOYDField", "")
+    cons      = entry.get("cONSIGNATAIREField", "")
+    eta_dt    = fmt_dt(entry.get("dATE_SITUATIONField", ""))
+    heure_loc = fmt_time(entry.get("hEURE_SITUATIONField", ""))
+    prov      = entry.get("pROVField", "")
+    type_nav  = entry.get("tYP_NAVIREField", "")
+    situ      = entry.get("sITUATIONField", "")
+    num_esc   = entry.get("nUMERO_ESCALEField", "")
 
-    subject = f"ANP MVM update - {vessel} ({port})"
+    subject = f"ANP MVM – {situ} – {nom} ({port})"
 
+    # Body in same logic as your Excel headers
     body_lines = [
-        "Change detected in ANP MVM (ports 17/18):",
+        "Changement détecté dans ANP MVM (ports 17/18)",
         "",
-        f"Vessel : {vessel}",
-        f"Port   : {port} ({port_code})",
-        f"Status : {situation}",
-        "",
-        "Raw JSON entry:",
-        json.dumps(entry, indent=2, ensure_ascii=False),
+        f"Port              : {port}",
+        f"Nom du Navire     : {nom}",
+        f"IMO               : {imo}",
+        f"Consignataire     : {cons}",
+        f"ETA_DateTime      : {eta_dt}",
+        f"Heure_Local       : {heure_loc}",
+        f"Provenance        : {prov}",
+        f"Type du Navire    : {type_nav}",
+        f"Situation         : {situ}",
+        f"Numéro d'escale   : {num_esc}",
     ]
+
     body = "\n".join(body_lines)
 
     msg = MIMEText(body, "plain", "utf-8")
