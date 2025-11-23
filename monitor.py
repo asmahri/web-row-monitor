@@ -10,37 +10,30 @@ from typing import Dict, List, Tuple, Any
 # ===== CONFIG & CONSTANTS =====
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
 
-# ⬇️ STATE PERSISTENCE SETTINGS FOR GITHUB ACTIONS ⬇️
-# Environment variable to read the state from (must match GitHub Secret name: VESSEL_STATE_DATA)
-STATE_ENV_VAR = "VESSEL_STATE_DATA"
-# Temporary file to write the new state to for the CI job to pick up
-TEMP_OUTPUT_FILE = "state_output.txt"
+# State persistence (GitHub Actions)
+STATE_ENV_VAR = "VESSEL_STATE_DATA"      # GitHub Secret name
+TEMP_OUTPUT_FILE = "state_output.txt"    # temp file used by workflow to update secret
 
-# Email credentials fetched from environment variables
+# Email (from GitHub Secrets)
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 EMAIL_TO = os.getenv("EMAIL_TO")
-
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
-# CallMeBot (WhatsApp) config – values come from GitHub Secrets
-# CALLMEBOT_PHONE  =      # <- DO NOT hardcode, set in GitHub Secrets
-# CALLMEBOT_APIKEY =
+# CallMeBot (WhatsApp) – all from GitHub Secrets
 CALLMEBOT_PHONE = os.getenv("CALLMEBOT_PHONE")
 CALLMEBOT_APIKEY = os.getenv("CALLMEBOT_APIKEY")
 CALLMEBOT_ENABLED = os.getenv("CALLMEBOT_ENABLED", "true").lower() == "true"
 CALLMEBOT_API_URL = "https://api.callmebot.com/whatsapp.php"
 
-# Statuses to monitor and remove
+# Status / ports
 TARGET_STATUS = "PREVU"
-# Statuses that signal the end of the port call (or removal from PREVU interest)
 STATUS_TO_REMOVE = {"EN RADE", "A QUAI", "DEPART"}
-# Ports to track (17: Laâyoune, 18: Dakhla)
-ALLOWED_PORTS = {"17", "18"}
+ALLOWED_PORTS = {"17", "18"}  # 17: Laâyoune, 18: Dakhla
 
 
-# ===== STATE MANAGEMENT (PERSISTENT) =====
+# ===== STATE MANAGEMENT =====
 def load_state() -> Dict[str, str]:
     """Loads the vessel status dictionary from the persistent environment variable."""
     state_data = os.getenv(STATE_ENV_VAR)
@@ -50,7 +43,6 @@ def load_state() -> Dict[str, str]:
         print("DEBUG: Environment variable is empty or not set. Starting with empty state.")
         return {}
     try:
-        # State data is stored as a JSON string in the environment variable
         state = json.loads(state_data)
         print(f"DEBUG: State loaded successfully (from environment). Tracked vessels: {len(state)}")
         return state
@@ -63,18 +55,16 @@ def save_state(state: Dict[str, str]):
     """Saves the current vessel status (as a JSON string) to a temporary file
        that will be used by the GitHub Actions workflow to update the secret."""
     updated_json_string = json.dumps(state)
-
     print(f"DEBUG: Saving new state ({len(state)} vessels) to temporary file '{TEMP_OUTPUT_FILE}'...")
     try:
-        # Write the new JSON string to a file in the temporary workspace
         with open(TEMP_OUTPUT_FILE, "w", encoding="utf-8") as f:
             f.write(updated_json_string)
         print(f"DEBUG: State successfully written to '{TEMP_OUTPUT_FILE}' for CI update.")
     except IOError as e:
-        print(f"CRITICAL ERROR: Failed to write to temp file {TEMP_OUTPUT_FILE}. Check CI permissions. Details: {e}")
+        print(f"CRITICAL ERROR: Failed to write to temp file {TEMP_OUTPUT_FILE}. Details: {e}")
 
 
-# ===== HELPERS (Date, Port, ID Formatting) =====
+# ===== HELPERS (DATE / PORT / IDs) =====
 def json_date_to_ms(json_date: str) -> int:
     """Converts ANP JSON date format to milliseconds for sorting."""
     if not isinstance(json_date, str):
@@ -135,7 +125,7 @@ def get_vessel_id(entry: dict) -> str:
     return f"{imo}-{port_code}"
 
 
-# ===== DATA FETCH AND PROCESSING =====
+# ===== FETCH & PROCESS DATA =====
 def fetch_and_process_data(
     current_state: Dict[str, str]
 ) -> Tuple[Dict[str, str], Dict[str, List[Dict[str, Any]]]]:
@@ -147,14 +137,13 @@ def fetch_and_process_data(
         all_data = resp.json()
     except requests.exceptions.RequestException as e:
         print(f"CRITICAL ERROR: Failed to fetch data from ANP. Details: {e}")
-        # On fetch failure, return the current state to prevent data loss
         return current_state, {}
 
     live_vessels: Dict[str, Dict] = {}
     new_vessels_by_port: Dict[str, List[Dict[str, Any]]] = {}
     next_state: Dict[str, str] = {}
 
-    # 1. IDENTIFY NEW PREVU VESSELS AND BUILD TEMPORARY NEXT STATE
+    # 1. Identify PREVU vessels & build next_state
     for entry in all_data:
         port_code = str(entry.get("cODE_SOCIETEField", ""))
         current_status = entry.get("sITUATIONField", "").upper()
@@ -168,19 +157,15 @@ def fetch_and_process_data(
         if current_status == TARGET_STATUS:
             next_state[vessel_id] = current_status
 
-            # Found a PREVU vessel that was NOT in the old state -> New arrival!
+            # New PREVU vessel (not tracked before)
             if vessel_id not in current_state:
                 port_name_str = port_name(port_code)
-                print(
-                    f"🔔 NEW PREVU vessel detected: {entry.get('nOM_NAVIREField')} "
-                    f"({vessel_id}) at {port_name_str}"
-                )
-
+                print(f"🔔 NEW PREVU vessel detected: {entry.get('nOM_NAVIREField')} ({vessel_id}) at {port_name_str}")
                 if port_name_str not in new_vessels_by_port:
                     new_vessels_by_port[port_name_str] = []
                 new_vessels_by_port[port_name_str].append(entry)
 
-    # 2. DETERMINE FINAL NEXT STATE (CLEANUP)
+    # 2. Cleanup tracking (removals / status change)
     final_next_state: Dict[str, str] = {}
     vessels_removed_count = 0
 
@@ -198,17 +183,15 @@ def fetch_and_process_data(
                 )
                 vessels_removed_count += 1
             else:
-                # Keep tracking other statuses for now, if it was already tracked
+                # Keep tracking other statuses if you wish
                 final_next_state[v_id] = live_status
         else:
-            # Vessel is gone from the feed entirely (completed call). Remove from tracking.
             print(
-                f"DEBUG: ❌ Vessel ID {v_id} no longer in live feed. "
-                "REMOVING from tracking."
+                f"DEBUG: ❌ Vessel ID {v_id} no longer in live feed. REMOVING from tracking."
             )
             vessels_removed_count += 1
 
-    # Add new PREVU vessels found in step 1 to the final state
+    # Add newly found PREVU vessels
     for v_id, status in next_state.items():
         final_next_state[v_id] = status
 
@@ -216,7 +199,7 @@ def fetch_and_process_data(
     return final_next_state, new_vessels_by_port
 
 
-# ===== EMAIL & WHATSAPP FORMATTING =====
+# ===== FORMATTERS (EMAIL + WHATSAPP) =====
 def format_vessel_details(entry: dict) -> str:
     """Formats a single vessel's details for the email body."""
     nom = entry.get("nOM_NAVIREField", "")
@@ -279,9 +262,7 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
                 f"{vessels[0].get('nOM_NAVIREField')} au Port de {port}"
             )
         else:
-            subject = (
-                f"🔔 {len(vessels)} NOUVELLES ARRIVÉES PRÉVUES au Port de {port}"
-            )
+            subject = f"🔔 {len(vessels)} NOUVELLES ARRIVÉES PRÉVUES au Port de {port}"
 
         body_parts: List[str] = [
             "Bonjour,",
@@ -349,22 +330,18 @@ def send_whatsapp_notifications(
         return
 
     for port, vessels in new_vessels_by_port.items():
-        header = (
-            f"ANP MVM – {len(vessels)} nouveau(x) PREVU au port de {port}"
-        )
+        header = f"ANP MVM – {len(vessels)} nouveau(x) PREVU au port de {port}"
 
         parts: List[str] = [header, ""]
         for i, vessel in enumerate(vessels, start=1):
             parts.append(f"--- Navire #{i} ---")
             parts.append(format_vessel_for_whatsapp(vessel))
-            parts.append("")  # blank line between vessels
+            parts.append("")
 
         text = "\n".join(parts)
 
         try:
-            print(
-                f"DEBUG: Sending WhatsApp notification via CallMeBot for port {port}..."
-            )
+            print(f"DEBUG: Sending WhatsApp notification via CallMeBot for port {port}...")
             r = requests.get(
                 CALLMEBOT_API_URL,
                 params={
@@ -383,12 +360,13 @@ def send_whatsapp_notifications(
             )
 
 
-# ===== MAIN EXECUTION =====
+# ===== MAIN =====
 def main():
     print("-" * 50)
-    print(
-        f"Monitoring run started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    )
+    print(f"Monitoring run started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"DEBUG: ENV CALLMEBOT_PHONE set? {bool(CALLMEBOT_PHONE)}")
+    print(f"DEBUG: ENV CALLMEBOT_APIKEY set? {bool(CALLMEBOT_APIKEY)}")
+
     current_state = load_state()
 
     try:
@@ -397,14 +375,12 @@ def main():
         print(f"Critical error during processing: {e}")
         return
 
-    # Check for any state change (new vessels OR status removals)
     if current_state != next_state:
         print(
             f"DEBUG: State change detected! "
             f"Old count: {len(current_state)}, New count: {len(next_state)}"
         )
 
-        # 1. Send notifications for new vessels
         if new_vessels_by_port:
             send_emails(new_vessels_by_port)
             send_whatsapp_notifications(new_vessels_by_port)
@@ -414,7 +390,6 @@ def main():
                 "no new notifications sent."
             )
 
-        # 2. Save the updated state to the temporary output file
         save_state(next_state)
     else:
         print("No new 'PREVU' vessels detected and no state changes required.")
