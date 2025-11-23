@@ -28,27 +28,36 @@ ALLOWED_PORTS = {"17", "18"}
 # ===== STATE =====
 def load_state() -> Dict[str, str]:
     """Loads the vessel status dictionary: {vessel_id: status}"""
+    print(f"DEBUG: Attempting to load state from {STATE_FILE}...")
     if not os.path.exists(STATE_FILE):
+        print(f"DEBUG: {STATE_FILE} not found. Starting with empty state.")
         return {}
     try:
         with open(STATE_FILE, "r", encoding="utf-8") as f:
-            # The state now holds a dictionary of {IMO_PORTCODE: STATUS}
-            return json.load(f)
+            state = json.load(f)
+            print(f"DEBUG: State loaded successfully. Total tracked vessels: {len(state)}")
+            return state
     except json.JSONDecodeError:
-        print(f"Warning: Could not decode {STATE_FILE}. Starting with empty state.")
+        print(f"DEBUG: WARNING! Could not decode {STATE_FILE}. File content may be corrupted. Starting with empty state.")
+        return {}
+    except IOError as e:
+        print(f"DEBUG: WARNING! Failed to read {STATE_FILE}. Error: {e}")
         return {}
 
 
 def save_state(state: Dict[str, str]):
     """Saves the current vessel status dictionary."""
-    with open(STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump(state, f, indent=2)
+    print(f"DEBUG: Attempting to save new state to {STATE_FILE}...")
+    try:
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2)
+        print(f"DEBUG: State saved successfully. New tracked vessel count: {len(state)}")
+    except IOError as e:
+        print(f"CRITICAL ERROR: Failed to write to {STATE_FILE}. Check file permissions and path. Details: {e}")
 
 
-# ===== HELPERS (Date formatting and Port names remain the same) =====
-# ... (json_date_to_ms, json_date_to_dt, fmt_dt, fmt_time, port_name functions) ...
+# ===== HELPERS (No change needed here) =====
 def json_date_to_ms(json_date: str) -> int:
-    """For sorting: '/Date(1764457200000+0100)/' -> ms int."""
     if not isinstance(json_date, str):
         return 0
     m = re.search(r"/Date\((\d+)", json_date)
@@ -58,7 +67,6 @@ def json_date_to_ms(json_date: str) -> int:
 
 
 def json_date_to_dt(json_date: str):
-    """For display: '/Date(1764457200000+0100)/' -> datetime with offset."""
     if not isinstance(json_date, str):
         return None
     m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", json_date)
@@ -80,7 +88,6 @@ def json_date_to_dt(json_date: str):
 
 
 def fmt_dt(json_date: str) -> str:
-    """Formats the JSON date to a display string, showing only the date."""
     dt = json_date_to_dt(json_date)
     if not dt:
         return "N/A"
@@ -99,7 +106,6 @@ def port_name(code: str) -> str:
 
 
 def get_vessel_id(entry: dict) -> str:
-    """Creates a unique ID from IMO number and Port Code."""
     imo = str(entry.get("nUMERO_LLOYDField", "NO_IMO"))
     port_code = str(entry.get("cODE_SOCIETEField", "NO_PORT"))
     return f"{imo}-{port_code}"
@@ -109,23 +115,16 @@ def get_vessel_id(entry: dict) -> str:
 
 def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str], Dict[str, List[Dict[str, Any]]]]:
     """
-    1. Fetches data and filters for relevant ports (17/18).
-    2. Compares the current live data against the stored state.
-    3. Calculates the next state and identifies new vessels for notification.
+    Fetches data, compares it against the stored state, and identifies new vessels.
     """
     print("Fetching ANP data...")
     resp = requests.get(TARGET_URL, timeout=20)
     resp.raise_for_status()
     all_data = resp.json()
 
-    # Store all vessels currently in the feed for tracking
     live_vessels: Dict[str, Dict] = {}
-    
-    # Stores new vessels detected, grouped by port name
     new_vessels_by_port: Dict[str, List[Dict[str, Any]]] = {}
-    
-    # This will be the state to save after this run
-    next_state = {}
+    next_state = {} # Temporary store for new PREVU vessels found
 
     for entry in all_data:
         port_code = str(entry.get("cODE_SOCIETEField", ""))
@@ -135,75 +134,54 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
             continue
 
         vessel_id = get_vessel_id(entry)
-        
-        # 1. Update the live vessels dict for later comparison
         live_vessels[vessel_id] = entry
         
-        # 2. Determine if this entry should trigger a notification or be tracked
-        
-        # A. Status is 'PREVU' - this is the status we care about
         if current_status == TARGET_STATUS:
-            
-            # Add to the next state for tracking
             next_state[vessel_id] = current_status
             
-            # Check if it's a new vessel (not in the old state)
             if vessel_id not in current_state:
                 port_name_str = port_name(port_code)
-                print(f"🔔 NEW PREVU vessel detected: {entry.get('nOM_NAVIREField')} at {port_name_str}")
+                print(f"🔔 NEW PREVU vessel detected: {entry.get('nOM_NAVIREField')} ({vessel_id}) at {port_name_str}")
                 
-                # Group for notification email
                 if port_name_str not in new_vessels_by_port:
                     new_vessels_by_port[port_name_str] = []
                 new_vessels_by_port[port_name_str].append(entry)
 
-        # B. Status is not 'PREVU' (e.g., 'A QUAI', 'EN RADE')
-        else:
-            # We don't track non-PREVU statuses in the state
-            pass 
-
-    # 3. Clean up the state (Remove vessels that left 'PREVU' or hit 'EN RADE')
-    # We iterate over the *old* state to see which tracked vessels are no longer relevant
-    
-    # We remove a vessel from the state if:
-    # a) It's no longer in the live data (implying departure/completion)
-    # b) It's in the live data, but its status changed to a 'STATUS_TO_REMOVE' status
-    
+    # Clean up the state (Remove vessels that left 'PREVU' or hit 'EN RADE')
     final_next_state = {}
+    vessels_removed_count = 0
+    
     for v_id, status in current_state.items():
         if v_id in live_vessels:
             live_entry = live_vessels[v_id]
             live_status = live_entry.get("sITUATIONField", "").upper()
             
             if live_status == TARGET_STATUS:
-                # Still PREVU, keep tracking
                 final_next_state[v_id] = live_status
                 
             elif live_status in STATUS_TO_REMOVE:
-                # Status changed to one we want to ignore (e.g., 'EN RADE'). Remove from tracking.
-                print(f"✅ Vessel {live_entry.get('nOM_NAVIREField')} changed status to {live_status}. Removing from tracking.")
-                # Do not add to final_next_state
+                print(f"DEBUG: ✅ Vessel {live_entry.get('nOM_NAVIREField')} ({v_id}) changed status to {live_status}. REMOVING from tracking.")
+                vessels_removed_count += 1
                 
             else:
-                # Other status change (e.g., 'PROJET'). Keep tracking if it was PREVU before.
+                # Still tracking a vessel that was PREVU but is now in a different non-removal status
                 final_next_state[v_id] = live_status
                 
         else:
-            # Vessel is gone from the feed entirely, meaning port call completed. Remove from tracking.
-            print(f"❌ Vessel ID {v_id} no longer in live feed. Removing from tracking.")
-            # Do not add to final_next_state
+            # Vessel is gone from the feed entirely (completed call). Remove from tracking.
+            print(f"DEBUG: ❌ Vessel ID {v_id} no longer in live feed. REMOVING from tracking.")
+            vessels_removed_count += 1
 
-    # Add back any NEW 'PREVU' vessels found in step 2.A
+    # Add back any NEW 'PREVU' vessels found
     for v_id, status in next_state.items():
         final_next_state[v_id] = status
         
+    print(f"DEBUG: Vessels removed from tracking this run: {vessels_removed_count}")
     return final_next_state, new_vessels_by_port
 
 
-# ===== EMAIL GROUPING AND SENDING =====
-
+# ===== EMAIL GROUPING AND SENDING (No change needed here) =====
 def format_vessel_details(entry: dict) -> str:
-    """Formats a single vessel's details for the email body."""
     nom       = entry.get("nOM_NAVIREField", "")
     imo       = entry.get("nUMERO_LLOYDField", "N/A")
     cons      = entry.get("cONSIGNATAIREField", "N/A")
@@ -225,21 +203,18 @@ def format_vessel_details(entry: dict) -> str:
 
 
 def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
-    """Sends a separate email for each port that has new vessels."""
     if not new_vessels_by_port:
-        print("No emails to send.")
+        print("DEBUG: No emails to send.")
         return
 
     print(f"Preparing to send {len(new_vessels_by_port)} notification email(s)...")
 
     for port, vessels in new_vessels_by_port.items():
-        # --- Subject ---
         if len(vessels) == 1:
             subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {vessels[0].get('nOM_NAVIREField')} au Port de {port}"
         else:
             subject = f"🔔 {len(vessels)} NOUVELLES ARRIVÉES PRÉVUES au Port de {port}"
 
-        # --- Professional Body ---
         body_parts = [
             f"Bonjour,",
             "",
@@ -247,7 +222,6 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
             ""
         ]
         
-        # Add details for each vessel
         for i, vessel in enumerate(vessels):
             body_parts.append("---")
             body_parts.append(f"**Détails Navire #{i+1}**:")
@@ -260,8 +234,7 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
             "Cordialement,",
         ])
 
-        # Use HTML for better formatting (bolding, line breaks)
-        body_html = "<br>".join(body_parts).replace(":", "</b>:", 1).replace(":", ":") # Simple trick to bold labels
+        body_html = "<br>".join(body_parts).replace(":", "</b>:", 1).replace(":", ":")
 
         msg = MIMEText(body_html, "html", "utf-8")
         msg["Subject"] = subject
@@ -280,25 +253,32 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
 
 # ===== MAIN EXECUTION =====
 def main():
+    print("-" * 50)
+    print(f"Monitoring run started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     current_state = load_state()
 
     try:
-        # Fetch, compare against state, and get the next state and new vessels
         next_state, new_vessels_by_port = fetch_and_process_data(current_state)
     except Exception as e:
         print(f"Critical error during data fetching or processing: {e}")
         return
 
-    # Check if there were any changes (new vessels OR status removals)
+    # Check for any state change (new vessels OR status removals)
     if current_state != next_state:
-        # 1. Send notifications for new vessels
-        send_emails(new_vessels_by_port)
+        print(f"DEBUG: State change detected! Old count: {len(current_state)}, New count: {len(next_state)}")
         
-        # 2. Save the updated state (reflecting new PREVU vessels and removed/changed status vessels)
+        # 1. Send notifications for new vessels
+        if new_vessels_by_port:
+            send_emails(new_vessels_by_port)
+        else:
+            print("DEBUG: State change was due only to vessel removal/status change, no new emails sent.")
+        
+        # 2. Save the updated state
         save_state(next_state)
-        print("State updated successfully.")
     else:
         print("No new 'PREVU' vessels detected and no state changes required.")
+    
+    print("-" * 50)
 
 
 if __name__ == "__main__":
