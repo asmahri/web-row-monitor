@@ -16,11 +16,11 @@ TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"  # TODO:
 TABLE_CSS_SELECTOR = "table"   # you can change to "table#myTable" etc.
 
 # Email settings (set values via GitHub Secrets, see workflow)
-EMAIL_USER = os.getenv("asmahri1@gmail.com")  # sender email
-EMAIL_PASS = os.getenv("Massa076832139@1")  # app password / SMTP password
-EMAIL_TO = os.getenv("eun.aasmahri1@gmail.com")      # where to send notifications
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+EMAIL_USER = os.getenv("EMAIL_USER")  # your Gmail address
+EMAIL_PASS = os.getenv("tsfs rmjd nkjs tiwt")  # your App Password
+EMAIL_TO   = os.getenv("EMAIL_TO")    # where to send alerts
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
 
 STATE_PATH = Path("state.json")
 
