@@ -10,12 +10,13 @@ from typing import Dict, List, Tuple, Any
 # ===== CONFIG & CONSTANTS =====
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
 
-# ⬇️ STATE PERSISTENCE SETTINGS ⬇️
+# ⬇️ STATE PERSISTENCE SETTINGS FOR GITHUB ACTIONS ⬇️
 # Environment variable to read the state from (must match GitHub Secret name)
 STATE_ENV_VAR = "VESSEL_STATE_DATA" 
 # Temporary file to write the new state to for the CI job to pick up
 TEMP_OUTPUT_FILE = 'state_output.txt' 
 
+# Email credentials fetched from environment variables
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 EMAIL_TO = os.getenv("EMAIL_TO")
@@ -30,7 +31,7 @@ STATUS_TO_REMOVE = {"EN RADE", "A QUAI", "DEPART"}
 # Ports to track
 ALLOWED_PORTS = {"17", "18"}
 
-# ===== STATE (MODIFIED FOR PERSISTENCE) =====
+# ===== STATE MANAGEMENT (PERSISTENT) =====
 def load_state() -> Dict[str, str]:
     """Loads the vessel status dictionary from the persistent environment variable."""
     state_data = os.getenv(STATE_ENV_VAR)
@@ -65,9 +66,9 @@ def save_state(state: Dict[str, str]):
         print(f"CRITICAL ERROR: Failed to write to temp file {TEMP_OUTPUT_FILE}. Check CI permissions. Details: {e}")
 
 
-# ===== HELPERS =====
+# ===== HELPERS (Date, Port, ID Formatting) =====
 def json_date_to_ms(json_date: str) -> int:
-    """For sorting: '/Date(1764457200000+0100)/' -> ms int."""
+    """Converts ANP JSON date format to milliseconds for sorting."""
     if not isinstance(json_date, str):
         return 0
     m = re.search(r"/Date\((\d+)", json_date)
@@ -77,7 +78,7 @@ def json_date_to_ms(json_date: str) -> int:
 
 
 def json_date_to_dt(json_date: str):
-    """For display: '/Date(1764457200000+0100)/' -> datetime with offset."""
+    """Converts ANP JSON date format to a Python datetime object."""
     if not isinstance(json_date, str):
         return None
     m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", json_date)
@@ -99,21 +100,15 @@ def json_date_to_dt(json_date: str):
 
 
 def fmt_dt(json_date: str) -> str:
-    """Formats the JSON date to a display string, showing only the date."""
+    """Formats date to remove time: 'Sunday, 30 November 2025'"""
     dt = json_date_to_dt(json_date)
     if not dt:
         return "N/A"
     return dt.strftime("%A, %d %B %Y")
 
 
-def fmt_time(json_date: str) -> str:
-    dt = json_date_to_dt(json_date)
-    if not dt:
-        return "N/A"
-    return dt.strftime("%H:%M")
-
-
 def port_name(code: str) -> str:
+    """Maps port codes to names."""
     return {"17": "Laâyoune", "18": "Dakhla"}.get(code, f"Port {code}")
 
 
@@ -135,12 +130,14 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
         all_data = resp.json()
     except requests.exceptions.RequestException as e:
         print(f"CRITICAL ERROR: Failed to fetch data from ANP. Details: {e}")
+        # On fetch failure, return the current state to prevent data loss
         return current_state, {}
 
     live_vessels: Dict[str, Dict] = {}
     new_vessels_by_port: Dict[str, List[Dict[str, Any]]] = {}
     next_state = {} 
 
+    # 1. IDENTIFY NEW PREVU VESSELS AND BUILD TEMPORARY NEXT STATE
     for entry in all_data:
         port_code = str(entry.get("cODE_SOCIETEField", ""))
         current_status = entry.get("sITUATIONField", "").upper()
@@ -154,6 +151,7 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
         if current_status == TARGET_STATUS:
             next_state[vessel_id] = current_status
             
+            # Found a PREVU vessel that was NOT in the old state -> New arrival!
             if vessel_id not in current_state:
                 port_name_str = port_name(port_code)
                 print(f"🔔 NEW PREVU vessel detected: {entry.get('nOM_NAVIREField')} ({vessel_id}) at {port_name_str}")
@@ -162,7 +160,7 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
                     new_vessels_by_port[port_name_str] = []
                 new_vessels_by_port[port_name_str].append(entry)
 
-    # Clean up the state (Remove vessels that left 'PREVU' or hit 'EN RADE')
+    # 2. DETERMINE FINAL NEXT STATE (CLEANUP)
     final_next_state = {}
     vessels_removed_count = 0
     
@@ -177,12 +175,14 @@ def fetch_and_process_data(current_state: Dict[str, str]) -> Tuple[Dict[str, str
                 print(f"DEBUG: ✅ Vessel {live_entry.get('nOM_NAVIREField')} ({v_id}) changed status to {live_status}. REMOVING from tracking.")
                 vessels_removed_count += 1
             else:
+                # Keep tracking other statuses for now, if it was already tracked
                 final_next_state[v_id] = live_status
         else:
+            # Vessel is gone from the feed entirely (completed call). Remove from tracking.
             print(f"DEBUG: ❌ Vessel ID {v_id} no longer in live feed. REMOVING from tracking.")
             vessels_removed_count += 1
 
-    # Add back any NEW 'PREVU' vessels found
+    # Add new PREVU vessels found in step 1 to the final state
     for v_id, status in next_state.items():
         final_next_state[v_id] = status
         
