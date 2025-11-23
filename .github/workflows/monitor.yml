@@ -1,17 +1,20 @@
 name: Vessel Monitor (Persistent State)
 
+# Define when the workflow should run
 on:
   schedule:
-    - cron: '*/30 * * * *' # Example: Runs every 30 minutes
+    - cron: '*/30 * * * *' 
   workflow_dispatch:
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    
     steps:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
+      # --- Setup ---
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
@@ -20,11 +23,23 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # --- 1. RUN MONITOR SCRIPT & GENERATE NEW STATE FILE ---
+      # --- State Management Core ---
+      
+      # 1. READ OLD STATE AND INITIALIZE OUTPUT FILE (THE FIX!)
+      # This step ensures the state_output.txt file always exists, preventing the "No such file" error.
+      - name: 📝 Initialize Output File with Current State
+        run: |
+          # Writes the content of the persistent secret into the temporary file.
+          echo '${{ secrets.VESSEL_STATE_DATA }}' > state_output.txt
+          echo "DEBUG: Initial state successfully written to state_output.txt."
+
+      # 2. EXECUTE MONITOR SCRIPT
+      # The Python script reads the state from the environment and overwrites 
+      # state_output.txt ONLY if new changes are found.
       - name: Execute Monitor Script
         id: run_script
         env:
-          # READ: Pass the existing state from the GitHub Secret to the script via a variable
+          # READ: Pass the existing state from the GitHub Secret 
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }} 
           
           # Pass Email Credentials
@@ -33,13 +48,15 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: python monitor.py
         
-      # --- 2. READ THE NEW STATE FROM THE TEMPORARY FILE ---
+      # 3. READ NEW STATE FROM OUTPUT FILE
+      # This step now successfully reads the file content, which is either the old 
+      # state (from initialization) or the new state (from the Python script).
       - name: 📄 Read New State from Output File
         id: read_state
-        # The file name must match the one used in the save_state function.
         run: echo "NEW_STATE_VALUE=$(cat state_output.txt)" >> $GITHUB_OUTPUT 
       
-      # --- 3. SAVE NEW STATE BACK TO SECRET ---
+      # 4. SAVE NEW STATE BACK TO SECRET
+      # Updates the persistent secret with the final value.
       - name: 💾 Update GitHub Secret with New State
         run: |
           # Use the variable written to GITHUB_OUTPUT in the previous step
@@ -47,9 +64,8 @@ jobs:
           
           echo "Updating secret with new state for ${#NEW_STATE_VALUE} characters..."
           
-          # This command uses the GitHub CLI (gh) to update the repository secret.
-          # The 'repo' scope from GH_TOKEN is mandatory here.
+          # This command requires the 'repo' scope on the GH_TOKEN secret.
           gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }} # PAT with 'repo' scope
-          GH_REPO: ${{ github.repository }} # Automatically set by GitHub
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} 
+          GH_REPO: ${{ github.repository }}
