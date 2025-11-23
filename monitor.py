@@ -10,15 +10,15 @@ from bs4 import BeautifulSoup
 # ===== 1. CONFIG – EDIT THIS PART =====
 
 # The URL that Power Query is reading
-TARGET_URL = "https://example.com/your-table-page"  # TODO: change this
+TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"  # TODO: change this
 
 # How to identify the "latest row" (simplest: first row of first table)
 TABLE_CSS_SELECTOR = "table"   # you can change to "table#myTable" etc.
 
 # Email settings (set values via GitHub Secrets, see workflow)
-EMAIL_USER = os.getenv("EMAIL_USER")  # sender email
-EMAIL_PASS = os.getenv("EMAIL_PASS")  # app password / SMTP password
-EMAIL_TO = os.getenv("EMAIL_TO")      # where to send notifications
+EMAIL_USER = os.getenv("asmahri1@gmail.com")  # sender email
+EMAIL_PASS = os.getenv("Massa076832139@1")  # app password / SMTP password
+EMAIL_TO = os.getenv("eun.aasmahri1@gmail.com")      # where to send notifications
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 
