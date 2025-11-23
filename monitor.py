@@ -1,109 +1,101 @@
 import os
 import json
+import requests
 import smtplib
 from email.mime.text import MIMEText
-from pathlib import Path
 
-import requests
-from bs4 import BeautifulSoup
+# ===== CONFIG =====
+TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
+STATE_FILE = "state.json"
 
-# ===== 1. CONFIG – EDIT THIS PART =====
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
+EMAIL_TO   = os.getenv("EMAIL_TO")
 
-# The URL that Power Query is reading
-TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"  # TODO: change this
-
-# How to identify the "latest row" (simplest: first row of first table)
-TABLE_CSS_SELECTOR = "table"   # you can change to "table#myTable" etc.
-
-# Email settings (set values via GitHub Secrets, see workflow)
-EMAIL_USER = os.getenv("EMAIL_USER")  # your Gmail address
-EMAIL_PASS = os.getenv("EMAIL_PASS")  # your App Password
-EMAIL_TO   = os.getenv("EMAIL_TO")    # where to send alerts
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
-STATE_PATH = Path("state.json")
 
-# =====================================
-
-
-def fetch_latest_row_fingerprint() -> str:
-    """Fetch page, extract the latest row and return a fingerprint string."""
-    resp = requests.get(TARGET_URL, timeout=30)
-    resp.raise_for_status()
-
-    soup = BeautifulSoup(resp.text, "html.parser")
-
-    table = soup.select_one(TABLE_CSS_SELECTOR)
-    if not table:
-        raise RuntimeError("Could not find table with selector: " + TABLE_CSS_SELECTOR)
-
-    # Take the first row after header
-    rows = table.find_all("tr")
-    if len(rows) < 2:
-        raise RuntimeError("Not enough rows in the table")
-
-    # Assuming row 0 = header, row 1 = latest data
-    latest_row = rows[1]
-    cells = [c.get_text(strip=True) for c in latest_row.find_all(["td", "th"])]
-
-    # Fingerprint: join all cell texts; you can make this more specific
-    fingerprint = "|".join(cells)
-    return fingerprint
+# ===== UTIL =====
+def load_state():
+    if not os.path.exists(STATE_FILE):
+        return {}
+    with open(STATE_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
-def load_last_fingerprint() -> str:
-    if not STATE_PATH.exists():
-        return ""
-    with STATE_PATH.open("r", encoding="utf-8") as f:
-        data = json.load(f)
-    return data.get("last_row_fingerprint", "")
+def save_state(state):
+    with open(STATE_FILE, "w", encoding="utf-8") as f:
+        json.dump(state, f, indent=2)
 
 
-def save_last_fingerprint(fingerprint: str) -> None:
-    with STATE_PATH.open("w", encoding="utf-8") as f:
-        json.dump({"last_row_fingerprint": fingerprint}, f, indent=2)
+# ===== FETCH LATEST ENTRY =====
+def fetch_latest_row():
+    print("Fetching ANP JSON...")
+
+    response = requests.get(TARGET_URL, timeout=20)
+    response.raise_for_status()
+
+    data = response.json()
+    if not isinstance(data, list):
+        raise RuntimeError("API did not return a JSON list.")
+
+    # Filter only Laâyoune (17) + Dakhla (18)
+    allowed_ports = {"17", "18"}
+    filtered = [
+        v for v in data
+        if str(v.get("cODE_SOCIETEField")) in allowed_ports
+    ]
+
+    if not filtered:
+        raise RuntimeError("No entries found for ports 17 or 18.")
+
+    # Sort newest by date field
+    sorted_data = sorted(
+        filtered,
+        key=lambda v: v.get("dATE_SITUATIONField", ""),
+        reverse=True
+    )
+
+    latest = sorted_data[0]
+
+    # Fingerprint
+    fp = json.dumps(latest, sort_keys=True)
+    return fp, latest
 
 
-def send_email(subject: str, body: str) -> None:
-    if not (EMAIL_USER and EMAIL_PASS and EMAIL_TO):
-        print("Email not configured, skipping notification.")
-        return
+# ===== EMAIL NOTIFICATION =====
+def send_email(entry):
+    subject = "ANP MVM Update (17/18)"
+    body = json.dumps(entry, indent=2, ensure_ascii=False)
 
     msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = subject
     msg["From"] = EMAIL_USER
     msg["To"] = EMAIL_TO
 
+    print("Sending email...")
+
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()
         server.login(EMAIL_USER, EMAIL_PASS)
-        server.send_message(msg)
+        server.sendmail(EMAIL_USER, EMAIL_TO, msg.as_string())
 
-    print("Notification email sent.")
+    print("Email sent.")
 
 
+# ===== MAIN =====
 def main():
-    print("Fetching latest row...")
-    current = fetch_latest_row_fingerprint()
-    last = load_last_fingerprint()
+    state = load_state()
+    last_fp = state.get("last_fingerprint")
 
-    print("Current fingerprint:", current)
-    print("Last fingerprint   :", last)
+    fp, latest = fetch_latest_row()
 
-    if current != last:
-        print("New row detected!")
-
-        # Save new fingerprint
-        save_last_fingerprint(current)
-
-        # Build a simple email body
-        body = (
-            f"A new row was detected on {TARGET_URL}\n\n"
-            f"Old fingerprint:\n{last}\n\n"
-            f"New fingerprint:\n{current}\n"
-        )
-        send_email("New row detected on monitored table", body)
+    if fp != last_fp:
+        print("🔔 CHANGE DETECTED")
+        send_email(latest)
+        state["last_fingerprint"] = fp
+        save_state(state)
     else:
         print("No change.")
 
