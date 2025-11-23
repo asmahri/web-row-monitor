@@ -1,31 +1,55 @@
-name: ANP MVM monitor
+name: Vessel Monitor (Persistent State)
 
 on:
   schedule:
-    - cron: "0 * * * *"   # every hour (UTC)
-  workflow_dispatch:       # allow manual run from Actions tab
+    - cron: '*/30 * * * *' # Example: Runs every 30 minutes
+  workflow_dispatch:
 
 jobs:
-  run-monitor:
+  monitor:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.x'
 
-      - name: Install dependencies
-        run: |
-          pip install requests beautifulsoup4
+      - name: Install Dependencies
+        run: pip install requests
 
-      - name: Run monitor script
+      # --- 1. RUN MONITOR SCRIPT & GENERATE NEW STATE FILE ---
+      - name: Execute Monitor Script
+        id: run_script
         env:
+          # READ: Pass the existing state from the GitHub Secret to the script via a variable
+          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }} 
+          
+          # Pass Email Credentials
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          EMAIL_TO:   ${{ secrets.EMAIL_TO }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python monitor.py
+        
+      # --- 2. READ THE NEW STATE FROM THE TEMPORARY FILE ---
+      - name: 📄 Read New State from Output File
+        id: read_state
+        # The file name must match the one used in the save_state function.
+        run: echo "NEW_STATE_VALUE=$(cat state_output.txt)" >> $GITHUB_OUTPUT 
+      
+      # --- 3. SAVE NEW STATE BACK TO SECRET ---
+      - name: 💾 Update GitHub Secret with New State
         run: |
-          python monitor.py
+          # Use the variable written to GITHUB_OUTPUT in the previous step
+          NEW_STATE_VALUE='${{ steps.read_state.outputs.NEW_STATE_VALUE }}'
+          
+          echo "Updating secret with new state for ${#NEW_STATE_VALUE} characters..."
+          
+          # This command uses the GitHub CLI (gh) to update the repository secret.
+          # The 'repo' scope from GH_TOKEN is mandatory here.
+          gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} # PAT with 'repo' scope
+          GH_REPO: ${{ github.repository }} # Automatically set by GitHub
