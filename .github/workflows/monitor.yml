@@ -41,6 +41,9 @@ jobs:
           EMAIL_PASS:        ${{ secrets.EMAIL_PASS }}
           EMAIL_TO:          ${{ secrets.EMAIL_TO }}
 
+          # Disable emails temporarily
+          EMAIL_ENABLED: "false"
+
           # WhatsApp (CallMeBot) — REQUIRED
           CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:  ${{ secrets.CALLMEBOT_APIKEY }}
