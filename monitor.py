@@ -17,7 +17,7 @@ TABLE_CSS_SELECTOR = "table"   # you can change to "table#myTable" etc.
 
 # Email settings (set values via GitHub Secrets, see workflow)
 EMAIL_USER = os.getenv("EMAIL_USER")  # your Gmail address
-EMAIL_PASS = os.getenv("tsfs rmjd nkjs tiwt")  # your App Password
+EMAIL_PASS = os.getenv("EMAIL_PASS")  # your App Password
 EMAIL_TO   = os.getenv("EMAIL_TO")    # where to send alerts
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
