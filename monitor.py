@@ -241,23 +241,25 @@ def format_vessel_details(entry: dict) -> str:
 
 
 def format_vessel_for_whatsapp(entry: dict) -> str:
-    """Formats a single vessel's details for WhatsApp."""
+    """Formats a single vessel's details for WhatsApp (style emojis)."""
     nom = entry.get("nOM_NAVIREField", "")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     eta_date = fmt_dt(entry.get("dATE_SITUATIONField", ""))
     eta_time = fmt_time_only(entry.get("hEURE_SITUATIONField", ""))
     prov = entry.get("pROVField", "Inconnue")
+    cons = entry.get("cONSIGNATAIREField", "N/A")
     num_esc = entry.get("nUMERO_ESCALEField", "N/A")
 
     eta_line = f"{eta_date} {eta_time}".strip()
 
-    lines = [
-        f"Navire : {nom}",
-        f"IMO    : {imo}",
-        f"ETA    : {eta_line}",
-        f"Prov   : {prov}",
-        f"Escale : {num_esc}",
-    ]
+    return (
+        f"🚢 *{nom}*\n"
+        f"🔹 IMO : {imo}\n"
+        f"📅 ETA : {eta_line}\n"
+        f"📍 Prov : {prov}\n"
+        f"🏢 Cons : {cons}\n"
+        f"📝 Escale : {num_esc}"
+    )
     return "\n".join(lines)
 
 
