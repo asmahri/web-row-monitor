@@ -31,7 +31,8 @@ CALLMEBOT_API_URL = "https://api.callmebot.com/whatsapp.php"
 # Status / ports
 TARGET_STATUS = "PREVU"
 STATUS_TO_REMOVE = {"EN RADE", "A QUAI", "DEPART"}
-ALLOWED_PORTS = {"17", "18"}  # 17: Laâyoune, 18: Dakhla
+# 16: Tan Tan, 17: Laâyoune, 18: Dakhla
+ALLOWED_PORTS = {"16", "17", "18"}
 
 
 # ===== STATE MANAGEMENT =====
@@ -131,7 +132,11 @@ def fmt_time_only(json_date: str) -> str:
 
 def port_name(code: str) -> str:
     """Maps port codes to names."""
-    return {"17": "Laâyoune", "18": "Dakhla"}.get(code, f"Port {code}")
+    return {
+        "16": "Tan Tan",
+        "17": "Laâyoune",
+        "18": "Dakhla",
+    }.get(code, f"Port {code}")
 
 
 def get_vessel_id(entry: dict) -> str:
@@ -260,7 +265,6 @@ def format_vessel_for_whatsapp(entry: dict) -> str:
         f"🏢 Cons : {cons}\n"
         f"📝 Escale : {num_esc}"
     )
-    return "\n".join(lines)
 
 
 # ===== EMAIL SENDING =====
