@@ -42,12 +42,12 @@ jobs:
           EMAIL_TO:          ${{ secrets.EMAIL_TO }}
 
           # Disable emails temporarily
-          EMAIL_ENABLED: "false"
+          EMAIL_ENABLED: "true"
 
           # WhatsApp (CallMeBot)
           CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:  ${{ secrets.CALLMEBOT_APIKEY }}
-          CALLMEBOT_ENABLED: "true"
+          CALLMEBOT_ENABLED: "false"
 
         run: python monitor.py
 
