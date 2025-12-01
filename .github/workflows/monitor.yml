@@ -65,3 +65,7 @@ jobs:
           NEW_STATE_VALUE='${{ steps.read_state.outputs.NEW_STATE_VALUE }}'
           echo "Updating secret with new state..."
           gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
+
+          - name: Show state_output.txt
+  run: cat state_output.txt
+
