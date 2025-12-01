@@ -29,7 +29,7 @@ jobs:
           echo '${{ secrets.VESSEL_STATE_DATA }}' > state_output.txt
           echo "DEBUG: Initial state successfully written to state_output.txt."
 
-      # 4. Run Python Script (NOW WITH CALLMEBOT VARIABLES)
+      # 4. Run Python Script
       - name: Execute Monitor Script
         id: run_script
         env:
@@ -44,30 +44,25 @@ jobs:
           # Disable emails temporarily
           EMAIL_ENABLED: "false"
 
-          # WhatsApp (CallMeBot) — REQUIRED
+          # WhatsApp (CallMeBot)
           CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:  ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED: "true"
 
         run: python monitor.py
 
-      # 5. Read new state file
-      - name: 📄 Read New State from Output File
-        id: read_state
-        run: echo "NEW_STATE_VALUE=$(cat state_output.txt)" >> $GITHUB_OUTPUT 
-
-      # 6. Show state_output.txt in logs (just view)
+      # 5. Show the state file (just view)
       - name: 👀 Show state_output.txt
         run: |
           echo "=== state_output.txt ==="
           cat state_output.txt
 
-      # 7. Update Secret
+      # 6. Update Secret directly from file
       - name: 💾 Update GitHub Secret with New State
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_REPO:  ${{ github.repository }}
         run: |
-          NEW_STATE_VALUE='${{ steps.read_state.outputs.NEW_STATE_VALUE }}'
+          NEW_STATE_VALUE="$(cat state_output.txt)"
           echo "Updating secret with new state..."
           gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
