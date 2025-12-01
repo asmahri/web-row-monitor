@@ -221,7 +221,7 @@ def fetch_and_process_data(
 
 # ===== FORMATTERS (EMAIL + WHATSAPP) =====
 def format_vessel_details(entry: dict) -> str:
-    """Formats a single vessel's details for the email body."""
+    """Formats a single vessel's details for the email body (premium card design)."""
     nom = entry.get("nOM_NAVIREField", "")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     cons = entry.get("cONSIGNATAIREField", "N/A")
@@ -233,16 +233,72 @@ def format_vessel_details(entry: dict) -> str:
 
     eta_line = f"{eta_date} {eta_time}".strip()
 
-    details = [
-        f"<b>Nom du Navire</b> : {nom}",
-        f"<b>IMO / Lloyd's</b> : {imo}",
-        f"<b>ETA (Date Prévue)</b> : {eta_line}",
-        f"<b>Provenance</b> : {prov}",
-        f"<b>Type de Navire</b> : {type_nav}",
-        f"<b>Consignataire</b> : {cons}",
-        f"<b>Numéro d'Escale</b> : {num_esc}",
-    ]
-    return "<br>".join(details)
+    return f"""
+<div style="
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    margin:15px 0;
+    padding:0;
+">
+  <div style="
+      border:1px solid #d0d7e1;
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  ">
+    <div style="
+        background:#0a3d62;
+        color:white;
+        padding:12px 15px;
+        font-size:16px;
+    ">
+      🚢 <b>{nom}</b>
+      <span style="
+          background:#1dd1a1;
+          color:#003f2e;
+          padding:3px 8px;
+          border-radius:6px;
+          font-size:12px;
+          float:right;
+      ">
+        {TARGET_STATUS}
+      </span>
+    </div>
+
+    <table style="width:100%; border-collapse:collapse;">
+      <tr style="background:#f8faff;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef; width:35%;"><b>🆔 IMO</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{imo}</td>
+      </tr>
+
+      <tr style="background:white;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🕒 ETA</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{eta_line}</td>
+      </tr>
+
+      <tr style="background:#f8faff;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🌍 Provenance</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{prov}</td>
+      </tr>
+
+      <tr style="background:white;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🛳️ Type</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{type_nav}</td>
+      </tr>
+
+      <tr style="background:#f8faff;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🏢 Consignataire</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{cons}</td>
+      </tr>
+
+      <tr style="background:white;">
+        <td style="padding:10px;"><b>📝 Escale</b></td>
+        <td style="padding:10px;">{num_esc}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+""".strip()
 
 
 def format_vessel_for_whatsapp(entry: dict) -> str:
@@ -300,9 +356,8 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
             "",
         ]
 
-        for i, vessel in enumerate(vessels, start=1):
+        for vessel in vessels:
             body_parts.append("<hr>")
-            body_parts.append(f"<b>Détails Navire #{i}</b> :")
             body_parts.append(format_vessel_details(vessel))
 
         body_parts.extend(
