@@ -56,7 +56,13 @@ jobs:
         id: read_state
         run: echo "NEW_STATE_VALUE=$(cat state_output.txt)" >> $GITHUB_OUTPUT 
 
-      # 6. Update Secret
+      # 6. Show state_output.txt in logs (just view)
+      - name: 👀 Show state_output.txt
+        run: |
+          echo "=== state_output.txt ==="
+          cat state_output.txt
+
+      # 7. Update Secret
       - name: 💾 Update GitHub Secret with New State
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -65,7 +71,3 @@ jobs:
           NEW_STATE_VALUE='${{ steps.read_state.outputs.NEW_STATE_VALUE }}'
           echo "Updating secret with new state..."
           gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
-
-          - name: Show state_output.txt
-            run: cat state_output.txt
-
