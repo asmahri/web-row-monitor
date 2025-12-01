@@ -67,5 +67,5 @@ jobs:
           gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
 
           - name: Show state_output.txt
-  run: cat state_output.txt
+            run: cat state_output.txt
 
