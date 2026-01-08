@@ -65,7 +65,7 @@ def save_state(state: Dict):
     try:
         with open(STATE_FILE, "w", encoding="utf-8") as f:
             # Use separators for smaller file size
-            json.dump(state, f, indent=2, ensure_ascii=False)
+            json.dump(state, f, indent=2, ensure_ascii=False, separators=(',', ': '))
         print(f"[LOG] State successfully written to {STATE_FILE}")
     except IOError as e:
         print(f"[CRITICAL ERROR] Could not write state file. Details: {e}")
@@ -314,10 +314,14 @@ def send_email_alerts(new_vessels_by_port):
                 server.starttls(); server.login(EMAIL_USER, EMAIL_PASS)
                 server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
                 print(f"[EMAIL] Sent to YOU for {port}")
+                
+                # 2. Send to COLLEAGUE (Only Laâyoune) AND IF SWITCH IS TRUE
                 if port == "Laâyoune" and EMAIL_TO_COLLEAGUE:
-                    del msg["To"]; msg["To"] = EMAIL_TO_COLLEAGUE
-                    server.sendmail(EMAIL_USER, [EMAIL_TO_COLLEAGUE], msg.as_string())
-                    print(f"[EMAIL] Sent to COLLEAGUE for {port}")
+                    if os.getenv("SEND_TO_COLLEAGUE", "true").lower() == "true":
+                        del msg["To"]
+                        msg["To"] = EMAIL_TO_COLLEAGUE
+                        server.sendmail(EMAIL_USER, [EMAIL_TO_COLLEAGUE], msg.as_string())
+                        print(f"[EMAIL] Sent to COLLEAGUE for {port}")
         except Exception as e:
             print(f"[ERROR] Email Error {port}: {e}")
 
