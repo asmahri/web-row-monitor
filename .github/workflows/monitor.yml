@@ -1,9 +1,9 @@
-name: Vessel Monitor
+name: Vessel Monitor (Git Persistence)
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
-    - cron: '0 8 1 * *'
+    - cron: 'H/30 * * *'      # Run every 30 mins
+    - cron: '0 8 1 * *'       # Run on 1st of month at 08:00
   workflow_dispatch:
 
 jobs:
@@ -12,19 +12,20 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
+      - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Install
+      - name: 📦 Install Dependencies
         run: pip install requests
 
-      - name: Run Monitor Script
+      - name: 🚀 Run Monitor / Report Script
         env:
+          # Secrets
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
@@ -34,23 +35,33 @@ jobs:
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED: "false"
-        run: if [ "${{ github.event.schedule }}" == "0 8 1 * *" ]; then export MODE="report"; else export MODE="monitor"; fi; python monitor.py
+          
+          # Python reads this Env variable
+          # If schedule is '0 8 1 *' (1st of month), set to 'report'. Else 'monitor'.
+          RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
+        
+        run: python monitor.py
 
-      - name: Debug state.json
-        run: cat state.json | head -30
-
-      - name: Commit and Push
+      - name: 💾 Commit and Push State (Robust)
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action Bot"
           git add state.json
-          git diff --staged --quiet || echo "No changes to commit."
-          if git diff --staged --quiet; then
-            git commit -m "Update state.json"
+          
+          # FIX: Check for changes securely using exit codes
+          # git diff --quiet --exit-code returns 1 if changes, 0 if no changes
+          git diff --quiet --exit-code --staged
+          
+          if [ $? -eq 1 ]; then
+            # Only commit if there ARE changes
+            git commit -m "Update state.json [skip ci]"
             git push
-            echo "State committed and pushed."
+            echo "✅ State committed and pushed."
           else
-            echo "No state changes. Skipping commit."
+            echo "ℹ️ No state changes. Skipping commit."
           fi
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: 👁 Debug state.json (Optional)
+        run: cat state.json | head -30
