@@ -9,8 +9,10 @@ from typing import Dict, List, Optional
 
 # ===== CONFIG & CONSTANTS =====
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
-STATE_ENV_VAR = "VESSEL_STATE_DATA"
-TEMP_OUTPUT_FILE = "state_output.txt"
+# We now use a local file for state, not temp
+STATE_FILE = "state.json" 
+# Keep old secret name for backup/fallback
+STATE_ENV_VAR = "VESSEL_STATE_DATA" 
 
 # Email Configuration
 EMAIL_USER = os.getenv("EMAIL_USER")
@@ -27,30 +29,44 @@ RUN_MODE = os.getenv("RUN_MODE", "monitor")
 # Ports
 ALLOWED_PORTS = {"16", "17", "18"} # Tan Tan, Laâyoune, Dakhla
 
-# ===== STATE MANAGEMENT =====
+# ===== STATE MANAGEMENT (FILE + FALLBACK) =====
 def load_state() -> Dict:
-    print("[LOG] Loading state from environment variable...")
+    print("[LOG] Loading state...")
+    
+    # 1. Try loading from Git Repo (state.json)
+    if os.path.exists(STATE_FILE):
+        try:
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                print(f"[LOG] State loaded from file. Active: {len(data.get('active', {}))}, History: {len(data.get('history', []))}")
+                return data
+        except Exception as e:
+            print(f"[LOG] Error reading {STATE_FILE}: {e}. Trying fallback...")
+
+    # 2. Fallback to Environment Variable (Secrets)
+    print("[LOG] File not found. Trying to load from Secret (Backup)...")
     state_data = os.getenv(STATE_ENV_VAR)
     if not state_data: 
-        print("[LOG] No state found. Starting fresh.")
+        print("[LOG] No backup secret found. Starting fresh.")
         return {"active": {}, "history": []}
     try:
         data = json.loads(state_data)
         if "active" not in data: data["active"] = {}
         if "history" not in data: data["history"] = []
-        print(f"[LOG] State Loaded. Active: {len(data['active'])}, History: {len(data['history'])}")
+        print(f"[LOG] Backup loaded. Active: {len(data['active'])}, History: {len(data['history'])}")
         return data
     except json.JSONDecodeError:
-        print("[LOG] Error decoding state. Starting fresh.")
+        print("[LOG] Error decoding backup. Starting fresh.")
         return {"active": {}, "history": []}
 
 def save_state(state: Dict):
+    """Writes state to state.json (to be committed by Git)."""
     print(f"[LOG] Saving state to file (Active: {len(state['active'])}, History: {len(state['history'])})...")
-    json_str = json.dumps(state, indent=2, ensure_ascii=False)
     try:
-        with open(TEMP_OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(json_str)
-        print(f"[LOG] State successfully written to {TEMP_OUTPUT_FILE}")
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            # Use separators for smaller file size
+            json.dump(state, f, indent=2, ensure_ascii=False)
+        print(f"[LOG] State successfully written to {STATE_FILE}")
     except IOError as e:
         print(f"[CRITICAL ERROR] Could not write state file. Details: {e}")
 
@@ -97,9 +113,8 @@ def get_vessel_id(entry: dict) -> str:
 def format_duration_hours(total_seconds: float) -> str:
     return f"{(total_seconds / 3600):.1f}h"
 
-# ===== FORMATTERS (PREMIUM HTML DESIGN) =====
+# ===== FORMATTERS (PREMIUM HTML) =====
 def format_vessel_details(entry: dict) -> str:
-    """Formats a single vessel's details for email body (premium card design)."""
     nom = entry.get("nOM_NAVIREField", "")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     cons = entry.get("cONSIGNATAIREField", "N/A")
@@ -108,71 +123,22 @@ def format_vessel_details(entry: dict) -> str:
     prov = entry.get("pROVField", "Inconnue")
     type_nav = entry.get("tYP_NAVIREField", "N/A")
     num_esc = entry.get("nUMERO_ESCALEField", "N/A")
-
     eta_line = f"{eta_date} {eta_time}".strip()
 
     return f"""
-<div style="
-    font-family:Arial, sans-serif;
-    font-size:14px;
-    margin:15px 0;
-    padding:0;
-">
-  <div style="
-      border:1px solid #d0d7e1;
-      border-radius:10px;
-      overflow:hidden;
-      box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  ">
-    <div style="
-        background:#0a3d62;
-        color:white;
-        padding:12px 15px;
-        font-size:16px;
-    ">
+<div style="font-family:Arial, sans-serif; font-size:14px; margin:15px 0; padding:0;">
+  <div style="border:1px solid #d0d7e1; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+    <div style="background:#0a3d62; color:white; padding:12px 15px; font-size:16px;">
       🚢 <b>{nom}</b>
-      <span style="
-          background:#1dd1a1;
-          color:#003f2e;
-          padding:3px 8px;
-          border-radius:6px;
-          font-size:12px;
-          float:right;
-      ">
-        PREVU
-      </span>
+      <span style="background:#1dd1a1; color:#003f2e; padding:3px 8px; border-radius:6px; font-size:12px; float:right;">PREVU</span>
     </div>
-
     <table style="width:100%; border-collapse:collapse;">
-      <tr style="background:#f8faff;">
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef; width:35%;"><b>🆔 IMO</b></td>
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{imo}</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🕒 ETA</b></td>
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{eta_line}</td>
-      </tr>
-
-      <tr style="background:#f8faff;">
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🌍 Provenance</b></td>
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{prov}</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🛳️ Type</b></td>
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{type_nav}</td>
-      </tr>
-
-      <tr style="background:#f8faff;">
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🏢 Consignataire</b></td>
-        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{cons}</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:10px;"><b>📝 Escale</b></td>
-        <td style="padding:10px;">{num_esc}</td>
-      </tr>
+      <tr style="background:#f8faff;"><td style="padding:10px; border-bottom:1px solid #e6e9ef; width:35%;"><b>🆔 IMO</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{imo}</td></tr>
+      <tr style="background:white;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🕒 ETA</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{eta_line}</td></tr>
+      <tr style="background:#f8faff;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🌍 Provenance</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{prov}</td></tr>
+      <tr style="background:white;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🛳️ Type</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{type_nav}</td></tr>
+      <tr style="background:#f8faff;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🏢 Consignataire</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{cons}</td></tr>
+      <tr style="background:white;"><td style="padding:10px;"><b>📝 Escale</b></td><td style="padding:10px;">{num_esc}</td></tr>
     </table>
   </div>
 </div>
@@ -180,199 +146,107 @@ def format_vessel_details(entry: dict) -> str:
 
 # ===== REPORTING LOGIC =====
 def generate_monthly_report(state: Dict):
-    """Generates and sends separate emails for each Port (Laâyoune, Tan Tan, Dakhla)."""
     history = state.get("history", [])
     if not history:
-        print("[REPORT] No history found for monthly report.")
+        print("[REPORT] No history found.")
         return
 
-    # 1. Group by Port -> Agent
     port_map = {
         "Laâyoune": {},
         "Tan Tan": {},
         "Dakhla": {}
     }
-
     print(f"[REPORT] Processing {len(history)} trips for port separation...")
 
     for trip in history:
         port = trip.get("port")
         agent = trip.get("consignataire", "INCONNU")
-        
-        # Skip if port unknown
         if port not in port_map: continue
-
         if agent not in port_map[port]:
             port_map[port][agent] = {"count": 0, "rade_h": 0.0, "quai_h": 0.0, "total_h": 0.0}
-        
         port_map[port][agent]["count"] += 1
         port_map[port][agent]["rade_h"] += trip.get("rade_duration_hours", 0)
         port_map[port][agent]["quai_h"] += trip.get("quai_duration_hours", 0)
         port_map[port][agent]["total_h"] += (trip.get("rade_duration_hours", 0) + trip.get("quai_duration_hours", 0))
 
-    # 2. Generate and Send Report for EACH Port
     emails_sent = 0
     for port_name_str, agents_data in port_map.items():
-        
-        # Skip if no activity in this port
         if not agents_data:
-            print(f"[REPORT] No data for {port_name_str}. Skipping email.")
+            print(f"[REPORT] No data for {port_name_str}. Skipping.")
             continue
 
-        # Sort agents by Total Duration (Descending)
         sorted_agents = sorted(agents_data.items(), key=lambda x: x[1]["total_h"], reverse=True)
-        
         rows = ""
         for agent, data in sorted_agents:
-            rows += f"""
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; font-weight:bold;">{agent}</td>
-                <td style="padding:10px; text-align:center;">{data['count']}</td>
-                <td style="padding:10px; text-align:center;">{format_duration_hours(data['rade_h'] * 3600)}</td>
-                <td style="padding:10px; text-align:center;">{format_duration_hours(data['quai_h'] * 3600)}</td>
-                <td style="padding:10px; text-align:center; color:#0a3d62; font-weight:bold;">{format_duration_hours(data['total_h'] * 3600)}</td>
-            </tr>
-            """
+            rows += f"<tr style='border-bottom:1px solid #eee;'><td style='padding:10px; font-weight:bold;'>{agent}</td><td style='padding:10px; text-align:center;'>{data['count']}</td><td style='padding:10px; text-align:center;'>{format_duration_hours(data['rade_h'] * 3600)}</td><td style='padding:10px; text-align:center;'>{format_duration_hours(data['quai_h'] * 3600)}</td><td style='padding:10px; text-align:center; color:#0a3d62; font-weight:bold;'>{format_duration_hours(data['total_h'] * 3600)}</td></tr>"
 
         subject = f"📊 RAPPORT MENSUEL - Port de {port_name_str} ({len(sorted_agents)} agents)"
-        body = f"""
-        <div style="font-family:Arial, sans-serif;">
-            <h2 style="color:#0a3d62;">Rapport Mensuel : {port_name_str}</h2>
-            <p>Analyse des navires ayant quitté le port de <b>{port_name_str}</b> (Status: APPAREILLAGE).</p>
-            
-            <table style="width:100%; border-collapse:collapse; margin-top:20px; border:1px solid #ddd;">
-                <tr style="background:#0a3d62; color:white;">
-                    <th style="padding:12px; text-align:left;">Consignataire (Agent)</th>
-                    <th style="padding:12px; text-align:center;">Nb Navires</th>
-                    <th style="padding:12px; text-align:center;">Ancrage</th>
-                    <th style="padding:12px; text-align:center;">Au Quai</th>
-                    <th style="padding:12px; text-align:center;">Total (Ancre->Appareillage)</th>
-                </tr>
-                {rows}
-            </table>
-            
-            <br>
-            <p style="font-size:12px; color:#666;">Les durées sont calculées entre le statut 'EN RADE' et 'APPAREILLAGE'.</p>
-            <p>Cordialement,<br>Automated System</p>
-        </div>
-        """
+        body = f"<div style='font-family:Arial, sans-serif;'><h2 style='color:#0a3d62;'>Rapport Mensuel : {port_name_str}</h2><p>Analyse des navires ayant quitté le port de <b>{port_name_str}</b>.</p><table style='width:100%; border-collapse:collapse; margin-top:20px; border:1px solid #ddd;'><tr style='background:#0a3d62; color:white;'><th style='padding:12px; text-align:left;'>Agent</th><th style='padding:12px; text-align:center;'>Nb Navires</th><th style='padding:12px; text-align:center;'>Ancrage</th><th style='padding:12px; text-align:center;'>Au Quai</th><th style='padding:12px; text-align:center;'>Total</th></tr>{rows}</table><br><p style='font-size:12px; color:#666;'>Cordialement,<br>Automated System</p></div>"
 
         msg = MIMEText(body, "html", "utf-8")
         msg["Subject"] = subject
         msg["From"] = EMAIL_USER
         msg["To"] = EMAIL_TO
-
         try:
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.starttls()
-                server.login(EMAIL_USER, EMAIL_PASS)
-                server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
-            print(f"✅ Report sent successfully for {port_name_str}")
-            emails_sent += 1
+                server.starttls(); server.login(EMAIL_USER, EMAIL_PASS); server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
+            print(f"✅ Report sent for {port_name_str}"); emails_sent += 1
         except Exception as e:
-            print(f"❌ Failed to send report for {port_name_str}: {e}")
+            print(f"❌ Report Error {port_name_str}: {e}")
 
-    # 3. Reset History only if at least one email was sent successfully
     if emails_sent > 0:
-        print(f"[REPORT] Cleaning history ({len(history)} records cleared)...")
-        state["history"] = []
-        save_state(state)
-        print(f"✅ History cleared for new month.")
-    else:
-        print(f"[REPORT] No reports sent. History preserved.")
+        print(f"[REPORT] Cleaning history..."); state["history"] = []; save_state(state)
+        print(f"✅ History cleared.")
 
 # ===== MONITORING LOGIC =====
 def fetch_and_process_data(state: Dict) -> Dict:
     print("[LOG] Fetching ANP data...")
     try:
-        resp = requests.get(TARGET_URL, timeout=20)
-        resp.raise_for_status()
-        all_data = resp.json()
-        print(f"[LOG] Fetched {len(all_data)} entries from ANP.")
-    except requests.exceptions.RequestException as e:
-        print(f"[CRITICAL ERROR] Failed to fetch data. Details: {e}")
-        return state
+        resp = requests.get(TARGET_URL, timeout=20); resp.raise_for_status(); all_data = resp.json()
+        print(f"[LOG] Fetched {len(all_data)} entries.")
+    except Exception as e:
+        print(f"[CRITICAL ERROR] {e}"); return state
 
     live_vessels = {} 
     active_state = state.get("active", {})
     history = state.get("history", [])
     new_prevu_by_port = {}
 
-    # 1. Map Live Data
     for entry in all_data:
         port_code = str(entry.get("cODE_SOCIETEField", ""))
         status = entry.get("sITUATIONField", "").upper()
         if port_code not in ALLOWED_PORTS: continue
-        
         v_id = get_vessel_id(entry)
         full_dt = get_full_datetime(entry)
-        live_vessels[v_id] = {
-            "entry": entry,
-            "status": status,
-            "timestamp": full_dt
-        }
+        live_vessels[v_id] = {"entry": entry, "status": status, "timestamp": full_dt}
 
-    # 2. Process Active Tracking (Life Cycle)
-    print(f"[LOG] Processing {len(active_state)} active vessels against live data...")
+    print(f"[LOG] Processing {len(active_state)} active vessels...")
     to_remove = []
     for v_id, stored in active_state.items():
         live = live_vessels.get(v_id)
         if not live: continue
-        
         stored_status = stored.get("status")
         live_status = live["status"]
         live_ts = live["timestamp"]
         
-        # --- NEW FIXES (PREVU Transitions) ---
-        
-        # CASE A: PREVU -> EN RADE (The Trap Fix)
+        # TRANSITIONS
         if stored_status == "PREVU" and live_status == "EN RADE":
-            print(f"  📌 Started Tracking: {stored['entry']['nOM_NAVIREField']} (PREVU -> EN RADE)")
-            stored["status"] = "EN RADE"
-            stored["rade_at"] = live_ts.isoformat()
-        
-        # CASE B: PREVU -> A QUAI (Skipped Anchorage)
+            stored["status"] = "EN RADE"; stored["rade_at"] = live_ts.isoformat()
         elif stored_status == "PREVU" and live_status == "A QUAI":
-            print(f"  🚢 Berthed Directly: {stored['entry']['nOM_NAVIREField']} (PREVU -> A QUAI)")
-            stored["status"] = "A QUAI"
-            stored["quai_at"] = live_ts.isoformat()
-            # No rade_duration (0h)
-            
-        # CASE C: PREVU -> APPAREILLAGE (Skipped Port entirely?)
+            stored["status"] = "A QUAI"; stored["quai_at"] = live_ts.isoformat()
         elif stored_status == "PREVU" and live_status == "APPAREILLAGE":
-            print(f"  🏁 Departed without stopping: {stored['entry']['nOM_NAVIREField']} (PREVU -> APPAREILLAGE)")
-            # We don't track this for duration, just remove
             to_remove.append(v_id)
-
-        # --- ORIGINAL TRACKING LOGIC ---
-
-        # EN RADE -> A QUAI
         elif stored_status == "EN RADE" and live_status == "A QUAI":
-            print(f"  🚢 Berthed: {stored['entry']['nOM_NAVIREField']}")
-            stored["status"] = "A QUAI"
-            stored["quai_at"] = live_ts.isoformat()
+            stored["status"] = "A QUAI"; stored["quai_at"] = live_ts.isoformat()
             if "rade_at" in stored:
-                rade_dt = datetime.fromisoformat(stored["rade_at"])
-                stored["rade_duration_hours"] = (live_ts - rade_dt).total_seconds() / 3600
-
-        # A QUAI -> APPAREILLAGE (Completed Trip)
+                stored["rade_duration_hours"] = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
         elif stored_status == "A QUAI" and live_status == "APPAREILLAGE":
-            print(f"  🏁 Departed: {stored['entry']['nOM_NAVIREField']}")
             stored["status"] = "APPAREILLAGE"
-            
-            quai_hours = 0.0
-            rade_hours = 0.0
-            
+            quai_hours, rade_hours = 0.0, 0.0
             if "quai_at" in stored:
-                quai_dt = datetime.fromisoformat(stored["quai_at"])
-                quai_hours = (live_ts - quai_dt).total_seconds() / 3600
-            
+                quai_hours = (live_ts - datetime.fromisoformat(stored["quai_at"])).total_seconds() / 3600
             if "rade_at" in stored:
-                rade_dt = datetime.fromisoformat(stored["rade_at"])
-                rade_hours = (live_ts - rade_dt).total_seconds() / 3600
-
-            stored["quai_duration_hours"] = quai_hours
-            
+                rade_hours = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
             history.append({
                 "vessel": stored["entry"]["nOM_NAVIREField"],
                 "consignataire": stored["entry"]["cONSIGNATAIREField"],
@@ -384,13 +258,9 @@ def fetch_and_process_data(state: Dict) -> Dict:
                 "quai_duration_hours": quai_hours
             })
             to_remove.append(v_id)
-
-        # EN RADE -> APPAREILLAGE (Skipped Quai)
         elif stored_status == "EN RADE" and live_status == "APPAREILLAGE":
-            print(f"  🏁 Departed (Anchorage Only): {stored['entry']['nOM_NAVIREField']}")
             if "rade_at" in stored:
-                rade_dt = datetime.fromisoformat(stored["rade_at"])
-                rade_hours = (live_ts - rade_dt).total_seconds() / 3600
+                rade_hours = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
                 history.append({
                     "vessel": stored["entry"]["nOM_NAVIREField"],
                     "consignataire": stored["entry"]["cONSIGNATAIREField"],
@@ -403,123 +273,61 @@ def fetch_and_process_data(state: Dict) -> Dict:
                 })
                 to_remove.append(v_id)
 
-    # Remove completed
     for v_id in to_remove:
         del active_state[v_id]
-    if to_remove: print(f"[LOG] Removed {len(to_remove)} departed vessels from tracking.")
+    if to_remove: print(f"[LOG] Removed {len(to_remove)} departed vessels.")
 
-    # 3. Detect New Vessels (PREVU & EN RADE)
     new_detections = 0
     for v_id, live in live_vessels.items():
         if v_id not in active_state:
             if live["status"] == "PREVU":
-                active_state[v_id] = {
-                    "entry": live["entry"],
-                    "status": "PREVU"
-                }
-                
+                active_state[v_id] = {"entry": live["entry"], "status": "PREVU"}
                 p_name = port_name(str(live['entry'].get("cODE_SOCIETEField")))
-                if p_name not in new_prevu_by_port:
-                    new_prevu_by_port[p_name] = []
+                if p_name not in new_prevu_by_port: new_prevu_by_port[p_name] = []
                 new_prevu_by_port[p_name].append(live["entry"])
                 new_detections += 1
-            
             elif live["status"] == "EN RADE":
-                print(f"  📌 Start Tracking: {live['entry']['nOM_NAVIREField']} (Detected as EN RADE)")
-                active_state[v_id] = {
-                    "entry": live["entry"],
-                    "status": "EN RADE",
-                    "rade_at": live["timestamp"].isoformat()
-                }
+                active_state[v_id] = {"entry": live["entry"], "status": "EN RADE", "rade_at": live["timestamp"].isoformat()}
                 new_detections += 1
 
-    if new_detections > 0:
-        print(f"[LOG] Added {new_detections} new vessels to tracking.")
-    else:
-        print("[LOG] No new vessels detected.")
+    if new_detections > 0: print(f"[LOG] Added {new_detections} new vessels.")
+    else: print("[LOG] No new vessels detected.")
 
     state["active"] = active_state
     state["history"] = history
     return state, new_prevu_by_port
 
-# ===== EMAIL LOGIC (RESTORED PREMIUM DESIGN) =====
+# ===== EMAIL LOGIC =====
 def send_email_alerts(new_vessels_by_port):
-    """Sends new vessel alerts to YOU and COLLEAGUE (Laâyoune only) using Premium HTML."""
-    if not new_vessels_by_port or not EMAIL_ENABLED:
-        return
-
-    print(f"[LOG] Preparing to send alerts for {len(new_vessels_by_port)} port(s)...")
-
+    if not new_vessels_by_port or not EMAIL_ENABLED: return
     for port, vessels in new_vessels_by_port.items():
-        if len(vessels) == 1:
-            subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {vessels[0].get('nOM_NAVIREField')} au Port de {port}"
-        else:
-            subject = f"🔔 {len(vessels)} NOUVELLES ARRIVÉES PRÉVUES au Port de {port}"
-
-        body_parts: List[str] = [
-            "Bonjour,",
-            "",
-            (
-                f"Nous vous informons de la détection de <b>{len(vessels)} nouvelle(s) "
-                f"arrivée(s) de navire(s)</b> (statut <b>PREVU</b>) "
-                f"enregistrée(s) par l'ANP (MVM) pour le <b>Port de {port}</b>."
-            ),
-            "",
-        ]
-
+        subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {vessels[0].get('nOM_NAVIREField')} au Port de {port}" if len(vessels) == 1 else f"🔔 {len(vessels)} NOUVELLES ARRIVÉES PRÉVUES au Port de {port}"
+        body_parts = ["Bonjour,", "", f"Nous vous informons de la détection de <b>{len(vessels)} nouvelle(s) arrivée(s) de navire(s)</b> (statut <b>PREVU</b>) pour le <b>Port de {port}</b>.", ""]
         for vessel in vessels:
-            body_parts.append("<hr>")
-            body_parts.append(format_vessel_details(vessel))
-
-        body_parts.extend(
-            [
-                "",
-                "<hr>",
-                (
-                    f"Cette notification est basée sur les données ANP pour les "
-                    f"statuts <b>PREVU</b> du Port de {port}."
-                ),
-                "Cordialement,",
-            ]
-        )
-
-        body_html = "<br>".join(body_parts)
-
-        msg = MIMEText(body_html, "html", "utf-8")
-        msg["Subject"] = subject
-        msg["From"] = EMAIL_USER
-        msg["To"] = EMAIL_TO
-
+            body_parts.append("<hr>"); body_parts.append(format_vessel_details(vessel))
+        body_parts.extend(["", "<hr>", "Cordialement,"])
+        
+        msg = MIMEText("<br>".join(body_parts), "html", "utf-8")
+        msg["Subject"] = subject; msg["From"] = EMAIL_USER; msg["To"] = EMAIL_TO
         try:
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.starttls()
-                server.login(EMAIL_USER, EMAIL_PASS)
-                
-                # 1. Send to YOU
+                server.starttls(); server.login(EMAIL_USER, EMAIL_PASS)
                 server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
                 print(f"[EMAIL] Sent to YOU for {port}")
-
-                # 2. Send to COLLEAGUE (Only Laâyoune)
                 if port == "Laâyoune" and EMAIL_TO_COLLEAGUE:
-                    del msg["To"]
-                    msg["To"] = EMAIL_TO_COLLEAGUE
+                    del msg["To"]; msg["To"] = EMAIL_TO_COLLEAGUE
                     server.sendmail(EMAIL_USER, [EMAIL_TO_COLLEAGUE], msg.as_string())
                     print(f"[EMAIL] Sent to COLLEAGUE for {port}")
         except Exception as e:
-            print(f"[ERROR] Email Error for {port}: {e}")
+            print(f"[ERROR] Email Error {port}: {e}")
 
 # ===== MAIN =====
 def main():
-    print(f"{'='*50}")
-    print(f"--- Run Mode: {RUN_MODE.upper()} ---")
+    print(f"{'='*50}\n--- Run Mode: {RUN_MODE.upper()} ---")
     state = load_state()
-
     if RUN_MODE == "report":
-        # MONTHLY REPORT MODE
-        generate_monthly_report(state)
-        return
-
-    # MONITOR MODE (Every 30 mins)
+        generate_monthly_report(state); return
+    
     state, new_prevu = fetch_and_process_data(state)
     save_state(state)
     
