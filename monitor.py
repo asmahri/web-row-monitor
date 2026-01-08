@@ -315,9 +315,9 @@ def generate_monthly_report(state: Dict):
                 total_h = rade_h + quai_h
                 
                 # Calculate Days (Total / 24)
-                days_rade = int(rade_h / 24) if rade_h > 0 else 0
-                days_quai = int(quai_h / 24) if quai_h > 0 else 0
-                days_total = int(total_h / 24)
+                days_rade = round(rade_h / 24, 1)
+                days_quai = round(quai_h / 24, 1)
+                days_total = round((rade_h + quai_h) / 24, 1)
                 
                 # Get Arrival Date (Format YYYY-MM-DD)
                 arrival_ts_str = trip.get("arrived_rade", "N/A")
