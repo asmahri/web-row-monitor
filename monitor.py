@@ -196,7 +196,7 @@ def format_vessel_details_premium(entry: dict) -> str:
         ">{prov}</td>
       </tr>
 
-      <tr style="background:#f8faff;">
+      <tr style="background:white;">
         <td style="
           padding:10px;
           border-bottom:1px solid #e6e9ef;
@@ -308,16 +308,16 @@ def generate_monthly_report(state: Dict):
             </tr>
             """
 
-            # Generate Details Rows (Correct Loop)
+            # Generate Details Rows
             for trip in port_vessels:
                 rade_h = trip.get("rade_duration_hours", 0)
                 quai_h = trip.get("quai_duration_hours", 0)
                 total_h = rade_h + quai_h
                 
                 # Calculate Days (Total / 24)
-               days_rade = round(rade_h / 24, 1)
-               days_quai = round(quai_h / 24, 1)
-               days_total = round(total_h / 24, 1)
+                days_rade = round(rade_h / 24, 1)
+                days_quai = round(quai_h / 24, 1)
+                days_total = round(total_h / 24, 1)
                 
                 # Get Arrival Date (Format YYYY-MM-DD)
                 arrival_ts_str = trip.get("arrived_rade", "N/A")
@@ -362,7 +362,7 @@ def generate_monthly_report(state: Dict):
             </table>
 
             <!-- TABLE 2: DETAILS DES MOUVEMENTS -->
-            <h3 style='margin-top:30px; font-size:16px;'>2. Détails des Mouvements</h3>
+            <h3 style='margin-top:30px; font-size:16px; color:#0a3d62; border-bottom:1px solid #ddd; padding-bottom:10px;'>2. Détails des Mouvements</h3>
             <table style='width:100%; border-collapse:collapse; border:1px solid #ddd;'>
                 <tr style='background:#0a3d62; color:white;'>
                     <th style='padding:10px; text-align:left; font-weight:bold;'>Agent</th>
@@ -370,7 +370,7 @@ def generate_monthly_report(state: Dict):
                     <th style='padding:10px; text-align:center;'>Date d'arrivée (sans heure)</th>
                     <th style='padding:10px; text-align:center;'>Nb jr en rade</th>
                     <th style='padding:10px; text-align:center;'>Nb de jr à quai</th>
-                    <th style='padding:10px; text-align:center; font-weight:bold; color:#0a3d62;'>Total de jours au port</th>
+                    <th style='padding:10px; text-align:center; font-weight:bold; color:#333333;'>Total de jours au port</th>
                 </tr>
                 {rows_details}
             </table>
@@ -410,7 +410,8 @@ def fetch_and_process_data(state: Dict):
         all_data = resp.json()
         print(f"[LOG] Fetched {len(all_data)} entries.")
     except Exception as e:
-        print(f"[CRITICAL ERROR] {e}"); return state
+        print(f"[CRITICAL ERROR] {e}")
+        return state, {}
 
     live_vessels = {} 
     active_state = state.get("active", {})
@@ -462,38 +463,37 @@ def fetch_and_process_data(state: Dict):
             stored["status"] = "A QUAI"
             stored["quai_at"] = live_ts.isoformat()
             
-            if "rade_at" in stored and "quai_at" in stored:
-                # Calculate duration only if we have both timestamps
+            if "rade_at" in stored and live_ts:
                 rade_duration = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
                 stored["rade_duration_hours"] = rade_duration
-                print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} moved to quai. Rade Duration: {rade_duration:.1f}h")
+                print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} moved to quai after {rade_duration:.1f}h in rade")
         
         elif stored_status == "A QUAI" and live_status == "APPAREILLAGE":
-            stored["status"] = "APPAREILLAGE"
-            
+            # Calculate all durations and create history record
             quai_hours, rade_hours = 0.0, 0.0
             
-            if "quai_at" in stored:
+            if "quai_at" in stored and live_ts:
                 quai_hours = (live_ts - datetime.fromisoformat(stored["quai_at"])).total_seconds() / 3600
+            
             if "rade_at" in stored:
                 rade_hours = stored.get("rade_duration_hours", 0.0)
-                
-            total_h = quai_hours + rade_hours
             
             # Create history record
+            entry = stored.get("entry", {})
+            port_code = str(entry.get("cODE_SOCIETEField", ""))
             history_record = {
-                "vessel": stored["entry"]["nOM_NAVIREField"],
-                "consignataire": stored["entry"]["cONSIGNATAIREField"],
-                "port": port_name(str(stored["entry"]["cODE_SOCIETEField"])),
+                "vessel": entry.get("nOM_NAVIREField", "N/A"),
+                "consignataire": entry.get("cONSIGNATAIREField", "N/A"),
+                "port": port_name(port_code),
                 "arrived_rade": stored.get("rade_at", "N/A"),
-                "berthed": stored.get("quai_at", "N/A"),
-                "departed": live_ts.isoformat(),
+                "arrived_quai": stored.get("quai_at", "N/A"),
+                "departed": live_ts.isoformat() if live_ts else "N/A",
                 "rade_duration_hours": rade_hours,
                 "quai_duration_hours": quai_hours
             }
             
             history.append(history_record)
-            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} departed. Total: {total_h:.1f}h (Rade: {rade_hours:.1f}h, Quai: {quai_hours:.1f}h)")
+            print(f"[LOG] Vessel {history_record['vessel']} departed. Rade: {rade_hours:.1f}h, Quai: {quai_hours:.1f}h, Total: {rade_hours+quai_hours:.1f}h")
             
             # Mark for removal
             to_remove.append(v_id)
@@ -501,22 +501,22 @@ def fetch_and_process_data(state: Dict):
         elif stored_status == "EN RADE" and live_status == "APPAREILLAGE":
             # Vessel departed from rade without going to quai
             rade_hours = 0.0
-            if "rade_at" in stored:
-                rade_hours = stored.get("rade_duration_hours", 0.0)
+            if "rade_at" in stored and live_ts:
+                rade_hours = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
             
             history_record = {
                 "vessel": stored["entry"]["nOM_NAVIREField"],
                 "consignataire": stored["entry"]["cONSIGNATAIREField"],
                 "port": port_name(str(stored["entry"]["cODE_SOCIETEField"])),
                 "arrived_rade": stored.get("rade_at", "N/A"),
-                "berthed": "Direct Depart",
-                "departed": live_ts.isoformat(),
+                "arrived_quai": "N/A",
+                "departed": live_ts.isoformat() if live_ts else "N/A",
                 "rade_duration_hours": rade_hours,
                 "quai_duration_hours": 0.0
             }
             
             history.append(history_record)
-            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} departed. Rade Duration: {rade_hours:.1f}h")
+            print(f"[LOG] Vessel {history_record['vessel']} departed. Rade Duration: {rade_hours:.1f}h")
             
             # Mark for removal
             to_remove.append(v_id)
@@ -524,7 +524,7 @@ def fetch_and_process_data(state: Dict):
     # Remove completed
     for v_id in to_remove:
         if v_id in active_state:
-            # vessel_name = active_state[v_id]["entry"]["nOM_NAVIREField"]
+            vessel_name = active_state[v_id].get("entry", {}).get("nOM_NAVIREField", v_id)
             del active_state[v_id]
     if to_remove: 
         print(f"[LOG] Removed {len(to_remove)} departed vessels.")
@@ -540,13 +540,15 @@ def fetch_and_process_data(state: Dict):
                     new_prevu_by_port[p_name] = []
                 new_prevu_by_port[p_name].append(live["entry"])
                 new_detections += 1
-                print(f"[LOG] New PREVU vessel: {live['entry'].get('nOM_NAVIREField', 'N/A')} at {p_name}")
-            
+                print(f"[LOG] New PREVU vessel: {live['entry'].get('nOM_NAVIREField', 'Unknown')} at {p_name}")
             elif live["status"] == "EN RADE":
-                # Vessel entered rade after script started monitoring (or directly in rade)
-                active_state[v_id] = {"entry": live["entry"], "status": "EN RADE", "rade_at": live["timestamp"].isoformat()}
+                active_state[v_id] = {
+                    "entry": live["entry"], 
+                    "status": "EN RADE", 
+                    "rade_at": live["timestamp"].isoformat() if live["timestamp"] else "N/A"
+                }
                 new_detections += 1
-                print(f"[LOG] New EN RADE vessel: {live['entry'].get('nOM_NAVIREField', 'N/A')} at {p_name}")
+                print(f"[LOG] New EN RADE vessel: {live['entry'].get('nOM_NAVIREField', 'Unknown')}")
 
     if new_detections > 0: 
         print(f"[LOG] Added {new_detections} new vessels.")
