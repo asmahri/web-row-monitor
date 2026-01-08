@@ -4,7 +4,7 @@ import re
 import requests
 import smtplib
 from email.mime.text import MIMEText
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone # Added timezone
 from typing import Dict, List, Optional
 
 # ===== CONFIG & CONSTANTS =====
@@ -16,7 +16,7 @@ TEMP_OUTPUT_FILE = "state_output.txt"
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 EMAIL_TO = os.getenv("EMAIL_TO")
-EMAIL_TO_COLLEAGUE = os.getenv("EMAIL_TO_COLLEAGUE") # Used only for Monitor Mode
+EMAIL_TO_COLLEAGUE = os.getenv("EMAIL_TO_COLLEAGUE") 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "true").lower() == "true"
@@ -51,9 +51,11 @@ def save_state(state: Dict):
 
 # ===== HELPERS (DATES) =====
 def parse_ms_date(date_str: str) -> Optional[datetime]:
+    """Extracts the /Date(...)/ string and returns a UTC datetime object (Fixed for Py3.14)."""
     if not date_str: return None
     m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", date_str)
-    if m: return datetime.utcfromtimestamp(int(m.group(1)) / 1000.0)
+    if m: 
+        return datetime.fromtimestamp(int(m.group(1)) / 1000.0, tz=timezone.utc)
     return None
 
 def get_full_datetime(entry: dict) -> Optional[datetime]:
@@ -68,6 +70,22 @@ def get_full_datetime(entry: dict) -> Optional[datetime]:
     time_only = timedelta(hours=time_obj.hour, minutes=time_obj.minute, seconds=time_obj.second)
     return datetime.combine(date_obj.date(), datetime.min.time()) + time_only
 
+def fmt_dt(json_date: str) -> str:
+    """Formate DATE_SITUATION en français."""
+    dt = parse_ms_date(json_date)
+    if not dt: return "N/A"
+    jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+    jour_nom = jours[dt.weekday()].capitalize()
+    mois_nom = mois[dt.month - 1]
+    return f"{jour_nom}, {dt.day:02d} {mois_nom} {dt.year}"
+
+def fmt_time_only(json_date: str) -> str:
+    """Formats HEURE_SITUATION as time only: '14:00'."""
+    dt = parse_ms_date(json_date)
+    if not dt: return "N/A"
+    return dt.strftime("%H:%M")
+
 def port_name(code: str) -> str:
     return {"16": "Tan Tan", "17": "Laâyoune", "18": "Dakhla"}.get(code, code)
 
@@ -78,6 +96,87 @@ def get_vessel_id(entry: dict) -> str:
 
 def format_duration_hours(total_seconds: float) -> str:
     return f"{(total_seconds / 3600):.1f}h"
+
+# ===== FORMATTERS (PREMIUM HTML DESIGN) =====
+def format_vessel_details(entry: dict) -> str:
+    """Formats a single vessel's details for the email body (premium card design)."""
+    nom = entry.get("nOM_NAVIREField", "")
+    imo = entry.get("nUMERO_LLOYDField", "N/A")
+    cons = entry.get("cONSIGNATAIREField", "N/A")
+    eta_date = fmt_dt(entry.get("dATE_SITUATIONField", ""))
+    eta_time = fmt_time_only(entry.get("hEURE_SITUATIONField", ""))
+    prov = entry.get("pROVField", "Inconnue")
+    type_nav = entry.get("tYP_NAVIREField", "N/A")
+    num_esc = entry.get("nUMERO_ESCALEField", "N/A")
+
+    eta_line = f"{eta_date} {eta_time}".strip()
+
+    return f"""
+<div style="
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    margin:15px 0;
+    padding:0;
+">
+  <div style="
+      border:1px solid #d0d7e1;
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  ">
+    <div style="
+        background:#0a3d62;
+        color:white;
+        padding:12px 15px;
+        font-size:16px;
+    ">
+      🚢 <b>{nom}</b>
+      <span style="
+          background:#1dd1a1;
+          color:#003f2e;
+          padding:3px 8px;
+          border-radius:6px;
+          font-size:12px;
+          float:right;
+      ">
+        PREVU
+      </span>
+    </div>
+
+    <table style="width:100%; border-collapse:collapse;">
+      <tr style="background:#f8faff;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef; width:35%;"><b>🆔 IMO</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{imo}</td>
+      </tr>
+
+      <tr style="background:white;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🕒 ETA</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{eta_line}</td>
+      </tr>
+
+      <tr style="background:#f8faff;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🌍 Provenance</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{prov}</td>
+      </tr>
+
+      <tr style="background:white;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🛳️ Type</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{type_nav}</td>
+      </tr>
+
+      <tr style="background:#f8faff;">
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🏢 Consignataire</b></td>
+        <td style="padding:10px; border-bottom:1px solid #e6e9ef;">{cons}</td>
+      </tr>
+
+      <tr style="background:white;">
+        <td style="padding:10px;"><b>📝 Escale</b></td>
+        <td style="padding:10px;">{num_esc}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+""".strip()
 
 # ===== REPORTING LOGIC =====
 def generate_monthly_report(state: Dict):
@@ -102,7 +201,7 @@ def generate_monthly_report(state: Dict):
         agents[agent]["total_h"] += (trip.get("rade_duration_hours", 0) + trip.get("quai_duration_hours", 0))
         agents[agent]["vessels"].append(trip["vessel"])
 
-    # Build HTML Table (Sorted by Total Duration Descending)
+    # Build HTML Table
     sorted_agents = sorted(agents.items(), key=lambda x: x[1]["total_h"], reverse=True)
     rows = ""
     for agent, data in sorted_agents:
@@ -142,7 +241,7 @@ def generate_monthly_report(state: Dict):
     msg = MIMEText(body, "html", "utf-8")
     msg["Subject"] = subject
     msg["From"] = EMAIL_USER
-    msg["To"] = EMAIL_TO # REPORT GOES TO YOU ONLY
+    msg["To"] = EMAIL_TO
 
     try:
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
@@ -151,8 +250,7 @@ def generate_monthly_report(state: Dict):
             server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
         print("✅ Monthly report sent to YOU only.")
         
-        # IMPORTANT: Reset history for next month to avoid accumulating data indefinitely
-        # Comment out the next 2 lines if you want to keep ALL historical data forever
+        # Reset history for next month
         state["history"] = []
         save_state(state)
         print("✅ History cleared for new month.")
@@ -254,13 +352,13 @@ def fetch_and_process_data(state: Dict) -> Dict:
     for v_id, live in live_vessels.items():
         if v_id not in active_state:
             if live["status"] == "PREVU":
-                # PREVU: Add to active to prevent duplicate alerts, but don't start timer
+                # PREVU: Add to active to prevent duplicate alerts
                 active_state[v_id] = {
                     "entry": live["entry"],
                     "status": "PREVU"
                 }
                 
-                # EMAIL ALERT LOGIC (Original Workflow)
+                # EMAIL ALERT LOGIC
                 p_name = port_name(str(live['entry'].get("cODE_SOCIETEField")))
                 if p_name not in new_prevu_by_port:
                     new_prevu_by_port[p_name] = []
@@ -279,20 +377,48 @@ def fetch_and_process_data(state: Dict) -> Dict:
     state["history"] = history
     return state, new_prevu_by_port
 
-# ===== EMAIL LOGIC (Original) =====
+# ===== EMAIL LOGIC (RESTORED PREMIUM DESIGN) =====
 def send_email_alerts(new_vessels_by_port):
-    """Sends new vessel alerts to YOU and COLLEAGUE (Laâyoune only)."""
+    """Sends new vessel alerts to YOU and COLLEAGUE (Laâyoune only) using Premium HTML."""
     if not new_vessels_by_port or not EMAIL_ENABLED:
         return
 
     for port, vessels in new_vessels_by_port.items():
-        subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {len(vessels)} navire(s) au Port de {port}"
-        body = f"<div><h3>Bonjour,</h3><p>Nous signalons <b>{len(vessels)}</b> nouvelle(s) arrivée(s) à <b>{port}</b>.</p>"
-        for v in vessels:
-            body += f"<hr><b>{v.get('nOM_NAVIREField')}</b><br>Provenance: {v.get('pROVField')}<br>Consignataire: {v.get('cONSIGNATAIREField')}"
-        body += "</div>"
+        if len(vessels) == 1:
+            subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {vessels[0].get('nOM_NAVIREField')} au Port de {port}"
+        else:
+            subject = f"🔔 {len(vessels)} NOUVELLES ARRIVÉES PRÉVUES au Port de {port}"
 
-        msg = MIMEText(body, "html", "utf-8")
+        body_parts: List[str] = [
+            "Bonjour,",
+            "",
+            (
+                f"Nous vous informons de la détection de <b>{len(vessels)} nouvelle(s) "
+                f"arrivée(s) de navire(s)</b> (statut <b>PREVU</b>) "
+                f"enregistrée(s) par l'ANP (MVM) pour le <b>Port de {port}</b>."
+            ),
+            "",
+        ]
+
+        for vessel in vessels:
+            body_parts.append("<hr>")
+            body_parts.append(format_vessel_details(vessel))
+
+        body_parts.extend(
+            [
+                "",
+                "<hr>",
+                (
+                    f"Cette notification est basée sur les données ANP pour les "
+                    f"statuts <b>PREVU</b> du Port de {port}."
+                ),
+                "Cordialement,",
+            ]
+        )
+
+        body_html = "<br>".join(body_parts)
+
+        msg = MIMEText(body_html, "html", "utf-8")
         msg["Subject"] = subject
         msg["From"] = EMAIL_USER
         msg["To"] = EMAIL_TO
