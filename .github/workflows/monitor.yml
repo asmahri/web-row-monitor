@@ -4,7 +4,7 @@ on:
   schedule:
     # 1. Monitor Mode: Every 30 minutes
     - cron: '*/30 * * * *'
-    # 2. Report Mode: 1st of every month at 08:00 UTC (Change hour if needed)
+    # 2. Report Mode: 1st of every month at 08:00 UTC
     - cron: '0 8 1 * *'
   workflow_dispatch:
 
@@ -28,11 +28,13 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # 3. Initialize Output File (Only needed for Monitor mode to prevent crash if no changes)
-      - name: 📝 Initialize Output File
+      # 3. INITIALIZE OUTPUT FILE (CRITICAL FIX)
+      # This loads your current state. If script crashes, GitHub uses this OLD state instead of '***'.
+      - name: 📝 Initialize Output File with Current State
         if: github.event.schedule != '0 8 1 * *'
         run: |
           echo '${{ secrets.VESSEL_STATE_DATA }}' > state_output.txt
+          echo "DEBUG: State file initialized with current data."
 
       # 4. Run Script
       - name: 🚀 Run Monitor / Report Script
@@ -55,7 +57,7 @@ jobs:
           RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
         run: python monitor.py
 
-      # 5. Update Secret (Only if Monitor mode changed state or Report mode cleared history)
+      # 5. Update Secret
       - name: 💾 Update GitHub Secret
         if: hashFiles('state_output.txt') != ''
         env:
