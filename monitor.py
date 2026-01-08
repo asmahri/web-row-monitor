@@ -18,6 +18,8 @@ TEMP_OUTPUT_FILE = "state_output.txt"    # temp file used by workflow to update 
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 EMAIL_TO = os.getenv("EMAIL_TO")
+EMAIL_TO_COLLEAGUE = os.getenv("EMAIL_TO_COLLEAGUE")  # ADDED: Colleague Email
+
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "true").lower() == "true"
@@ -325,7 +327,7 @@ def format_vessel_for_whatsapp(entry: dict) -> str:
 
 # ===== EMAIL SENDING =====
 def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
-    """Sends a separate email for each port that has new vessels."""
+    """Sends emails to you and colleague (for Laâyoune)."""
     if not EMAIL_ENABLED:
         print("DEBUG: Email notifications disabled.")
         return
@@ -374,17 +376,27 @@ def send_emails(new_vessels_by_port: Dict[str, List[Dict[str, Any]]]):
 
         body_html = "<br>".join(body_parts)
 
-        msg = MIMEText(body_html, "html", "utf-8")
-        msg["Subject"] = subject
-        msg["From"] = EMAIL_USER
-        msg["To"] = EMAIL_TO
-
         try:
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
                 server.starttls()
                 server.login(EMAIL_USER, EMAIL_PASS)
+                
+                # 1. Send to YOU (Main User)
+                msg = MIMEText(body_html, "html", "utf-8")
+                msg["Subject"] = subject
+                msg["From"] = EMAIL_USER
+                msg["To"] = EMAIL_TO
                 server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
-            print(f"Email sent successfully for Port: {port}")
+                print(f"Email sent successfully to YOU for Port: {port}")
+
+                # 2. Send to COLLEAGUE (Only if Port is Laâyoune)
+                if port == "Laâyoune" and EMAIL_TO_COLLEAGUE:
+                    # Update the 'To' header to show colleague's name
+                    del msg["To"]
+                    msg["To"] = EMAIL_TO_COLLEAGUE
+                    server.sendmail(EMAIL_USER, [EMAIL_TO_COLLEAGUE], msg.as_string())
+                    print(f"Email sent successfully to COLLEAGUE for Port: {port}")
+
         except Exception as e:
             print(
                 f"ERROR: Failed to send email for Port {port}. "
