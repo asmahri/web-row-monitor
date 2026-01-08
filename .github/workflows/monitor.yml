@@ -34,7 +34,8 @@ jobs:
           CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED:    "false"
-          RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
+          # SAFER LOGIC: Check if the schedule contains "0 8 1"
+          RUN_MODE: ${{ contains(github.event.schedule, '0 8 1 * *') && 'report' || 'monitor' }}
         run: python monitor.py
 
       - name: 🔍 DEBUG: Check state.json content
