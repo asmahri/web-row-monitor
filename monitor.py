@@ -115,7 +115,7 @@ def format_duration_hours(total_seconds: float) -> str:
 
 # ===== PREMIUM HTML DESIGN FOR ALERTS =====
 def format_vessel_details_premium(entry: dict) -> str:
-    """Formats a single vessel's details for the email body (premium card design)."""
+    """Formats a single vessel's details for email body (premium card design)."""
     nom = entry.get("nOM_NAVIREField", "")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     cons = entry.get("cONSIGNATAIREField", "N/A")
@@ -196,7 +196,7 @@ def format_vessel_details_premium(entry: dict) -> str:
         ">{prov}</td>
       </tr>
 
-      <tr style="background:white;">
+      <tr style="background:#f8faff;">
         <td style="
           padding:10px;
           border-bottom:1px solid #e6e9ef;
@@ -221,7 +221,7 @@ def format_vessel_details_premium(entry: dict) -> str:
       <tr style="background:white;">
         <td style="
           padding:10px;
-        "><b>📝 Escale</b></td>
+          "><b>📝 Escale</b></td>
         <td style="
           padding:10px;
           border-bottom:1px solid #e6e9ef;
@@ -276,7 +276,7 @@ def generate_monthly_report(state: Dict):
         
         # --- HTML BUILD START ---
         rows_summary = ""
-        rows_details = ""  # Initialize rows_details
+        rows_details = "" # Initialize outside loops to prevent NameError
         
         # Agent Summary Loop
         for agent, data in sorted_agents:
@@ -308,16 +308,16 @@ def generate_monthly_report(state: Dict):
             </tr>
             """
 
-            # Generate Details Rows for this agent
+            # Generate Details Rows (Correct Loop)
             for trip in port_vessels:
                 rade_h = trip.get("rade_duration_hours", 0)
                 quai_h = trip.get("quai_duration_hours", 0)
                 total_h = rade_h + quai_h
                 
                 # Calculate Days (Total / 24)
-                days_rade = round(rade_h / 24, 1)
-                days_quai = round(quai_h / 24, 1)
-                days_total = round((rade_h + quai_h) / 24, 1)
+               days_rade = round(rade_h / 24, 1)
+               days_quai = round(quai_h / 24, 1)
+               days_total = round(total_h / 24, 1)
                 
                 # Get Arrival Date (Format YYYY-MM-DD)
                 arrival_ts_str = trip.get("arrived_rade", "N/A")
@@ -332,20 +332,20 @@ def generate_monthly_report(state: Dict):
                 rows_details += f"""
                 <tr style="background:#ffffff;">
                     <td style="padding:10px;">{agent}</td>
-                    <td style="padding:10px;">{trip.get('vessel', 'N/A')}</td>
-                    <td style="padding:10px; text-align:center;">{date_str_only}</td>
+                    <td style="padding:10px;">{trip['vessel']}</td>
+                    <td style="padding:10px;">{date_str_only}</td>
                     <td style="padding:10px; text-align:center;">{days_rade}</td>
                     <td style="padding:10px; text-align:center;">{days_quai}</td>
                     <td style="padding:10px; text-align:center; font-weight:bold; color:#0a3d62;">{days_total}</td>
                 </tr>
                 """
 
-        # --- Build Email Body ---
+        # --- BUILD EMAIL BODY ---
         subject = f"📊 RAPPORT MENSUEL - Port de {port_name_str} ({len(sorted_agents)} agents)"
         body = f"""
         <div style='font-family:Arial, sans-serif; max-width:900px; margin:0 auto; padding:20px; background-color:#ffffff; border:1px solid #ddd; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.08);'>
             
-            <h2 style='color:#0a3d62; margin-bottom:20px;'>Rapport Mensuel : {port_name_str}</h2>
+            <h2 style='color:#0a3d62; margin-bottom:10px;'>Rapport Mensuel : {port_name_str}</h2>
             <p>Synthèse Performance (Par Agent)</p>
             
             <table style='width:100%; border-collapse:collapse; margin-bottom:30px; border:1px solid #ddd;'>
@@ -362,7 +362,7 @@ def generate_monthly_report(state: Dict):
             </table>
 
             <!-- TABLE 2: DETAILS DES MOUVEMENTS -->
-            <h3 style='margin-top:30px; font-size:16px; color:#0a3d62; border-bottom:1px solid #ddd; padding-bottom:10px;'>2. Détails des Mouvements</h3>
+            <h3 style='margin-top:30px; font-size:16px;'>2. Détails des Mouvements</h3>
             <table style='width:100%; border-collapse:collapse; border:1px solid #ddd;'>
                 <tr style='background:#0a3d62; color:white;'>
                     <th style='padding:10px; text-align:left; font-weight:bold;'>Agent</th>
@@ -410,8 +410,7 @@ def fetch_and_process_data(state: Dict):
         all_data = resp.json()
         print(f"[LOG] Fetched {len(all_data)} entries.")
     except Exception as e:
-        print(f"[CRITICAL ERROR] {e}")
-        return state, {}
+        print(f"[CRITICAL ERROR] {e}"); return state
 
     live_vessels = {} 
     active_state = state.get("active", {})
@@ -423,6 +422,7 @@ def fetch_and_process_data(state: Dict):
         port_code = str(entry.get("cODE_SOCIETEField", ""))
         status = entry.get("sITUATIONField", "").upper()
         if port_code not in ALLOWED_PORTS: 
+        
             continue
         
         v_id = get_vessel_id(entry)
@@ -434,6 +434,7 @@ def fetch_and_process_data(state: Dict):
     for v_id, stored in active_state.items():
         live = live_vessels.get(v_id)
         if not live: 
+        
             continue
         
         stored_status = stored.get("status")
@@ -449,8 +450,8 @@ def fetch_and_process_data(state: Dict):
         elif stored_status == "PREVU" and live_status == "A QUAI":
             stored["status"] = "A QUAI"
             stored["quai_at"] = live_ts.isoformat()
-            stored["rade_duration_hours"] = 0.0  # Direct to quai, no rade time
-            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} went directly to quai")
+            stored["rade_duration_hours"] = 0.0
+            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} arrived directly at quai")
             
         elif stored_status == "PREVU" and live_status == "APPAREILLAGE":
             # Vessel departed without arriving
@@ -460,44 +461,39 @@ def fetch_and_process_data(state: Dict):
         elif stored_status == "EN RADE" and live_status == "A QUAI":
             stored["status"] = "A QUAI"
             stored["quai_at"] = live_ts.isoformat()
-            if "rade_at" in stored and live_ts:
+            
+            if "rade_at" in stored and "quai_at" in stored:
+                # Calculate duration only if we have both timestamps
                 rade_duration = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
                 stored["rade_duration_hours"] = rade_duration
-                print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} moved to quai after {rade_duration:.1f}h in rade")
-                
+                print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} moved to quai. Rade Duration: {rade_duration:.1f}h")
+        
         elif stored_status == "A QUAI" and live_status == "APPAREILLAGE":
-            # Calculate all durations and create history record
+            stored["status"] = "APPAREILLAGE"
+            
             quai_hours, rade_hours = 0.0, 0.0
             
-            # Calculate quai duration
-            if "quai_at" in stored and live_ts:
+            if "quai_at" in stored:
                 quai_hours = (live_ts - datetime.fromisoformat(stored["quai_at"])).total_seconds() / 3600
-            
-            # Get rade duration (already calculated during EN RADE -> A QUAI transition)
-            rade_hours = stored.get("rade_duration_hours", 0.0)
-            
-            # If we don't have rade duration but have rade_at, calculate it
-            if rade_hours == 0.0 and "rade_at" in stored and "quai_at" in stored:
-                rade_hours = (datetime.fromisoformat(stored["quai_at"]) - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
+            if "rade_at" in stored:
+                rade_hours = stored.get("rade_duration_hours", 0.0)
+                
+            total_h = quai_hours + rade_hours
             
             # Create history record
-            entry = stored.get("entry", {})
-            port_code = str(entry.get("cODE_SOCIETEField", ""))
             history_record = {
-                "vessel": entry.get("nOM_NAVIREField", "N/A"),
-                "consignataire": entry.get("cONSIGNATAIREField", "N/A"),
-                "port": port_name(port_code),
+                "vessel": stored["entry"]["nOM_NAVIREField"],
+                "consignataire": stored["entry"]["cONSIGNATAIREField"],
+                "port": port_name(str(stored["entry"]["cODE_SOCIETEField"])),
                 "arrived_rade": stored.get("rade_at", "N/A"),
-                "arrived_quai": stored.get("quai_at", "N/A"),
-                "departed": live_ts.isoformat() if live_ts else "N/A",
+                "berthed": stored.get("quai_at", "N/A"),
+                "departed": live_ts.isoformat(),
                 "rade_duration_hours": rade_hours,
-                "quai_duration_hours": quai_hours,
-                "total_duration_hours": rade_hours + quai_hours
+                "quai_duration_hours": quai_hours
             }
             
-            # Add to history
             history.append(history_record)
-            print(f"[LOG] Vessel {history_record['vessel']} departed. Rade: {rade_hours:.1f}h, Quai: {quai_hours:.1f}h, Total: {rade_hours+quai_hours:.1f}h")
+            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} departed. Total: {total_h:.1f}h (Rade: {rade_hours:.1f}h, Quai: {quai_hours:.1f}h)")
             
             # Mark for removal
             to_remove.append(v_id)
@@ -505,35 +501,30 @@ def fetch_and_process_data(state: Dict):
         elif stored_status == "EN RADE" and live_status == "APPAREILLAGE":
             # Vessel departed from rade without going to quai
             rade_hours = 0.0
-            if "rade_at" in stored and live_ts:
-                rade_hours = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
+            if "rade_at" in stored:
+                rade_hours = stored.get("rade_duration_hours", 0.0)
             
-            # Create history record
-            entry = stored.get("entry", {})
-            port_code = str(entry.get("cODE_SOCIETEField", ""))
             history_record = {
-                "vessel": entry.get("nOM_NAVIREField", "N/A"),
-                "consignataire": entry.get("cONSIGNATAIREField", "N/A"),
-                "port": port_name(port_code),
+                "vessel": stored["entry"]["nOM_NAVIREField"],
+                "consignataire": stored["entry"]["cONSIGNATAIREField"],
+                "port": port_name(str(stored["entry"]["cODE_SOCIETEField"])),
                 "arrived_rade": stored.get("rade_at", "N/A"),
-                "arrived_quai": "N/A",
-                "departed": live_ts.isoformat() if live_ts else "N/A",
+                "berthed": "Direct Depart",
+                "departed": live_ts.isoformat(),
                 "rade_duration_hours": rade_hours,
-                "quai_duration_hours": 0.0,
-                "total_duration_hours": rade_hours
+                "quai_duration_hours": 0.0
             }
             
-            # Add to history
             history.append(history_record)
-            print(f"[LOG] Vessel {history_record['vessel']} departed from rade. Rade: {rade_hours:.1f}h")
+            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} departed. Rade Duration: {rade_hours:.1f}h")
             
             # Mark for removal
             to_remove.append(v_id)
 
-    # Remove completed vessels
+    # Remove completed
     for v_id in to_remove:
         if v_id in active_state:
-            vessel_name = active_state[v_id].get("entry", {}).get("nOM_NAVIREField", v_id)
+            # vessel_name = active_state[v_id]["entry"]["nOM_NAVIREField"]
             del active_state[v_id]
     if to_remove: 
         print(f"[LOG] Removed {len(to_remove)} departed vessels.")
@@ -544,20 +535,18 @@ def fetch_and_process_data(state: Dict):
         if v_id not in active_state:
             if live["status"] == "PREVU":
                 active_state[v_id] = {"entry": live["entry"], "status": "PREVU"}
-                p_name = port_name(str(live['entry'].get("cODE_SOCIETEField", "")))
+                p_name = port_name(str(live['entry'].get("cODE_SOCIETEField")))
                 if p_name not in new_prevu_by_port: 
                     new_prevu_by_port[p_name] = []
                 new_prevu_by_port[p_name].append(live["entry"])
                 new_detections += 1
-                print(f"[LOG] New PREVU vessel: {live['entry'].get('nOM_NAVIREField', 'Unknown')} at {p_name}")
+                print(f"[LOG] New PREVU vessel: {live['entry'].get('nOM_NAVIREField', 'N/A')} at {p_name}")
+            
             elif live["status"] == "EN RADE":
-                active_state[v_id] = {
-                    "entry": live["entry"], 
-                    "status": "EN RADE", 
-                    "rade_at": live["timestamp"].isoformat() if live["timestamp"] else "N/A"
-                }
+                # Vessel entered rade after script started monitoring (or directly in rade)
+                active_state[v_id] = {"entry": live["entry"], "status": "EN RADE", "rade_at": live["timestamp"].isoformat()}
                 new_detections += 1
-                print(f"[LOG] New EN RADE vessel: {live['entry'].get('nOM_NAVIREField', 'Unknown')}")
+                print(f"[LOG] New EN RADE vessel: {live['entry'].get('nOM_NAVIREField', 'N/A')} at {p_name}")
 
     if new_detections > 0: 
         print(f"[LOG] Added {new_detections} new vessels.")
@@ -597,7 +586,7 @@ def send_email_alerts(new_vessels_by_port):
                 server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
                 print(f"[EMAIL] Sent to YOU for {port}")
                 
-                # 2. Send to COLLEAGUE (Only Laâyoune) AND IF SWITCH IS TRUE
+                # 2. Send to COLLEAGUE (Only Laâyoune)
                 if port == "Laâyoune" and EMAIL_TO_COLLEAGUE:
                     del msg["To"]
                     msg["To"] = EMAIL_TO_COLLEAGUE
