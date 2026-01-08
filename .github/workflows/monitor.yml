@@ -1,25 +1,20 @@
-name: Vessel Monitor & Reports
+name: Vessel Monitor (Git Persistence)
 
 on:
   schedule:
-    # 1. Monitor Mode: Every 30 minutes
     - cron: '*/30 * * * *'
-    # 2. Report Mode: 1st of every month at 08:00 UTC
     - cron: '0 8 1 * *'
   workflow_dispatch:
 
 jobs:
-  vessel_job:
+  monitor:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
-      # 1. Checkout Code
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Setup Python
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,41 +23,32 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # 3. INITIALIZE OUTPUT FILE (CRITICAL FIX)
-      # This loads your current state. If script crashes, GitHub uses this OLD state instead of '***'.
-      - name: 📝 Initialize Output File with Current State
-        if: github.event.schedule != '0 8 1 * *'
-        run: |
-          echo '${{ secrets.VESSEL_STATE_DATA }}' > state_output.txt
-          echo "DEBUG: State file initialized with current data."
-
-      # 4. Run Script
       - name: 🚀 Run Monitor / Report Script
         env:
-          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
-          
+          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }} # Used only as fallback
           EMAIL_USER:           ${{ secrets.EMAIL_USER }}
           EMAIL_PASS:           ${{ secrets.EMAIL_PASS }}
           EMAIL_TO:             ${{ secrets.EMAIL_TO }}
           EMAIL_TO_COLLEAGUE:   ${{ secrets.EMAIL_TO_COLLEAGUE }}
           EMAIL_ENABLED: "true"
-          
           CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED:    "false"
-
-          # AUTOMATIC MODE SWITCH:
-          # If schedule is monthly (1st of month), mode = "report".
-          # Else, mode = "monitor".
           RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
         run: python monitor.py
 
-      # 5. Update Secret
-      - name: 💾 Update GitHub Secret
-        if: hashFiles('state_output.txt') != ''
+      - name: 💾 Commit and Push State
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action Bot"
+          git add state.json
+          git diff --staged --quiet || echo "No changes to commit."
+          if git diff --staged --quiet; then
+            git commit -m "Update state.json [skip ci]"
+            git push
+            echo "✅ State committed and pushed."
+          else
+            echo "ℹ️ No state changes. Skipping commit."
+          fi
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          NEW_STATE_VALUE="$(cat state_output.txt)"
-          echo "Updating secret..."
-          gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
