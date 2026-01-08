@@ -2,7 +2,7 @@ name: Vessel Monitor (Git Persistence)
 
 on:
   schedule:
-    - cron: '*/30 * * *'
+    - cron: 'H/30 * * * *'
     - cron: '0 8 1 * *'
   workflow_dispatch:
 
@@ -23,7 +23,7 @@ jobs:
       - name: 📦 Install Dependencies
         run: pip install requests
 
-      - name: 🚀 Run Monitor Script
+      - name: 🚀 Run Monitor / Report Script
         env:
           # Secrets
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
@@ -36,9 +36,7 @@ jobs:
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED: "false"
           
-          # AUTOMATIC RUN MODE LOGIC
-          # If schedule is '0 8 1 *' (1st of month), set to 'report'. Else 'monitor'.
-          # This sets the variable RUN_MODE explicitly for Python.
+          # AUTOMATIC RUN MODE (PYTHON READS THIS)
           RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
         
         run: python monitor.py
@@ -49,12 +47,8 @@ jobs:
           git config --global user.name "GitHub Action Bot"
           git add state.json
           
-          # THE FIX: Check for changes
+          # Fix: Use "!" to negate exit code
           git diff --staged --quiet || echo "No changes to commit."
-          
-          # THE FIX: Use "!" to negate the exit code
-          # git diff returns 1 (True) if there ARE changes.
-          # We want to commit IF there ARE changes (! means NOT).
           if ! git diff --staged --quiet; then
             git commit -m "Update state.json [skip ci]"
             git push
