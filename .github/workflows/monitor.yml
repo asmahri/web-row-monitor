@@ -1,23 +1,25 @@
-name: Vessel Monitor (Persistent State)
+name: Vessel Monitor & Reports
 
 on:
   schedule:
-    - cron: '*/30 * * * *'   # every 30 minutes
+    # 1. Monitor Mode: Every 30 minutes
+    - cron: '*/30 * * * *'
+    # 2. Report Mode: 1st of every month at 08:00 UTC (Change hour if needed)
+    - cron: '0 8 1 * *'
   workflow_dispatch:
 
 jobs:
-  monitor:
+  vessel_job:
     runs-on: ubuntu-latest
-    
     permissions:
       contents: write
 
     steps:
-      # 1. Checkout
+      # 1. Checkout Code
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Python Setup
+      # 2. Setup Python
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
@@ -26,41 +28,39 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # 3. Initialize Output File with Current State (THE FIX)
-      - name: 📝 Initialize Output File with Current State
+      # 3. Initialize Output File (Only needed for Monitor mode to prevent crash if no changes)
+      - name: 📝 Initialize Output File
+        if: github.event.schedule != '0 8 1 * *'
         run: |
           echo '${{ secrets.VESSEL_STATE_DATA }}' > state_output.txt
-          echo "DEBUG: Initial state successfully written to state_output.txt."
 
-      # 4. Run Python Script
-      - name: Execute Monitor Script
-        id: run_script
+      # 4. Run Script
+      - name: 🚀 Run Monitor / Report Script
         env:
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
+          
           EMAIL_USER:           ${{ secrets.EMAIL_USER }}
           EMAIL_PASS:           ${{ secrets.EMAIL_PASS }}
           EMAIL_TO:             ${{ secrets.EMAIL_TO }}
           EMAIL_TO_COLLEAGUE:   ${{ secrets.EMAIL_TO_COLLEAGUE }}
           EMAIL_ENABLED: "true"
+          
           CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED:    "false"
+
+          # AUTOMATIC MODE SWITCH:
+          # If schedule is monthly (1st of month), mode = "report".
+          # Else, mode = "monitor".
+          RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
         run: python monitor.py
 
-      # 5. Show the state file (optional)
-      - name: 👀 Show state_output.txt
-        if: success() 
-        run: |
-          echo "=== state_output.txt ==="
-          cat state_output.txt
-
-      # 6. Update Secret
-      - name: 💾 Update GitHub Secret with New State
-        if: success() 
+      # 5. Update Secret (Only if Monitor mode changed state or Report mode cleared history)
+      - name: 💾 Update GitHub Secret
+        if: hashFiles('state_output.txt') != ''
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          # This will now work because state_output.txt is guaranteed to exist
           NEW_STATE_VALUE="$(cat state_output.txt)"
-          echo "Updating secret with new state..."
+          echo "Updating secret..."
           gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
