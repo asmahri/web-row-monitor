@@ -37,7 +37,6 @@ jobs:
           RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
         run: python monitor.py
 
-      # ADDED DEBUG STEP
       - name: 🔍 DEBUG: Check state.json content
         run: |
           echo "=== Content of state.json (First 30 lines) ==="
