@@ -99,7 +99,7 @@ def format_duration_hours(total_seconds: float) -> str:
 
 # ===== FORMATTERS (PREMIUM HTML DESIGN) =====
 def format_vessel_details(entry: dict) -> str:
-    """Formats a single vessel's details for the email body (premium card design)."""
+    """Formats a single vessel's details for email body (premium card design)."""
     nom = entry.get("nOM_NAVIREField", "")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     cons = entry.get("cONSIGNATAIREField", "N/A")
@@ -178,7 +178,7 @@ def format_vessel_details(entry: dict) -> str:
 </div>
 """.strip()
 
-# ===== REPORTING LOGIC (UPDATED FOR PORTS) =====
+# ===== REPORTING LOGIC =====
 def generate_monthly_report(state: Dict):
     """Generates and sends separate emails for each Port (Laâyoune, Tan Tan, Dakhla)."""
     history = state.get("history", [])
@@ -291,7 +291,7 @@ def fetch_and_process_data(state: Dict) -> Dict:
         print(f"[LOG] Fetched {len(all_data)} entries from ANP.")
     except requests.exceptions.RequestException as e:
         print(f"[CRITICAL ERROR] Failed to fetch data. Details: {e}")
-        return state # Return unchanged state on network error
+        return state
 
     live_vessels = {} 
     active_state = state.get("active", {})
@@ -323,8 +323,31 @@ def fetch_and_process_data(state: Dict) -> Dict:
         live_status = live["status"]
         live_ts = live["timestamp"]
         
+        # --- NEW FIXES (PREVU Transitions) ---
+        
+        # CASE A: PREVU -> EN RADE (The Trap Fix)
+        if stored_status == "PREVU" and live_status == "EN RADE":
+            print(f"  📌 Started Tracking: {stored['entry']['nOM_NAVIREField']} (PREVU -> EN RADE)")
+            stored["status"] = "EN RADE"
+            stored["rade_at"] = live_ts.isoformat()
+        
+        # CASE B: PREVU -> A QUAI (Skipped Anchorage)
+        elif stored_status == "PREVU" and live_status == "A QUAI":
+            print(f"  🚢 Berthed Directly: {stored['entry']['nOM_NAVIREField']} (PREVU -> A QUAI)")
+            stored["status"] = "A QUAI"
+            stored["quai_at"] = live_ts.isoformat()
+            # No rade_duration (0h)
+            
+        # CASE C: PREVU -> APPAREILLAGE (Skipped Port entirely?)
+        elif stored_status == "PREVU" and live_status == "APPAREILLAGE":
+            print(f"  🏁 Departed without stopping: {stored['entry']['nOM_NAVIREField']} (PREVU -> APPAREILLAGE)")
+            # We don't track this for duration, just remove
+            to_remove.append(v_id)
+
+        # --- ORIGINAL TRACKING LOGIC ---
+
         # EN RADE -> A QUAI
-        if stored_status == "EN RADE" and live_status == "A QUAI":
+        elif stored_status == "EN RADE" and live_status == "A QUAI":
             print(f"  🚢 Berthed: {stored['entry']['nOM_NAVIREField']}")
             stored["status"] = "A QUAI"
             stored["quai_at"] = live_ts.isoformat()
@@ -338,9 +361,16 @@ def fetch_and_process_data(state: Dict) -> Dict:
             stored["status"] = "APPAREILLAGE"
             
             quai_hours = 0.0
+            rade_hours = 0.0
+            
             if "quai_at" in stored:
                 quai_dt = datetime.fromisoformat(stored["quai_at"])
                 quai_hours = (live_ts - quai_dt).total_seconds() / 3600
+            
+            if "rade_at" in stored:
+                rade_dt = datetime.fromisoformat(stored["rade_at"])
+                rade_hours = (live_ts - rade_dt).total_seconds() / 3600
+
             stored["quai_duration_hours"] = quai_hours
             
             history.append({
@@ -350,7 +380,7 @@ def fetch_and_process_data(state: Dict) -> Dict:
                 "arrived_rade": stored.get("rade_at", "N/A"),
                 "berthed": stored.get("quai_at", "N/A"),
                 "departed": live_ts.isoformat(),
-                "rade_duration_hours": stored.get("rade_duration_hours", 0),
+                "rade_duration_hours": rade_hours,
                 "quai_duration_hours": quai_hours
             })
             to_remove.append(v_id)
@@ -395,7 +425,7 @@ def fetch_and_process_data(state: Dict) -> Dict:
                 new_detections += 1
             
             elif live["status"] == "EN RADE":
-                print(f"  📌 Start Tracking: {live['entry']['nOM_NAVIREField']} (EN RADE)")
+                print(f"  📌 Start Tracking: {live['entry']['nOM_NAVIREField']} (Detected as EN RADE)")
                 active_state[v_id] = {
                     "entry": live["entry"],
                     "status": "EN RADE",
