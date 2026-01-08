@@ -23,16 +23,15 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # NEW STEP: Logic handled here, not in YAML variables
-      - name: 🔧 Set Run Mode
-        run: |
-          if [ "${{ github.event_name }}" == "schedule" ] && [ "${{ github.event.schedule }}" == "0 8 1 * *" ]; then
-            echo "RUN_MODE=report" >> $GITHUB_ENV
-          else
-            echo "RUN_MODE=monitor" >> $GITHUB_ENV
-          fi
-
       - name: 🚀 Run Monitor / Report Script
+        run: |
+          # Logic to determine Mode directly in Bash
+          if [ "${{ github.event.schedule }}" == "0 8 1 * *" ]; then
+            export RUN_MODE="report"
+          else
+            export RUN_MODE="monitor"
+          fi
+          python monitor.py
         env:
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
           EMAIL_USER:           ${{ secrets.EMAIL_USER }}
@@ -43,9 +42,6 @@ jobs:
           CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED:    "false"
-          # Line 41 is now simple and safe
-          RUN_MODE: ${{ env.RUN_MODE }}
-        run: python monitor.py
 
       - name: 🔍 DEBUG: Check state.json content
         run: |
@@ -62,9 +58,9 @@ jobs:
           if git diff --staged --quiet; then
             git commit -m "Update state.json [skip ci]"
             git push
-            echo "✅ State committed and pushed."
+            echo "State committed and pushed."
           else
-            echo "ℹ️ No state changes. Skipping commit."
+            echo "No state changes. Skipping commit."
           fi
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
