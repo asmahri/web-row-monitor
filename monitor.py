@@ -276,6 +276,7 @@ def generate_monthly_report(state: Dict):
         
         # --- HTML BUILD START ---
         rows_summary = ""
+        rows_details = ""  # Initialize rows_details
         
         # Agent Summary Loop
         for agent, data in sorted_agents:
@@ -296,54 +297,50 @@ def generate_monthly_report(state: Dict):
                 <td style='padding:10px; text-align:center; color:#d35400; font-weight:bold;'>{format_duration_hours(avg_quai * 3600)}</td>
             </tr>
             """
-
-        # --- END OF SUMMARY TABLE ---
-
-        # Vessel Details Setup (Correct Logic)
-        # We filter the history list for THIS specific port to get the vessels
-        port_vessels = [t for t in history if t.get("consignataire") == agent and t.get("port") == port_name_str]
-        
-        # Header for Details Table
-        rows_details += f"""
-            <tr style="background:#eee; color:#0a3d62; font-weight:bold;">
-                <td colspan="4" style="padding:8px;">Détails des Mouvements ({agent})</td>
-            </tr>
-            """
-
-        # Generate Details Rows (Correct Loop)
-        for trip in port_vessels:
-            rade_h = trip.get("rade_duration_hours", 0)
-            quai_h = trip.get("quai_duration_hours", 0)
-            total_h = rade_h + quai_h
             
-            # Calculate Days (Total / 24)
-            days_rade = int(rade_h / 24) if rade_h > 0 else 0
-            days_quai = int(quai_h / 24) if quai_h > 0 else 0
-            days_total = int(total_h / 24)
+            # Vessel Details Setup for this agent
+            port_vessels = [t for t in history if t.get("consignataire") == agent and t.get("port") == port_name_str]
             
-            # Get Arrival Date (Format YYYY-MM-DD)
-            arrival_ts_str = trip.get("arrived_rade", "N/A")
-            date_str_only = "N/A"
-            if arrival_ts_str != "N/A":
-                try:
-                    dt = datetime.fromisoformat(arrival_ts_str)
-                    date_str_only = dt.strftime("%Y-%m-%d")
-                except:
-                    date_str_only = arrival_ts_str
-
+            # Header for Details Table for this agent
             rows_details += f"""
-            <tr style="background:#ffffff;">
-                <td style="padding:10px;">• {trip['vessel']}</td>
-                <td style="padding:10px;">{date_str_only}</td>
-                <td style="padding:10px; text-align:center;">{days_rade}</td>
-                <td style="padding:10px; text-align:center;">{days_quai}</td>
-                <td style="padding:10px; text-align:center; font-weight:bold; color:#0a3d62;">{days_total}</td>
+            <tr style="background:#eee; color:#0a3d62; font-weight:bold;">
+                <td colspan="6" style="padding:8px;">Détails des Mouvements ({agent})</td>
             </tr>
             """
 
-        # --- END OF DETAILS TABLE ---
+            # Generate Details Rows for this agent
+            for trip in port_vessels:
+                rade_h = trip.get("rade_duration_hours", 0)
+                quai_h = trip.get("quai_duration_hours", 0)
+                total_h = rade_h + quai_h
+                
+                # Calculate Days (Total / 24)
+                days_rade = int(rade_h / 24) if rade_h > 0 else 0
+                days_quai = int(quai_h / 24) if quai_h > 0 else 0
+                days_total = int(total_h / 24)
+                
+                # Get Arrival Date (Format YYYY-MM-DD)
+                arrival_ts_str = trip.get("arrived_rade", "N/A")
+                date_str_only = "N/A"
+                if arrival_ts_str != "N/A":
+                    try:
+                        dt = datetime.fromisoformat(arrival_ts_str)
+                        date_str_only = dt.strftime("%Y-%m-%d")
+                    except:
+                        date_str_only = arrival_ts_str
 
-        # Build Email Body (Correct Logic)
+                rows_details += f"""
+                <tr style="background:#ffffff;">
+                    <td style="padding:10px;">{agent}</td>
+                    <td style="padding:10px;">{trip.get('vessel', 'N/A')}</td>
+                    <td style="padding:10px; text-align:center;">{date_str_only}</td>
+                    <td style="padding:10px; text-align:center;">{days_rade}</td>
+                    <td style="padding:10px; text-align:center;">{days_quai}</td>
+                    <td style="padding:10px; text-align:center; font-weight:bold; color:#0a3d62;">{days_total}</td>
+                </tr>
+                """
+
+        # --- Build Email Body ---
         subject = f"📊 RAPPORT MENSUEL - Port de {port_name_str} ({len(sorted_agents)} agents)"
         body = f"""
         <div style='font-family:Arial, sans-serif; max-width:900px; margin:0 auto; padding:20px; background-color:#ffffff; border:1px solid #ddd; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.08);'>
