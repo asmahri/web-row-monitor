@@ -336,7 +336,7 @@ def generate_monthly_report(state: Dict):
                     <td style="padding:10px;">{date_str_only}</td>
                     <td style="padding:10px; text-align:center;">{days_rade}</td>
                     <td style="padding:10px; text-align:center;">{days_quai}</td>
-                    <td style="padding:10px; text-align:center; font-weight:bold; color:#0a3d62;">{days_total}</td>
+                    <td style="padding:10px; text-align:center; font-weight:bold; color:#333333;">{days_total}</td>
                 </tr>
                 """
 
