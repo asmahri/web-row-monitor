@@ -5,7 +5,7 @@ on:
   # Cela corrige le bug "invalid cron attribute" une fois pour toutes
   schedule:
     - cron: '*/30 * * * *'       # Run every 30 mins (Mode Monitor)
-    - cron: '0 8 1 * *'       # Run 1st of month at 08:00 (Mode Report)
+    - cron: '0 8 1 * *'        # Run 1st of month at 08:00 (Mode Report)
   workflow_dispatch:
 
 jobs:
@@ -43,24 +43,21 @@ jobs:
         run: python monitor.py
 
       - name: 💾 Commit and Push State
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action Bot"
           git add state.json
           
-          # Git Diff Check (Standard)
-          # --exit-code est nécessaire pour git diff dans certaines versions bash
-          git diff --exit-code --staged --quiet || echo "No changes to commit."
-          
-          if [ $? -eq 1 ]; then
+          # Check if there are changes in the staging area
+          if git diff --staged --quiet; then
+            echo "ℹ️ No state changes. Skipping commit."
+          else
             git commit -m "Update state.json [skip ci]"
             git push
             echo "✅ Changes committed and pushed."
-          else
-            echo "ℹ️ No state changes. Skipping commit."
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: 👁 Debug state.json
         run: cat state.json | head -30
