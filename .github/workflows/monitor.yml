@@ -4,7 +4,7 @@ on:
   # NOUVELLE SYNTAXE LISTE
   # Cela corrige le bug "invalid cron attribute" une fois pour toutes
   schedule:
-    - cron: '*/30 * * *'       # Run every 30 mins (Mode Monitor)
+    - cron: '*/30 * * * *'       # Run every 30 mins (Mode Monitor)
     - cron: '0 8 1 * *'       # Run 1st of month at 08:00 (Mode Report)
   workflow_dispatch:
 
