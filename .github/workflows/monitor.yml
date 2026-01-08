@@ -9,12 +9,16 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     
+    # CRITICAL: Grant write permissions to update secrets
+    permissions:
+      contents: write
+    
     steps:
       # 1. Checkout
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Python
+      # 2. Python Setup
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
@@ -23,13 +27,7 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # 3. Initialize output file (required for persistent state)
-      - name: 📝 Initialize Output File with Current State
-        run: |
-          echo '${{ secrets.VESSEL_STATE_DATA }}' > state_output.txt
-          echo "DEBUG: Initial state successfully written to state_output.txt."
-
-      # 4. Run Python Script
+      # 3. Run Python Script
       - name: Execute Monitor Script
         id: run_script
         env:
@@ -37,32 +35,40 @@ jobs:
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
 
           # Email credentials
-          EMAIL_USER:        ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS:        ${{ secrets.EMAIL_PASS }}
-          EMAIL_TO:          ${{ secrets.EMAIL_TO }}
+          EMAIL_USER:           ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS:           ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO:             ${{ secrets.EMAIL_TO }}
+          # ADDED: Colleague Email (for Laâyoune)
+          EMAIL_TO_COLLEAGUE:   ${{ secrets.EMAIL_TO_COLLEAGUE }}
 
-          # Disable emails temporarily
+          # Enable emails
           EMAIL_ENABLED: "true"
 
           # WhatsApp (CallMeBot)
-          CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}
-          CALLMEBOT_APIKEY:  ${{ secrets.CALLMEBOT_APIKEY }}
-          CALLMEBOT_ENABLED: "false"
+          CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
+          CALLMEBOT_ENABLED:    "false"
 
         run: python monitor.py
 
-      # 5. Show the state file (just view)
+      # 4. Show the state file (only if it exists)
       - name: 👀 Show state_output.txt
+        if: hashFiles('state_output.txt') != ''
         run: |
           echo "=== state_output.txt ==="
           cat state_output.txt
 
-      # 6. Update Secret directly from file
+      # 5. Update Secret directly from file
       - name: 💾 Update GitHub Secret with New State
+        if: success() 
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_REPO:  ${{ github.repository }}
         run: |
-          NEW_STATE_VALUE="$(cat state_output.txt)"
-          echo "Updating secret with new state..."
-          gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
+          if [ -f "state_output.txt" ]; then
+            NEW_STATE_VALUE="$(cat state_output.txt)"
+            echo "Updating secret with new state..."
+            gh secret set VESSEL_STATE_DATA --body "$NEW_STATE_VALUE"
+          else
+            echo "Error: state_output.txt was not created by the script."
+            exit 1
+          fi
