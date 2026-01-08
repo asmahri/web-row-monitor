@@ -23,6 +23,15 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
+      # NEW STEP: Logic handled here, not in YAML variables
+      - name: 🔧 Set Run Mode
+        run: |
+          if [ "${{ github.event_name }}" == "schedule" ] && [ "${{ github.event.schedule }}" == "0 8 1 * *" ]; then
+            echo "RUN_MODE=report" >> $GITHUB_ENV
+          else
+            echo "RUN_MODE=monitor" >> $GITHUB_ENV
+          fi
+
       - name: 🚀 Run Monitor / Report Script
         env:
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
@@ -34,8 +43,8 @@ jobs:
           CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED:    "false"
-          # LOGIC: If it's a schedule named '0 8 1 * *', it's a report. Else, it's a monitor.
-          RUN_MODE: ${{ github.event_name == 'schedule' && github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
+          # Line 41 is now simple and safe
+          RUN_MODE: ${{ env.RUN_MODE }}
         run: python monitor.py
 
       - name: 🔍 DEBUG: Check state.json content
