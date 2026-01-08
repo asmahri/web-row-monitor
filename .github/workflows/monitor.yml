@@ -1,11 +1,11 @@
 name: Vessel Monitor (Git Persistence)
 
 on:
-  # Nous utilisons une LISTE de schedules
-  # Cela évite le bug "invalid cron attribute" tout en gérant les deux modes.
+  # NOUVELLE SYNTAXE LISTE
+  # Cela corrige le bug "invalid cron attribute" une fois pour toutes
   schedule:
-    - cron: '*/30 * * *'      # Tous les 30 min (Mode Monitor)
-    - cron: '0 8 1 * *'       # Le 1er du mois à 08h00 (Mode Report)
+    - cron: '*/30 * * *'       # Run every 30 mins (Mode Monitor)
+    - cron: '0 8 1 * *'       # Run 1st of month at 08:00 (Mode Report)
   workflow_dispatch:
 
 jobs:
@@ -25,9 +25,8 @@ jobs:
       - name: 📦 Install Dependencies
         run: pip install requests
 
-      - name: 🚀 Run Monitor / Report Script
+      - name: 🚀 Run Monitor Script
         env:
-          # Secrets
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
@@ -38,25 +37,22 @@ jobs:
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED: "false"
           
-          # AUTOMATIC RUN MODE (Safe Logic)
-          # On compare l'événement schedule avec les motifs des déclencheurs.
-          # Si correspond au motif du 1er du mois ('0 8 1 * *'), alors MODE="report".
-          # Sinon MODE="monitor".
+          # Python lit cette variable
           RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
           
-        run: if [ "${{ github.event.schedule }}" == "0 8 1 * *" ]; then export MODE="report"; else export MODE="monitor"; fi; python monitor.py
+        run: python monitor.py
 
-      - name: 💾 Commit and Push State (Robust)
+      - name: 💾 Commit and Push State
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action Bot"
           git add state.json
           
-          # Vérification propre avec codes de retour
-          git diff --staged --quiet || echo "No changes to commit."
+          # Git Diff Check (Standard)
+          # --exit-code est nécessaire pour git diff dans certaines versions bash
+          git diff --exit-code --staged --quiet || echo "No changes to commit."
           
-          # "!" signifie NOT (si git diff retourne 0, alors il y a des changements).
-          if ! git diff --staged --quiet; then
+          if [ $? -eq 1 ]; then
             git commit -m "Update state.json [skip ci]"
             git push
             echo "✅ Changes committed and pushed."
@@ -65,3 +61,6 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: 👁 Debug state.json
+        run: cat state.json | head -30
