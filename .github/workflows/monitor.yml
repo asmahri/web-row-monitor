@@ -1,12 +1,11 @@
 name: Vessel Monitor (Git Persistence)
 
 on:
-  # NOUVELLE SYNTAXE LISTE
-  # Cela corrige le bug "invalid cron attribute" une fois pour toutes
   schedule:
+    # Corrected Cron: Added the 5th field (Minute Hour Day Month DayOfWeek)
     - cron: '*/30 * * * *'       # Run every 30 mins (Mode Monitor)
-    - cron: '0 8 1 * *'        # Run 1st of month at 08:00 (Mode Report)
-  workflow_dispatch:
+    - cron: '0 8 1 * *'          # Run 1st of month at 08:00 (Mode Report)
+  workflow_dispatch:             # Allows manual testing from the Actions tab
 
 jobs:
   monitor:
@@ -16,30 +15,43 @@ jobs:
     steps:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0         # Fetch full history for better Git management
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: 📦 Install Dependencies
-        run: pip install requests
+      - name: 🔍 Check Environment & State
+        run: |
+          echo "--- Runner Info ---"
+          echo "Date: $(date)"
+          echo "Workspace: $GITHUB_WORKSPACE"
+          echo "--- File Check ---"
+          if [ -f "state.json" ]; then 
+            echo "✅ state.json exists. Size: $(du -h state.json | cut -f1)"
+          else 
+            echo "⚠️ state.json not found. A new one will be created."
+          fi
 
-      - name: 🚀 Run Monitor Script
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: 🚀 Run Monitor / Report Script
         env:
+          # Secrets
           VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           EMAIL_TO_COLLEAGUE: ${{ secrets.EMAIL_TO_COLLEAGUE }}
           EMAIL_ENABLED: "true"
-          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
-          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
-          CALLMEBOT_ENABLED: "false"
           
-          # Python lit cette variable
+          # Logic: If triggered by the monthly schedule, set mode to 'report'
           RUN_MODE: ${{ github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
-          
         run: python monitor.py
 
       - name: 💾 Commit and Push State
@@ -50,14 +62,24 @@ jobs:
           git config --global user.name "GitHub Action Bot"
           git add state.json
           
-          # Check if there are changes in the staging area
+          # Check for changes in the staging area
           if git diff --staged --quiet; then
-            echo "ℹ️ No state changes. Skipping commit."
+            echo "ℹ️ No changes to state.json. Nothing to commit."
           else
+            echo "📊 Changes detected in state.json:"
+            git diff --staged --shortstat
             git commit -m "Update state.json [skip ci]"
             git push
-            echo "✅ Changes committed and pushed."
+            echo "✅ State successfully updated in repository."
           fi
 
-      - name: 👁 Debug state.json
-        run: cat state.json | head -30
+      - name: 👁️ Final Debug View
+        if: always() # Runs even if the script or git steps fail
+        run: |
+          echo "--- End of Job Summary ---"
+          if [ -f "state.json" ]; then
+            echo "Last 5 lines of state.json:"
+            tail -n 5 state.json
+          else
+            echo "❌ state.json was not generated."
+          fi
