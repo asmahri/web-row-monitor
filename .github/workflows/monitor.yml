@@ -24,24 +24,25 @@ jobs:
         run: pip install requests
 
       - name: 🚀 Run Monitor / Report Script
+        env:
+          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_TO_COLLEAGUE: ${{ secrets.EMAIL_TO_COLLEAGUE }}
+          EMAIL_ENABLED: "true"
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          CALLMEBOT_ENABLED: "false"
         run: |
-          # Logic to determine Mode directly in Bash
+          # Logic to set Mode
           if [ "${{ github.event.schedule }}" == "0 8 1 * *" ]; then
             export RUN_MODE="report"
           else
             export RUN_MODE="monitor"
           fi
+          echo "RUN_MODE is set to: $RUN_MODE"
           python monitor.py
-        env:
-          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
-          EMAIL_USER:           ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS:           ${{ secrets.EMAIL_PASS }}
-          EMAIL_TO:             ${{ secrets.EMAIL_TO }}
-          EMAIL_TO_COLLEAGUE:   ${{ secrets.EMAIL_TO_COLLEAGUE }}
-          EMAIL_ENABLED: "true"
-          CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
-          CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
-          CALLMEBOT_ENABLED:    "false"
 
       - name: 🔍 DEBUG: Check state.json content
         run: |
