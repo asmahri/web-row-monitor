@@ -25,7 +25,7 @@ jobs:
 
       - name: 🚀 Run Monitor / Report Script
         env:
-          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }} # Used only as fallback
+          VESSEL_STATE_DATA: ${{ secrets.VESSEL_STATE_DATA }}
           EMAIL_USER:           ${{ secrets.EMAIL_USER }}
           EMAIL_PASS:           ${{ secrets.EMAIL_PASS }}
           EMAIL_TO:             ${{ secrets.EMAIL_TO }}
@@ -34,8 +34,8 @@ jobs:
           CALLMEBOT_PHONE:      ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY:     ${{ secrets.CALLMEBOT_APIKEY }}
           CALLMEBOT_ENABLED:    "false"
-          # SAFER LOGIC: Check if the schedule contains "0 8 1"
-          RUN_MODE: ${{ contains(github.event.schedule, '0 8 1 * *') && 'report' || 'monitor' }}
+          # LOGIC: If it's a schedule named '0 8 1 * *', it's a report. Else, it's a monitor.
+          RUN_MODE: ${{ github.event_name == 'schedule' && github.event.schedule == '0 8 1 * *' && 'report' || 'monitor' }}
         run: python monitor.py
 
       - name: 🔍 DEBUG: Check state.json content
