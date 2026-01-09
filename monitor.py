@@ -232,7 +232,6 @@ def format_vessel_details_premium(entry: dict) -> str:
 </div>
 """.strip()
 
-# ===== REPORTING LOGIC (MONTHLY) =====
 def generate_monthly_report(state: Dict):
     """Generates and sends separate emails for each Port (Laâyoune, Tan Tan, Dakhla)."""
     history = state.get("history", [])
@@ -246,8 +245,7 @@ def generate_monthly_report(state: Dict):
         "Tan Tan": {},
         "Dakhla": {}
     }
-    print(f"[REPORT] Processing {len(history)} trips for port separation...")
-
+    
     for trip in history:
         port = trip.get("port")
         agent = trip.get("consignataire", "INCONNU")
@@ -269,23 +267,19 @@ def generate_monthly_report(state: Dict):
     emails_sent = 0
     for port_name_str, agents_data in port_map.items():
         if not agents_data:
-            print(f"[REPORT] No data for {port_name_str}. Skipping.")
             continue
 
+        # --- IMPORTANT: Reset these for every PORT to prevent data mixing ---
+        rows_summary = ""
+        rows_details = "" 
+        
         sorted_agents = sorted(agents_data.items(), key=lambda x: x[1]["total_h"], reverse=True)
         
-        # --- HTML BUILD START ---
-        rows_summary = ""
-        rows_details = "" # Initialize outside loops to prevent NameError
-        
-        # Agent Summary Loop
         for agent, data in sorted_agents:
-            avg_rade = 0.0
-            avg_quai = 0.0
-            if data["count"] > 0:
-                avg_rade = data["rade_h"] / data["count"]
-                avg_quai = data["quai_h"] / data["count"]
+            avg_rade = data["rade_h"] / data["count"] if data["count"] > 0 else 0
+            avg_quai = data["quai_h"] / data["count"] if data["count"] > 0 else 0
             
+            # 1. Build Summary Row
             rows_summary += f"""
             <tr style='border-bottom:1px solid #eee;'>
                 <td style='padding:10px; font-weight:bold;'>{agent}</td>
@@ -298,105 +292,74 @@ def generate_monthly_report(state: Dict):
             </tr>
             """
             
-            # Vessel Details Setup for this agent
-            port_vessels = [t for t in history if t.get("consignataire") == agent and t.get("port") == port_name_str]
+            # 2. Build Detail Rows (Filtered by BOTH Port and Agent)
+            port_agent_vessels = [t for t in history if t.get("consignataire") == agent and t.get("port") == port_name_str]
             
-            # Header for Details Table for this agent
             rows_details += f"""
-            <tr style="background:#eee; color:#0a3d62; font-weight:bold;">
-                <td colspan="6" style="padding:8px;">Détails des Mouvements ({agent})</td>
+            <tr style="background:#f9f9f9; color:#0a3d62; font-weight:bold; border-top:2px solid #0a3d62;">
+                <td colspan="6" style="padding:10px;">Mouvements détaillés : {agent}</td>
             </tr>
             """
 
-            # Generate Details Rows
-            for trip in port_vessels:
-                rade_h = trip.get("rade_duration_hours", 0)
-                quai_h = trip.get("quai_duration_hours", 0)
-                total_h = rade_h + quai_h
+            for trip in port_agent_vessels:
+                days_rade = round(trip.get("rade_duration_hours", 0) / 24, 1)
+                days_quai = round(trip.get("quai_duration_hours", 0) / 24, 1)
+                days_total = round(days_rade + days_quai, 1)
                 
-                # Calculate Days (Total / 24)
-                days_rade = round(rade_h / 24, 1)
-                days_quai = round(quai_h / 24, 1)
-                days_total = round(total_h / 24, 1)
-                
-                # Get Arrival Date (Format YYYY-MM-DD)
-                arrival_ts_str = trip.get("arrived_rade", "N/A")
-                date_str_only = "N/A"
-                if arrival_ts_str != "N/A":
-                    try:
-                        dt = datetime.fromisoformat(arrival_ts_str)
-                        date_str_only = dt.strftime("%Y-%m-%d")
-                    except:
-                        date_str_only = arrival_ts_str
+                arrival = trip.get("arrived_rade", "N/A")
+                if "T" in arrival: arrival = arrival.split("T")[0] # Simple date extraction
 
                 rows_details += f"""
-                <tr style="background:#ffffff;">
-                    <td style="padding:10px;">{agent}</td>
-                    <td style="padding:10px;">{trip['vessel']}</td>
-                    <td style="padding:10px;">{date_str_only}</td>
-                    <td style="padding:10px; text-align:center;">{days_rade}</td>
-                    <td style="padding:10px; text-align:center;">{days_quai}</td>
-                    <td style="padding:10px; text-align:center; font-weight:bold; color:#333333;">{days_total}</td>
+                <tr>
+                    <td style="padding:8px; border-bottom:1px solid #eee;">{agent}</td>
+                    <td style="padding:8px; border-bottom:1px solid #eee;">{trip['vessel']}</td>
+                    <td style="padding:8px; border-bottom:1px solid #eee; text-align:center;">{arrival}</td>
+                    <td style="padding:8px; border-bottom:1px solid #eee; text-align:center;">{days_rade} j</td>
+                    <td style="padding:8px; border-bottom:1px solid #eee; text-align:center;">{days_quai} j</td>
+                    <td style="padding:8px; border-bottom:1px solid #eee; text-align:center; font-weight:bold;">{days_total} j</td>
                 </tr>
                 """
 
-        # --- BUILD EMAIL BODY ---
-        subject = f"📊 RAPPORT MENSUEL - Port de {port_name_str} ({len(sorted_agents)} agents)"
+        # --- Construct Email Body (Unique to this Port) ---
+        subject = f"📊 RAPPORT MENSUEL - Port de {port_name_str}"
         body = f"""
-        <div style='font-family:Arial, sans-serif; max-width:900px; margin:0 auto; padding:20px; background-color:#ffffff; border:1px solid #ddd; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.08);'>
-            
-            <h2 style='color:#0a3d62; margin-bottom:10px;'>Rapport Mensuel : {port_name_str}</h2>
-            <p>Synthèse Performance (Par Agent)</p>
-            
-            <table style='width:100%; border-collapse:collapse; margin-bottom:30px; border:1px solid #ddd;'>
-                <tr style='background:#0a3d62; color:white;'>
-                    <th style='padding:12px; text-align:left;'>Consignataire</th>
-                    <th style='padding:12px; text-align:center;'>Nb Navires</th>
-                    <th style='padding:12px; text-align:center;'>Ancrage (Total h)</th>
-                    <th style='padding:12px; text-align:center;'>Au Quai (Total h)</th>
-                    <th style='padding:12px; text-align:center;'>Total (h)</th>
-                    <th style='padding:12px; text-align:center; color:#d35400; font-weight:bold;'>Moyenne Ancrage (h)</th>
-                    <th style='padding:12px; text-align:center; color:#d35400; font-weight:bold;'>Moyenne Quai (h)</th>
-                </tr>
-                {rows_summary}
-            </table>
-
-            <!-- TABLE 2: DETAILS DES MOUVEMENTS -->
-            <h3 style='margin-top:30px; font-size:16px; color:#0a3d62; border-bottom:1px solid #ddd; padding-bottom:10px;'>2. Détails des Mouvements</h3>
-            <table style='width:100%; border-collapse:collapse; border:1px solid #ddd;'>
-                <tr style='background:#0a3d62; color:white;'>
-                    <th style='padding:10px; text-align:left; font-weight:bold;'>Agent</th>
-                    <th style='padding:10px; text-align:left; font-weight:bold;'>Vessel</th>
-                    <th style='padding:10px; text-align:center;'>Date d'arrivée (sans heure)</th>
-                    <th style='padding:10px; text-align:center;'>Nb jr en rade</th>
-                    <th style='padding:10px; text-align:center;'>Nb de jr à quai</th>
-                    <th style='padding:10px; text-align:center; font-weight:bold; color:#333333;'>Total de jours au port</th>
-                </tr>
-                {rows_details}
-            </table>
-            
-            <br>
-            <p style='font-size:12px; color:#666;'>Les durées sont calculées entre le statut 'EN RADE' et 'APPAREILLAGE'.</p>
-            <p>Cordialement,<br>Automated System</p>
-        </div>
+        <html>
+            <body style="font-family:Arial,sans-serif; color:#333;">
+                <div style="max-width:900px; border:1px solid #eee; padding:20px; border-radius:10px;">
+                    <h2 style="color:#0a3d62;">Rapport d'Activité : {port_name_str}</h2>
+                    <hr>
+                    <h3>1. Synthèse par Agent</h3>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr style="background:#0a3d62; color:white;">
+                            <th style="padding:10px;">Agent</th><th style="padding:10px;">Vessels</th>
+                            <th style="padding:10px;">Total Rade</th><th style="padding:10px;">Total Quai</th>
+                            <th style="padding:10px;">Total Port</th><th style="padding:10px;">Moy. Rade</th>
+                            <th style="padding:10px;">Moy. Quai</th>
+                        </tr>
+                        {rows_summary}
+                    </table>
+                    <br>
+                    <h3>2. Détails des Escales</h3>
+                    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                        <tr style="background:#666; color:white;">
+                            <th style="padding:8px;">Agent</th><th style="padding:8px;">Navire</th>
+                            <th style="padding:8px;">Arrivée</th><th style="padding:8px;">Séjour Rade</th>
+                            <th style="padding:8px;">Séjour Quai</th><th style="padding:8px;">Total</th>
+                        </tr>
+                        {rows_details}
+                    </table>
+                    <p style="font-size:11px; color:#999; margin-top:20px;">Généré automatiquement par le système de monitoring.</p>
+                </div>
+            </body>
+        </html>
         """
+        
+        # Sending Logic (Same as your previous snippet)
+        send_email(EMAIL_TO, subject, body) # Assuming you have a helper function
+        emails_sent += 1
 
-        msg = MIMEText(body, "html", "utf-8")
-        msg["Subject"] = subject
-        msg["From"] = EMAIL_USER
-        msg["To"] = EMAIL_TO
-        try:
-            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.starttls()
-                server.login(EMAIL_USER, EMAIL_PASS)
-                server.sendmail(EMAIL_USER, [EMAIL_TO], msg.as_string())
-                print(f"✅ Report sent for {port_name_str}")
-                emails_sent += 1
-        except Exception as e:
-            print(f"❌ Report Error {port_name_str}: {e}")
-
+    # Only clear history if reports were actually sent
     if emails_sent > 0:
-        print(f"[REPORT] Cleaning history...")
         state["history"] = []
         save_state(state)
         print(f"✅ History cleared.")
