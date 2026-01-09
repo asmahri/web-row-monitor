@@ -232,19 +232,33 @@ def format_vessel_details_premium(entry: dict) -> str:
 </div>
 """.strip()
 
+# ===== EMAIL HELPER =====
+def send_email(to_email: str, subject: str, body_html: str):
+    """Utility to send HTML emails."""
+    if not EMAIL_ENABLED: return
+    msg = MIMEText(body_html, "html", "utf-8")
+    msg["Subject"] = subject
+    msg["From"] = EMAIL_USER
+    msg["To"] = to_email
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_USER, EMAIL_PASS)
+            server.sendmail(EMAIL_USER, [to_email], msg.as_string())
+            print(f"✅ Email sent: {subject}")
+    except Exception as e:
+        print(f"❌ Email Error: {e}")
+
+# ===== REPORTING LOGIC (MONTHLY) =====
 def generate_monthly_report(state: Dict):
     """Generates and sends separate emails for each Port (Laâyoune, Tan Tan, Dakhla)."""
     history = state.get("history", [])
     if not history:
-        print("[REPORT] No history found.")
+        print("[REPORT] No history found to generate reports.")
         return
 
     # 1. ORGANISE DATA BY PORT AND AGENT
-    port_map = {
-        "Laâyoune": {},
-        "Tan Tan": {},
-        "Dakhla": {}
-    }
+    port_map = {"Laâyoune": {}, "Tan Tan": {}, "Dakhla": {}}
     
     for trip in history:
         port = trip.get("port")
@@ -252,12 +266,7 @@ def generate_monthly_report(state: Dict):
         if port not in port_map: continue
 
         if agent not in port_map[port]:
-            port_map[port][agent] = {
-                "count": 0, 
-                "rade_h": 0.0, 
-                "quai_h": 0.0, 
-                "total_h": 0.0
-            }
+            port_map[port][agent] = {"count": 0, "rade_h": 0.0, "quai_h": 0.0, "total_h": 0.0}
         
         port_map[port][agent]["count"] += 1
         port_map[port][agent]["rade_h"] += trip.get("rade_duration_hours", 0)
@@ -269,7 +278,7 @@ def generate_monthly_report(state: Dict):
         if not agents_data:
             continue
 
-        # --- IMPORTANT: Reset these for every PORT to prevent data mixing ---
+        # CRITICAL: Reset these inside the port loop to prevent data mixing
         rows_summary = ""
         rows_details = "" 
         
@@ -279,7 +288,7 @@ def generate_monthly_report(state: Dict):
             avg_rade = data["rade_h"] / data["count"] if data["count"] > 0 else 0
             avg_quai = data["quai_h"] / data["count"] if data["count"] > 0 else 0
             
-            # 1. Build Summary Row
+            # Summary Table Row
             rows_summary += f"""
             <tr style='border-bottom:1px solid #eee;'>
                 <td style='padding:10px; font-weight:bold;'>{agent}</td>
@@ -289,25 +298,21 @@ def generate_monthly_report(state: Dict):
                 <td style='padding:10px; text-align:center; color:#0a3d62; font-weight:bold;'>{format_duration_hours(data['total_h'] * 3600)}</td>
                 <td style='padding:10px; text-align:center; color:#d35400; font-weight:bold;'>{format_duration_hours(avg_rade * 3600)}</td>
                 <td style='padding:10px; text-align:center; color:#d35400; font-weight:bold;'>{format_duration_hours(avg_quai * 3600)}</td>
-            </tr>
-            """
+            </tr>"""
             
-            # 2. Build Detail Rows (Filtered by BOTH Port and Agent)
+            # Detail Rows (Double filtered by Agent AND Port)
             port_agent_vessels = [t for t in history if t.get("consignataire") == agent and t.get("port") == port_name_str]
             
             rows_details += f"""
-            <tr style="background:#f9f9f9; color:#0a3d62; font-weight:bold; border-top:2px solid #0a3d62;">
-                <td colspan="6" style="padding:10px;">Mouvements détaillés : {agent}</td>
-            </tr>
-            """
+            <tr style="background:#f2f5f8; color:#0a3d62; font-weight:bold; border-top:2px solid #0a3d62;">
+                <td colspan="6" style="padding:10px;">Mouvements : {agent}</td>
+            </tr>"""
 
             for trip in port_agent_vessels:
                 days_rade = round(trip.get("rade_duration_hours", 0) / 24, 1)
                 days_quai = round(trip.get("quai_duration_hours", 0) / 24, 1)
                 days_total = round(days_rade + days_quai, 1)
-                
-                arrival = trip.get("arrived_rade", "N/A")
-                if "T" in arrival: arrival = arrival.split("T")[0] # Simple date extraction
+                arrival = trip.get("arrived_rade", "N/A").split("T")[0]
 
                 rows_details += f"""
                 <tr>
@@ -317,52 +322,51 @@ def generate_monthly_report(state: Dict):
                     <td style="padding:8px; border-bottom:1px solid #eee; text-align:center;">{days_rade} j</td>
                     <td style="padding:8px; border-bottom:1px solid #eee; text-align:center;">{days_quai} j</td>
                     <td style="padding:8px; border-bottom:1px solid #eee; text-align:center; font-weight:bold;">{days_total} j</td>
-                </tr>
-                """
+                </tr>"""
 
-        # --- Construct Email Body (Unique to this Port) ---
+        # Build Final HTML
         subject = f"📊 RAPPORT MENSUEL - Port de {port_name_str}"
         body = f"""
         <html>
-            <body style="font-family:Arial,sans-serif; color:#333;">
-                <div style="max-width:900px; border:1px solid #eee; padding:20px; border-radius:10px;">
-                    <h2 style="color:#0a3d62;">Rapport d'Activité : {port_name_str}</h2>
-                    <hr>
-                    <h3>1. Synthèse par Agent</h3>
-                    <table style="width:100%; border-collapse:collapse;">
+            <body style="font-family:Arial,sans-serif; background-color:#f4f4f4; padding:20px;">
+                <div style="max-width:950px; margin:auto; background:white; padding:20px; border-radius:10px; border:1px solid #ddd;">
+                    <h2 style="color:#0a3d62; border-bottom:2px solid #0a3d62; padding-bottom:10px;">Rapport Mensuel : Port de {port_name_str}</h2>
+                    <h3>1. Synthèse Performance par Agent</h3>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
                         <tr style="background:#0a3d62; color:white;">
-                            <th style="padding:10px;">Agent</th><th style="padding:10px;">Vessels</th>
-                            <th style="padding:10px;">Total Rade</th><th style="padding:10px;">Total Quai</th>
-                            <th style="padding:10px;">Total Port</th><th style="padding:10px;">Moy. Rade</th>
+                            <th style="padding:10px; text-align:left;">Agent</th>
+                            <th style="padding:10px;">Navires</th>
+                            <th style="padding:10px;">Total Rade</th>
+                            <th style="padding:10px;">Total Quai</th>
+                            <th style="padding:10px;">Total</th>
+                            <th style="padding:10px;">Moy. Rade</th>
                             <th style="padding:10px;">Moy. Quai</th>
                         </tr>
                         {rows_summary}
                     </table>
-                    <br>
                     <h3>2. Détails des Escales</h3>
-                    <table style="width:100%; border-collapse:collapse; font-size:13px;">
-                        <tr style="background:#666; color:white;">
-                            <th style="padding:8px;">Agent</th><th style="padding:8px;">Navire</th>
-                            <th style="padding:8px;">Arrivée</th><th style="padding:8px;">Séjour Rade</th>
-                            <th style="padding:8px;">Séjour Quai</th><th style="padding:8px;">Total</th>
+                    <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                        <tr style="background:#444; color:white;">
+                            <th style="padding:8px; text-align:left;">Agent</th>
+                            <th style="padding:8px; text-align:left;">Navire</th>
+                            <th style="padding:8px;">Date</th>
+                            <th style="padding:8px;">Jrs Rade</th>
+                            <th style="padding:8px;">Jrs Quai</th>
+                            <th style="padding:8px;">Total</th>
                         </tr>
                         {rows_details}
                     </table>
-                    <p style="font-size:11px; color:#999; margin-top:20px;">Généré automatiquement par le système de monitoring.</p>
                 </div>
             </body>
-        </html>
-        """
+        </html>"""
         
-        # Sending Logic (Same as your previous snippet)
-        send_email(EMAIL_TO, subject, body) # Assuming you have a helper function
+        send_email(EMAIL_TO, subject, body)
         emails_sent += 1
 
-    # Only clear history if reports were actually sent
     if emails_sent > 0:
         state["history"] = []
         save_state(state)
-        print(f"✅ History cleared.")
+        print("✅ Reports sent and history cleared.")
 
 # ===== MONITORING LOGIC =====
 def fetch_and_process_data(state: Dict):
