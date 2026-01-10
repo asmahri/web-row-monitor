@@ -118,26 +118,6 @@
       "status": "EN RADE",
       "rade_at": "2026-01-01T00:40:00"
     },
-    "7808334": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "005970",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "MADES DE PECHE",
-        "dATE_SITUATIONField": "/Date(1767222000000+0100)/",
-        "date_SystemeField": "/Date(1767885352593+0100)/",
-        "hEURE_SITUATIONField": "/Date(57600000+0100)/",
-        "nOM_NAVIREField": "BELOMORYE",
-        "nUMERO_ESCALEField": 201466600,
-        "nUMERO_LLOYDField": "7808334",
-        "oPERATEURField": "DIVERS",
-        "pROVField": "AGADIR",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "FRIGORIFIQUE"
-      },
-      "status": "EN RADE",
-      "rade_at": "2025-12-31T16:00:00"
-    },
     "8607359": {
       "entry": {
         "cODE_CONSIGNATAIREField": "005970",
@@ -340,5 +320,16 @@
       "status": "PREVU"
     }
   },
-  "history": []
+  "history": [
+    {
+      "vessel": "BELOMORYE",
+      "consignataire": "MADES DE PECHE",
+      "port": "Dakhla",
+      "arrived_rade": "2025-12-31T16:00:00",
+      "arrived_quai": "N/A",
+      "departed": "2026-01-09T13:25:00",
+      "rade_duration_hours": 213.41666666666666,
+      "quai_duration_hours": 0.0
+    }
+  ]
 }
