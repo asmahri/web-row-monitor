@@ -235,8 +235,10 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "PETROLIER"
       },
-      "status": "EN RADE",
-      "rade_at": "2025-12-29T09:30:00"
+      "status": "A QUAI",
+      "rade_at": "2025-12-29T09:30:00",
+      "quai_at": "2026-01-09T09:10:00",
+      "rade_duration_hours": 263.6666666666667
     },
     "9139127": {
       "entry": {
