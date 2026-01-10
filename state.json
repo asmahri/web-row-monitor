@@ -178,26 +178,6 @@
       "status": "EN RADE",
       "rade_at": "2025-12-31T11:00:00"
     },
-    "8607323": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "005970",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "MADES DE PECHE",
-        "dATE_SITUATIONField": "/Date(1767222000000+0100)/",
-        "date_SystemeField": "/Date(1767885352593+0100)/",
-        "hEURE_SITUATIONField": "/Date(39600000+0100)/",
-        "nOM_NAVIREField": "VASILIY LOZOVSKIY",
-        "nUMERO_ESCALEField": 201466599,
-        "nUMERO_LLOYDField": "8607323",
-        "oPERATEURField": "DIVERS",
-        "pROVField": "DAKHLA",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "CHALUTIER"
-      },
-      "status": "EN RADE",
-      "rade_at": "2025-12-31T11:00:00"
-    },
     "9933913": {
       "entry": {
         "cODE_CONSIGNATAIREField": "000303",
@@ -329,6 +309,16 @@
       "arrived_quai": "N/A",
       "departed": "2026-01-09T13:25:00",
       "rade_duration_hours": 213.41666666666666,
+      "quai_duration_hours": 0.0
+    },
+    {
+      "vessel": "VASILIY LOZOVSKIY",
+      "consignataire": "MADES DE PECHE",
+      "port": "Dakhla",
+      "arrived_rade": "2025-12-31T11:00:00",
+      "arrived_quai": "N/A",
+      "departed": "2026-01-09T14:15:00",
+      "rade_duration_hours": 219.25,
       "quai_duration_hours": 0.0
     }
   ]
