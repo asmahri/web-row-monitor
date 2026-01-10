@@ -257,8 +257,10 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "CONVENTIONEL"
       },
-      "status": "EN RADE",
-      "rade_at": "2025-12-28T23:15:00"
+      "status": "A QUAI",
+      "rade_at": "2025-12-28T23:15:00",
+      "quai_at": "2026-01-09T10:25:00",
+      "rade_duration_hours": 275.1666666666667
     },
     "9501655": {
       "entry": {
@@ -279,6 +281,63 @@
       },
       "status": "EN RADE",
       "rade_at": "2025-12-28T14:55:00"
+    },
+    "0081062": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "4153",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "18",
+        "cONSIGNATAIREField": "KHALID FISHERIES SA",
+        "dATE_SITUATIONField": "/Date(1768258800000+0100)/",
+        "date_SystemeField": "/Date(1768040096067+0100)/",
+        "hEURE_SITUATIONField": "/Date(21660000+0100)/",
+        "nOM_NAVIREField": "ANZAR 1",
+        "nUMERO_ESCALEField": 201466820,
+        "nUMERO_LLOYDField": "0081062",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "AGADIR",
+        "sITUATIONField": "PREVU",
+        "tYP_NAVIREField": "CHALUTIER"
+      },
+      "status": "PREVU"
+    },
+    "9874562": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "4153",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "18",
+        "cONSIGNATAIREField": "KHALID FISHERIES SA",
+        "dATE_SITUATIONField": "/Date(1768258800000+0100)/",
+        "date_SystemeField": "/Date(1768040096067+0100)/",
+        "hEURE_SITUATIONField": "/Date(21660000+0100)/",
+        "nOM_NAVIREField": "KELTI",
+        "nUMERO_ESCALEField": 201466819,
+        "nUMERO_LLOYDField": "9874562",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "AGADIR",
+        "sITUATIONField": "PREVU",
+        "tYP_NAVIREField": "CHALUTIER"
+      },
+      "status": "PREVU"
+    },
+    "7610426": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "4153",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "18",
+        "cONSIGNATAIREField": "KHALID FISHERIES SA",
+        "dATE_SITUATIONField": "/Date(1768258800000+0100)/",
+        "date_SystemeField": "/Date(1768040096067+0100)/",
+        "hEURE_SITUATIONField": "/Date(21660000+0100)/",
+        "nOM_NAVIREField": "TILILA-1",
+        "nUMERO_ESCALEField": 201466818,
+        "nUMERO_LLOYDField": "7610426",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "AGADIR",
+        "sITUATIONField": "PREVU",
+        "tYP_NAVIREField": "CHALUTIER"
+      },
+      "status": "PREVU"
     }
   },
   "history": []
