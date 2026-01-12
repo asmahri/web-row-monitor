@@ -83,10 +83,20 @@ def get_full_datetime(entry: dict) -> Optional[datetime]:
     time_obj = parse_ms_date(entry.get("hEURE_SITUATIONField"))
     
     if not date_obj: return None
-    if not time_obj: return date_obj
+    
+    # --- FIX START ---
+    # Convert UTC timestamp to Morocco Time (UTC+1) to fix the "Midnight Wrap"
+    # Otherwise, 00:00 (Morocco) becomes 23:00 Prev Day (UTC)
+    morocco_tz = timezone(timedelta(hours=1))
+    local_date = date_obj.astimezone(morocco_tz).date()
+    # --- FIX END ---
 
+    if not time_obj: 
+        return datetime.combine(local_date, datetime.min.time())
+
+    # Combine the corrected Local Date with the Time
     time_only = timedelta(hours=time_obj.hour, minutes=time_obj.minute, seconds=time_obj.second)
-    return datetime.combine(date_obj.date(), datetime.min.time()) + time_only
+    return datetime.combine(local_date, datetime.min.time()) + time_only
 
 def fmt_dt(json_date: str) -> str:
     dt = parse_ms_date(json_date)
