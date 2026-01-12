@@ -281,6 +281,25 @@
         "tYP_NAVIREField": "CHALUTIER"
       },
       "status": "PREVU"
+    },
+    "9501655": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000303",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "COMANAV",
+        "dATE_SITUATIONField": "/Date(1768431600000+0100)/",
+        "date_SystemeField": "/Date(1768234553187+0100)/",
+        "hEURE_SITUATIONField": "/Date(43260000+0100)/",
+        "nOM_NAVIREField": "BBC BELEM",
+        "nUMERO_ESCALEField": 201466851,
+        "nUMERO_LLOYDField": "9501655",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "PUERTO DE GRANADILLA",
+        "sITUATIONField": "PREVU",
+        "tYP_NAVIREField": "VRAQUIER"
+      },
+      "status": "PREVU"
     }
   },
   "history": [
