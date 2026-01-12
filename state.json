@@ -17,7 +17,8 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "CONVENTIONEL"
       },
-      "status": "PREVU"
+      "status": "EN RADE",
+      "rade_at": "2026-01-11T14:20:00"
     },
     "9518880": {
       "entry": {
