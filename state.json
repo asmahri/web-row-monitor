@@ -37,7 +37,8 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "TANKER"
       },
-      "status": "PREVU"
+      "status": "EN RADE",
+      "rade_at": "2026-01-12T14:00:00"
     },
     "9409754": {
       "entry": {
