@@ -389,13 +389,8 @@ def generate_monthly_report(state: Dict):
 def fetch_and_process_data(state: Dict):
     print("[LOG] Fetching ANP data...")
     try:
-                # Added headers to mimic a browser and increased timeout to 60s
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
-        resp = requests.get(TARGET_URL, headers=headers, timeout=60)
+        resp = requests.get(TARGET_URL, timeout=20)
         resp.raise_for_status()
-
         all_data = resp.json()
         print(f"[LOG] Fetched {len(all_data)} entries.")
     except Exception as e:
@@ -406,48 +401,63 @@ def fetch_and_process_data(state: Dict):
     active_state = state.get("active", {})
     history = state.get("history", [])
     new_prevu_by_port = {}
+    
+    # Current time for timestamps
+    now_utc = datetime.now(timezone.utc)
+    now_iso = now_utc.isoformat()
 
     # 1. Build live vessels map
     for entry in all_data:
         port_code = str(entry.get("cODE_SOCIETEField", ""))
         status = entry.get("sITUATIONField", "").upper()
-        if port_code not in ALLOWED_PORTS: 
         
+        if port_code not in ALLOWED_PORTS: 
             continue
         
+        # Now uses the new UNIQUE ID (IMO + Escale)
         v_id = get_vessel_id(entry)
         full_dt = get_full_datetime(entry)
         live_vessels[v_id] = {"entry": entry, "status": status, "timestamp": full_dt}
 
     # 2. Process Active Tracking (Life Cycle)
     to_remove = []
+    
     for v_id, stored in active_state.items():
+        # Update 'last_seen' if the vessel is currently live
+        if v_id in live_vessels:
+            stored["last_seen"] = now_iso
+            
         live = live_vessels.get(v_id)
-        if not live: 
         
+        # If vessel is NOT in live data, we skip logic and let the "Ghost Cleanup" handle it later
+        if not live: 
             continue
         
         stored_status = stored.get("status")
         live_status = live["status"]
         live_ts = live["timestamp"]
         
-        # TRANSITIONS
+        # --- STATUS TRANSITIONS ---
+        
+        # A. PREVU -> EN RADE
         if stored_status == "PREVU" and live_status == "EN RADE":
             stored["status"] = "EN RADE"
             stored["rade_at"] = live_ts.isoformat()
             print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} arrived in rade")
             
+        # B. PREVU -> A QUAI (Direct Arrival)
         elif stored_status == "PREVU" and live_status == "A QUAI":
             stored["status"] = "A QUAI"
             stored["quai_at"] = live_ts.isoformat()
             stored["rade_duration_hours"] = 0.0
             print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} arrived directly at quai")
             
+        # C. PREVU -> APPAREILLAGE (Departed without arrival scan? rare)
         elif stored_status == "PREVU" and live_status == "APPAREILLAGE":
-            # Vessel departed without arriving
             to_remove.append(v_id)
-            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} departed without arriving")
+            print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} departed (was only PREVU)")
             
+        # D. EN RADE -> A QUAI
         elif stored_status == "EN RADE" and live_status == "A QUAI":
             stored["status"] = "A QUAI"
             stored["quai_at"] = live_ts.isoformat()
@@ -455,10 +465,10 @@ def fetch_and_process_data(state: Dict):
             if "rade_at" in stored and live_ts:
                 rade_duration = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
                 stored["rade_duration_hours"] = rade_duration
-                print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} moved to quai after {rade_duration:.1f}h in rade")
+                print(f"[LOG] Vessel {stored['entry'].get('nOM_NAVIREField')} moved to quai. Rade: {rade_duration:.1f}h")
         
+        # E. A QUAI -> APPAREILLAGE (Standard Departure)
         elif stored_status == "A QUAI" and live_status == "APPAREILLAGE":
-            # Calculate all durations and create history record
             quai_hours, rade_hours = 0.0, 0.0
             
             if "quai_at" in stored and live_ts:
@@ -467,13 +477,12 @@ def fetch_and_process_data(state: Dict):
             if "rade_at" in stored:
                 rade_hours = stored.get("rade_duration_hours", 0.0)
             
-            # Create history record
+            # Create History Record
             entry = stored.get("entry", {})
-            port_code = str(entry.get("cODE_SOCIETEField", ""))
             history_record = {
                 "vessel": entry.get("nOM_NAVIREField", "N/A"),
                 "consignataire": entry.get("cONSIGNATAIREField", "N/A"),
-                "port": port_name(port_code),
+                "port": port_name(str(entry.get("cODE_SOCIETEField", ""))),
                 "arrived_rade": stored.get("rade_at", "N/A"),
                 "arrived_quai": stored.get("quai_at", "N/A"),
                 "departed": live_ts.isoformat() if live_ts else "N/A",
@@ -482,13 +491,11 @@ def fetch_and_process_data(state: Dict):
             }
             
             history.append(history_record)
-            print(f"[LOG] Vessel {history_record['vessel']} departed. Rade: {rade_hours:.1f}h, Quai: {quai_hours:.1f}h, Total: {rade_hours+quai_hours:.1f}h")
-            
-            # Mark for removal
             to_remove.append(v_id)
+            print(f"[LOG] DEPARTURE: {history_record['vessel']} (Total: {rade_hours+quai_hours:.1f}h)")
             
+        # F. EN RADE -> APPAREILLAGE (Departed from Rade)
         elif stored_status == "EN RADE" and live_status == "APPAREILLAGE":
-            # Vessel departed from rade without going to quai
             rade_hours = 0.0
             if "rade_at" in stored and live_ts:
                 rade_hours = (live_ts - datetime.fromisoformat(stored["rade_at"])).total_seconds() / 3600
@@ -503,49 +510,75 @@ def fetch_and_process_data(state: Dict):
                 "rade_duration_hours": rade_hours,
                 "quai_duration_hours": 0.0
             }
-            
             history.append(history_record)
-            print(f"[LOG] Vessel {history_record['vessel']} departed. Rade Duration: {rade_hours:.1f}h")
-            
-            # Mark for removal
             to_remove.append(v_id)
+            print(f"[LOG] DEPARTURE (FROM RADE): {history_record['vessel']}")
 
-    # Remove completed
+    # Remove vessels marked for completion
     for v_id in to_remove:
         if v_id in active_state:
-            vessel_name = active_state[v_id].get("entry", {}).get("nOM_NAVIREField", v_id)
             del active_state[v_id]
-    if to_remove: 
-        print(f"[LOG] Removed {len(to_remove)} departed vessels.")
 
-    # 3. Detect New Vessels (PREVU & EN RADE)
+    # 3. Detect New Vessels
     new_detections = 0
     for v_id, live in live_vessels.items():
         if v_id not in active_state:
+            # Add 'last_seen' to new entries
+            base_data = {
+                "entry": live["entry"], 
+                "last_seen": now_iso
+            }
+
             if live["status"] == "PREVU":
-                active_state[v_id] = {"entry": live["entry"], "status": "PREVU"}
+                base_data["status"] = "PREVU"
+                active_state[v_id] = base_data
+                
                 p_name = port_name(str(live['entry'].get("cODE_SOCIETEField")))
                 if p_name not in new_prevu_by_port: 
                     new_prevu_by_port[p_name] = []
                 new_prevu_by_port[p_name].append(live["entry"])
                 new_detections += 1
-                print(f"[LOG] New PREVU vessel: {live['entry'].get('nOM_NAVIREField', 'Unknown')} at {p_name}")
+                
             elif live["status"] == "EN RADE":
-                active_state[v_id] = {
-                    "entry": live["entry"], 
-                    "status": "EN RADE", 
-                    "rade_at": live["timestamp"].isoformat() if live["timestamp"] else "N/A"
-                }
+                base_data["status"] = "EN RADE"
+                base_data["rade_at"] = live["timestamp"].isoformat() if live["timestamp"] else "N/A"
+                active_state[v_id] = base_data
                 new_detections += 1
-                print(f"[LOG] New EN RADE vessel: {live['entry'].get('nOM_NAVIREField', 'Unknown')}")
 
+    # 4. GHOST CLEANUP (Crucial Fix)
+    # Remove vessels that haven't been seen in the API for > 3 days
+    cutoff_time = now_utc - timedelta(days=3)
+    cleaned_active = {}
+    
+    cleaned_count = 0
+    for v_id, data in active_state.items():
+        last_seen_str = data.get("last_seen")
+        
+        # If it's a new system run, some old data might not have 'last_seen'.
+        # We give them a grace pass by setting it to now.
+        if not last_seen_str:
+            data["last_seen"] = now_iso
+            cleaned_active[v_id] = data
+            continue
+            
+        last_seen_dt = datetime.fromisoformat(last_seen_str)
+        
+        # KEEP if seen recently, DISCARD if too old
+        if last_seen_dt > cutoff_time:
+            cleaned_active[v_id] = data
+        else:
+            cleaned_count += 1
+            print(f"[CLEANUP] Removing ghost vessel: {data['entry'].get('nOM_NAVIREField')} (ID: {v_id})")
+
+    if cleaned_count > 0:
+        print(f"[LOG] Cleaned up {cleaned_count} stale ghost records.")
+
+    state["active"] = cleaned_active
+    state["history"] = history
+    
     if new_detections > 0: 
         print(f"[LOG] Added {new_detections} new vessels.")
-    else: 
-        print("[LOG] No new vessels detected.")
-
-    state["active"] = active_state
-    state["history"] = history
+        
     return state, new_prevu_by_port
 
 # ===== EMAIL LOGIC =====
