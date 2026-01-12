@@ -116,9 +116,16 @@ def port_name(code: str) -> str:
     return {"16": "Tan Tan", "17": "Laâyoune", "18": "Dakhla"}.get(code, code)
 
 def get_vessel_id(entry: dict) -> str:
-    imo = entry.get("nUMERO_LLOYDField")
-    if imo: return str(imo)
-    return f"ESCALE-{entry.get('nUMERO_ESCALEField')}-{entry.get('cODE_SOCIETEField')}"
+    """
+    Creates a unique ID based on the Voyage (Escale), not just the Ship (IMO).
+    This ensures that if a ship leaves and comes back, it's treated as a new trip.
+    Format: IMO-ESCALE-PORT (e.g., 9123456-1234-17)
+    """
+    imo = str(entry.get("nUMERO_LLOYDField") or "NO-IMO")
+    num_esc = str(entry.get("nUMERO_ESCALEField") or "NO-ESC")
+    port_code = str(entry.get("cODE_SOCIETEField") or "NO-PORT")
+    
+    return f"{imo}-{num_esc}-{port_code}"
 
 def format_duration_hours(total_seconds: float) -> str:
     return f"{(total_seconds / 3600):.1f}h"
