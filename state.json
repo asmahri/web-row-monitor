@@ -115,8 +115,10 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "VRAQUIER"
       },
-      "status": "EN RADE",
-      "rade_at": "2026-01-01T00:40:00"
+      "status": "A QUAI",
+      "rade_at": "2026-01-01T00:40:00",
+      "quai_at": "2026-01-11T11:45:00",
+      "rade_duration_hours": 251.08333333333334
     },
     "8607359": {
       "entry": {
