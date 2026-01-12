@@ -225,26 +225,6 @@
       "quai_at": "2026-01-09T10:25:00",
       "rade_duration_hours": 275.1666666666667
     },
-    "9501655": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000303",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "COMANAV",
-        "dATE_SITUATIONField": "/Date(1766962800000+0100)/",
-        "date_SystemeField": "/Date(1767885352593+0100)/",
-        "hEURE_SITUATIONField": "/Date(53700000+0100)/",
-        "nOM_NAVIREField": "BBC BELEM",
-        "nUMERO_ESCALEField": 201466518,
-        "nUMERO_LLOYDField": "9501655",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "PUERTO DE GRANADILLA",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "VRAQUIER"
-      },
-      "status": "EN RADE",
-      "rade_at": "2025-12-28T14:55:00"
-    },
     "0081062": {
       "entry": {
         "cODE_CONSIGNATAIREField": "4153",
