@@ -382,8 +382,13 @@ def generate_monthly_report(state: Dict):
 def fetch_and_process_data(state: Dict):
     print("[LOG] Fetching ANP data...")
     try:
-        resp = requests.get(TARGET_URL, timeout=20)
+                # Added headers to mimic a browser and increased timeout to 60s
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+        resp = requests.get(TARGET_URL, headers=headers, timeout=60)
         resp.raise_for_status()
+
         all_data = resp.json()
         print(f"[LOG] Fetched {len(all_data)} entries.")
     except Exception as e:
