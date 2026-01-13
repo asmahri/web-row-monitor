@@ -334,7 +334,7 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "VRAQUIER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "PREVU"
     },
     "0081062-201466820-18": {
@@ -354,7 +354,7 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "CHALUTIER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "PREVU"
     },
     "9874562-201466819-18": {
@@ -374,7 +374,7 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "CHALUTIER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "PREVU"
     },
     "7610426-201466818-18": {
@@ -394,7 +394,7 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "CHALUTIER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "PREVU"
     },
     "9427079-201466794-17": {
@@ -414,7 +414,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "CONVENTIONEL"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-12T14:20:00"
     },
@@ -435,7 +435,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "TANKER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-12T14:00:00"
     },
@@ -456,7 +456,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "CONVENTIONEL"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-08T19:35:00"
     },
@@ -477,7 +477,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "PETROLIER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "A QUAI",
       "rade_at": "2026-01-02T16:13:00",
       "quai_at": "2026-01-13T10:25:00",
@@ -500,7 +500,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "CHALUTIER"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-01T11:15:00"
     },
@@ -521,7 +521,7 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "FRIGORIFIQUE"
       },
-      "last_seen": "2026-01-13T14:51:55.878542+00:00",
+      "last_seen": "2026-01-13T15:20:07.978289+00:00",
       "status": "PREVU"
     }
   },
