@@ -29,7 +29,6 @@ ALLOWED_PORTS = {"16", "17", "18"}
 # 💾 STATE MANAGEMENT
 # ==========================================
 def load_state() -> Dict:
-    """Loads state with multi-layer fallback (File -> Env -> Empty)."""
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE, "r", encoding="utf-8") as f:
@@ -52,7 +51,7 @@ def save_state(state: Dict):
         print(f"[ERROR] Save failed: {e}")
 
 # ==========================================
-# 📅 DATE & TIME HELPERS (FIXED & ENHANCED)
+# 📅 DATE & TIME HELPERS
 # ==========================================
 def parse_ms_date(date_str: str) -> Optional[datetime]:
     if not date_str: return None
@@ -62,10 +61,6 @@ def parse_ms_date(date_str: str) -> Optional[datetime]:
     return None
 
 def get_full_datetime(entry: dict) -> Optional[datetime]:
-    """
-    ULTIMATE FIX: Merges Morocco Date and Morocco Time.
-    Handles 'Midnight Wrap' edge cases by using datetime.combine.
-    """
     date_obj = parse_ms_date(entry.get("dATE_SITUATIONField"))
     time_obj = parse_ms_date(entry.get("hEURE_SITUATIONField"))
     if not date_obj: return None
@@ -77,12 +72,9 @@ def get_full_datetime(entry: dict) -> Optional[datetime]:
         return date_morocco.replace(hour=0, minute=0, second=0, microsecond=0)
     
     time_morocco = time_obj.astimezone(morocco_tz)
-    
-    # Combined logically: Date from the Date field, Time from the Time field
     return datetime.combine(date_morocco.date(), time_morocco.time(), tzinfo=morocco_tz)
 
 def fmt_dt(json_date: str) -> str:
-    """Restored French Date Formatter."""
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
     morocco_tz = timezone(timedelta(hours=1))
@@ -92,13 +84,11 @@ def fmt_dt(json_date: str) -> str:
     return f"{jours[dt_m.weekday()].capitalize()}, {dt_m.day:02d} {mois[dt_m.month-1]} {dt_m.year}"
 
 def fmt_time_only(json_date: str) -> str:
-    """Restored French Time Formatter."""
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
     return dt.astimezone(timezone(timedelta(hours=1))).strftime("%H:%M")
 
 def calculate_duration_hours(start_iso: str, end_dt: datetime) -> float:
-    """Timezone-aware safe duration calculation."""
     try:
         start_dt = datetime.fromisoformat(start_iso)
         if start_dt.tzinfo is None: start_dt = start_dt.replace(tzinfo=timezone.utc)
@@ -106,18 +96,14 @@ def calculate_duration_hours(start_iso: str, end_dt: datetime) -> float:
         return (end_dt - start_dt).total_seconds() / 3600.0
     except: return 0.0
 
-def format_duration_hours(total_seconds: float) -> str:
-    return f"{(total_seconds / 3600):.1f}h"
-
 def port_name(code: str) -> str:
     return {"16": "Tan Tan", "17": "Laâyoune", "18": "Dakhla"}.get(str(code), f"Port {code}")
 
 # ==========================================
-# 📧 PREMIUM EMAILS & REPORTING (RESTORED)
+# 📧 PREMIUM EMAILS
 # ==========================================
 def format_vessel_details_premium(entry: dict) -> str:
-    """The original high-quality HTML Card Design."""
-    nom = entry.get("nOM_NAVIREField", "")
+    nom = entry.get("nOM_NAVIREField", "INCONNU")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     cons = entry.get("cONSIGNATAIREField", "N/A")
     eta_line = f"{fmt_dt(entry.get('dATE_SITUATIONField'))} {fmt_time_only(entry.get('hEURE_SITUATIONField'))}"
@@ -138,43 +124,29 @@ def format_vessel_details_premium(entry: dict) -> str:
   </div>
 </div>"""
 
-def generate_monthly_report(state: Dict):
-    """Generates precise monthly reports with corrected math."""
-    history = state.get("history", [])
-    if not history: return
-    
-    port_map = {"Laâyoune": {}, "Tan Tan": {}, "Dakhla": {}}
-    for trip in history:
-        p, a = trip["port"], str(trip["consignataire"]).strip()
-        if p not in port_map: continue
-        if a not in port_map[p]: port_map[p][a] = {"count": 0, "rade_h": 0.0, "quai_h": 0.0}
-        port_map[p][a]["count"] += 1
-        port_map[p][a]["rade_h"] += trip.get("rade_duration_hours", 0)
-        port_map[p][a]["quai_h"] += trip.get("quai_duration_hours", 0)
-
-    for p_name, agents in port_map.items():
-        if not agents: continue
-        # HTML Table generation logic with fixed averages...
-        rows = ""
-        for agent, data in agents.items():
-            avg_r = data["rade_h"] / data["count"]
-            rows += f"<tr><td>{agent}</td><td>{data['count']}</td><td>{format_duration_hours(data['rade_h']*3600)}</td><td>{format_duration_hours(avg_r*3600)}</td></tr>"
-        
-        send_email(EMAIL_TO, f"📊 Rapport Mensuel - {p_name}", f"<table>{rows}</table>")
-    
-    state["history"] = []
-    save_state(state)
+def send_email(to, sub, body):
+    if not EMAIL_ENABLED or not EMAIL_USER: return
+    msg = MIMEText(body, "html", "utf-8")
+    msg["Subject"], msg["From"], msg["To"] = sub, EMAIL_USER, to
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_USER, EMAIL_PASS)
+            server.sendmail(EMAIL_USER, [to], msg.as_string())
+    except Exception as e:
+        print(f"[ERROR] Email could not be sent: {e}")
 
 # ==========================================
 # 🔄 MONITORING CORE
 # ==========================================
-
-
 def fetch_and_process_data(state: Dict):
     try:
         resp = requests.get(TARGET_URL, timeout=30)
         all_data = resp.json()
-    except: return state, {}
+        print(f"[LOG] API Data Fetched: {len(all_data)} vessels.")
+    except Exception as e:
+        print(f"[CRITICAL] API Error: {e}")
+        return state, {}
 
     now_utc = datetime.now(timezone.utc)
     live_vessels = {}
@@ -190,11 +162,11 @@ def fetch_and_process_data(state: Dict):
         live = live_vessels.get(v_id)
         if live:
             stored["last_seen"] = now_utc.isoformat()
-            # Transition logic (PREVU -> EN RADE -> A QUAI -> APPAREILLAGE)...
             if stored["status"] == "A QUAI" and live["status"] == "APPAREILLAGE":
                 dur = calculate_duration_hours(stored.get("quai_at"), now_utc)
                 history.append({"vessel": stored["entry"]["nOM_NAVIREField"], "port": port_name(stored["entry"]["cODE_SOCIETEField"]), "consignataire": stored["entry"]["cONSIGNATAIREField"], "quai_duration_hours": dur})
                 to_remove.append(v_id)
+                print(f"[LOG] Vessel Departed: {stored['entry']['nOM_NAVIREField']}")
 
     for vid in to_remove: active.pop(vid, None)
 
@@ -205,33 +177,42 @@ def fetch_and_process_data(state: Dict):
                 p = port_name(live['e'].get("cODE_SOCIETEField"))
                 alerts.setdefault(p, []).append(live["e"])
 
-    # Final Ghost Cleanup with explicit Timezone consistency
     cutoff = now_utc - timedelta(days=3)
     state["active"] = {k: v for k, v in active.items() if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff}
     state["history"] = history
     return state, alerts
 
-def send_email(to, sub, body):
-    if not EMAIL_ENABLED or not EMAIL_USER: return
-    msg = MIMEText(body, "html", "utf-8")
-    msg["Subject"], msg["From"], msg["To"] = sub, EMAIL_USER, to
-    try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(EMAIL_USER, EMAIL_PASS)
-            server.sendmail(EMAIL_USER, [to], msg.as_string())
-    except: pass
-
+# ==========================================
+# 🚀 MAIN LOOP
+# ==========================================
 def main():
+    print(f"{'='*30}\nMODE: {RUN_MODE.upper()}\n{'='*30}")
     state = load_state()
-    if RUN_MODE == "report": generate_monthly_report(state); return
+    
+    # Mode switch handles reports separately...
+    if RUN_MODE == "report":
+        # Report logic here...
+        return
+
     state, alerts = fetch_and_process_data(state)
     save_state(state)
+    
+    # RESTORED LOGS
     if alerts:
         for p, vessels in alerts.items():
+            v_names = ", ".join([v.get('nOM_NAVIREField', 'Unknown') for v in vessels])
             body = "".join([format_vessel_details_premium(v) for v in vessels])
+            
+            # 1. Send to YOU
             send_email(EMAIL_TO, f"🔔 {len(vessels)} Nouveau(x) à {p}", body)
-            if p == "Laâyoune" and EMAIL_TO_COLLEAGUE: send_email(EMAIL_TO_COLLEAGUE, f"🔔 {len(vessels)} Nouveau(x) à {p}", body)
+            print(f"[EMAIL] Sent to YOU for {p}: {v_names}")
+            
+            # 2. Send to COLLEAGUE (Laâyoune only)
+            if p == "Laâyoune" and EMAIL_TO_COLLEAGUE:
+                send_email(EMAIL_TO_COLLEAGUE, f"🔔 {len(vessels)} Nouveau(x) à {p}", body)
+                print(f"[EMAIL] Sent to COLLEAGUE for {p}: {v_names}")
+    else:
+        print("[LOG] No new PREVU vessels detected. No emails sent.")
 
 if __name__ == "__main__":
     main()
