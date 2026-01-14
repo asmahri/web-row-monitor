@@ -197,20 +197,42 @@ def main():
     state, alerts = fetch_and_process_data(state)
     save_state(state)
     
-    # RESTORED LOGS
+# === SECTION ENVOI AVEC SALUTATIONS ET FOOTER ===
     if alerts:
         for p, vessels in alerts.items():
+            # 1. Préparation des noms pour le sujet
             v_names = ", ".join([v.get('nOM_NAVIREField', 'Unknown') for v in vessels])
-            body = "".join([format_vessel_details_premium(v) for v in vessels])
             
-            # 1. Send to YOU
-            send_email(EMAIL_TO, f"🔔 {len(vessels)} Nouveau(x) à {p}", body)
-            print(f"[EMAIL] Sent to YOU for {p}: {v_names}")
+            # 2. Construction du Message HTML
+            # --- SALUTATION ---
+            intro = f"<p style='font-family:Arial; font-size:15px;'>Bonjour,<br><br>Ci-dessous les mouvements prévus au <b>Port de {p}</b> :</p>"
             
-            # 2. Send to COLLEAGUE (Laâyoune only)
+            # --- CORPS (Les Cartes Navires) ---
+            cards = "".join([format_vessel_details_premium(v) for v in vessels])
+            
+            # --- FOOTER (Signature) ---
+            footer = f"""
+            <div style='margin-top: 20px; border-top: 1px solid #e6e9ef; padding-top: 15px;'>
+                <p style='font-family:Arial; font-size:14px; color:#333;'>
+                    Cordialement,
+                </p>
+                <p style='font-family:Arial; font-size:12px; color:#777777; font-style: italic;'>
+                    Ceci est une génération automatique par le système de surveillance.
+                </p>
+            </div>"""
+            
+            full_body = intro + cards + footer
+            
+            # 3. Sujet
+            new_subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {v_names} au Port de {p}"
+            
+            # 4. Envois
+            send_email(EMAIL_TO, new_subject, full_body)
+            print(f"[EMAIL] Envoyé à VOUS : {new_subject}")
+            
             if p == "Laâyoune" and EMAIL_TO_COLLEAGUE:
-                send_email(EMAIL_TO_COLLEAGUE, f"🔔 {len(vessels)} Nouveau(x) à {p}", body)
-                print(f"[EMAIL] Sent to COLLEAGUE for {p}: {v_names}")
+                send_email(EMAIL_TO_COLLEAGUE, new_subject, full_body)
+                print(f"[EMAIL] Envoyé au COLLÈGUE : {new_subject}")
     else:
         print("[LOG] No new PREVU vessels detected. No emails sent.")
 
