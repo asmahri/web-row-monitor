@@ -204,26 +204,19 @@ def main():
     print(f"{'='*30}\nMODE: {RUN_MODE.upper()}\n{'='*30}")
     state = load_state()
     
-    # Mode switch handles reports separately...
     if RUN_MODE == "report":
-        # Report logic here...
         return
 
     state, alerts = fetch_and_process_data(state)
     save_state(state)
     
-if alerts:
+    if alerts:
         for p, vessels in alerts.items():
             v_names = ", ".join([v.get('nOM_NAVIREField', 'Unknown') for v in vessels])
             
             # --- CONSTRUCTION DU CORPS ---
-            # 1. Bonjour
             intro = f"<p style='font-family:Arial; font-size:15px;'>Bonjour,<br><br>Ci-dessous les mouvements prévus au <b>Port de {p}</b> :</p>"
-            
-            # 2. Cartes Navires (Style Initial)
             cards = "".join([format_vessel_details_premium(v) for v in vessels])
-            
-            # 3. Footer et Cordialement
             footer = f"""
             <div style='margin-top: 20px; border-top: 1px solid #e6e9ef; padding-top: 15px;'>
                 <p style='font-family:Arial; font-size:14px; color:#333;'>Cordialement,</p>
@@ -233,14 +226,14 @@ if alerts:
             </div>"""
             
             full_body = intro + cards + footer
-            
-            # Sujet avec la cloche
             new_subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {v_names} au Port de {p}"
             
-            # Envois
             send_email(EMAIL_TO, new_subject, full_body)
+            print(f"[EMAIL] Sent to YOU for {p}: {v_names}")
+            
             if p == "Laâyoune" and EMAIL_TO_COLLEAGUE:
                 send_email(EMAIL_TO_COLLEAGUE, new_subject, full_body)
+                print(f"[EMAIL] Sent to COLLEAGUE for {p}: {v_names}")
     else:
         print("[LOG] No new PREVU vessels detected. No emails sent.")
 
