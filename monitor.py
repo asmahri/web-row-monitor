@@ -82,35 +82,52 @@ def get_full_datetime(entry: dict) -> Optional[datetime]:
     date_obj = parse_ms_date(entry.get("dATE_SITUATIONField"))
     time_obj = parse_ms_date(entry.get("hEURE_SITUATIONField"))
     
-    if not date_obj: return None
+    if not date_obj: 
+        return None
     
-    # --- FIX START ---
-    # Convert UTC timestamp to Morocco Time (UTC+1) to fix the "Midnight Wrap"
-    # Otherwise, 00:00 (Morocco) becomes 23:00 Prev Day (UTC)
+    # Convert date to Morocco time (UTC+1)
     morocco_tz = timezone(timedelta(hours=1))
-    local_date = date_obj.astimezone(morocco_tz).date()
-    # --- FIX END ---
-
-    if not time_obj: 
-        return datetime.combine(local_date, datetime.min.time())
-
-    # Combine the corrected Local Date with the Time
-    time_only = timedelta(hours=time_obj.hour, minutes=time_obj.minute, seconds=time_obj.second)
-    return datetime.combine(local_date, datetime.min.time()) + time_only
+    date_morocco = date_obj.astimezone(morocco_tz)
+    
+    if not time_obj:
+        return date_morocco.replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    # Convert time to Morocco time and extract just the time part
+    time_morocco = time_obj.astimezone(morocco_tz)
+    
+    # Combine Morocco date with Morocco time
+    combined = date_morocco.replace(
+        hour=time_morocco.hour,
+        minute=time_morocco.minute,
+        second=time_morocco.second,
+        microsecond=time_morocco.microsecond
+    )
+    
+    return combined
 
 def fmt_dt(json_date: str) -> str:
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
+    
+    # Convert to Morocco time for display
+    morocco_tz = timezone(timedelta(hours=1))
+    dt_morocco = dt.astimezone(morocco_tz)
+    
     jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
     mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
-    jour_nom = jours[dt.weekday()].capitalize()
-    mois_nom = mois[dt.month - 1]
-    return f"{jour_nom}, {dt.day:02d} {mois_nom} {dt.year}"
+    jour_nom = jours[dt_morocco.weekday()].capitalize()
+    mois_nom = mois[dt_morocco.month - 1]
+    return f"{jour_nom}, {dt_morocco.day:02d} {mois_nom} {dt_morocco.year}"
 
 def fmt_time_only(json_date: str) -> str:
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
-    return dt.strftime("%H:%M")
+    
+    # Convert to Morocco time for display
+    morocco_tz = timezone(timedelta(hours=1))
+    dt_morocco = dt.astimezone(morocco_tz)
+    
+    return dt_morocco.strftime("%H:%M")
 
 def port_name(code: str) -> str:
     return {"16": "Tan Tan", "17": "Laâyoune", "18": "Dakhla"}.get(code, code)
