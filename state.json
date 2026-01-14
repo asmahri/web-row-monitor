@@ -334,7 +334,7 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "VRAQUIER"
       },
-      "last_seen": "2026-01-14T16:56:26.126991+00:00",
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
       "status": "PREVU"
     },
     "0081062-201466820-18": {
@@ -414,7 +414,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "CONVENTIONEL"
       },
-      "last_seen": "2026-01-14T16:56:26.126991+00:00",
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-12T14:20:00"
     },
@@ -435,7 +435,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "TANKER"
       },
-      "last_seen": "2026-01-14T16:56:26.126991+00:00",
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-12T14:00:00"
     },
@@ -477,7 +477,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "PETROLIER"
       },
-      "last_seen": "2026-01-14T16:56:26.126991+00:00",
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
       "status": "A QUAI",
       "rade_at": "2026-01-02T16:13:00",
       "quai_at": "2026-01-13T10:25:00",
@@ -500,7 +500,7 @@
         "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "CHALUTIER"
       },
-      "last_seen": "2026-01-14T16:56:26.126991+00:00",
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
       "status": "EN RADE",
       "rade_at": "2026-01-01T11:15:00"
     },
@@ -521,7 +521,27 @@
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "FRIGORIFIQUE"
       },
-      "last_seen": "2026-01-14T16:56:26.126991+00:00",
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
+      "status": "PREVU"
+    },
+    "7325461-201466900-17": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000303",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "COMANAV",
+        "dATE_SITUATIONField": "/Date(1768431600000+0100)/",
+        "date_SystemeField": "/Date(1768407333340+0100)/",
+        "hEURE_SITUATIONField": "/Date(28860000+0100)/",
+        "nOM_NAVIREField": "DURA BULK",
+        "nUMERO_ESCALEField": 201466900,
+        "nUMERO_LLOYDField": "7325461",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "ARINAGA",
+        "sITUATIONField": "PREVU",
+        "tYP_NAVIREField": "VRAQUIER"
+      },
+      "last_seen": "2026-01-14T17:25:57.677990+00:00",
       "status": "PREVU"
     }
   },
