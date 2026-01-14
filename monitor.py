@@ -111,18 +111,33 @@ def format_vessel_details_premium(entry: dict) -> str:
     type_nav = entry.get("tYP_NAVIREField", "N/A")
 
     return f"""
-<div style="font-family:Arial, sans-serif; font-size:14px; margin:15px 0;">
-  <div style="border:1px solid #d0d7e1; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
-    <div style="background:#0a3d62; color:white; padding:12px 15px; font-size:16px;">🚢 <b>{nom}</b></div>
-    <table style="width:100%; border-collapse:collapse;">
-      <tr style="background:#f8faff;"><td style="padding:10px; border-bottom:1px solid #e6e9ef; width:35%;"><b>🆔 IMO</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{imo}</td></tr>
-      <tr style="background:white;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🕒 ETA</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{eta_line}</td></tr>
-      <tr style="background:#f8faff;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🌍 Prov.</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{prov}</td></tr>
-      <tr style="background:white;"><td style="padding:10px; border-bottom:1px solid #e6e9ef;"><b>🛳️ Type</b></td><td style="padding:10px; border-bottom:1px solid #e6e9ef;">{type_nav}</td></tr>
-      <tr style="background:#f8faff;"><td style="padding:10px;"><b>🏢 Agent</b></td><td style="padding:10px;">{cons}</td></tr>
-    </table>
-  </div>
-</div>"""
+    <div style="font-family: Arial, sans-serif; margin: 15px 0; border: 1px solid #d0d7e1; border-radius: 8px; overflow: hidden;">
+        <div style="background: #0a3d62; color: white; padding: 12px; font-size: 16px;">
+            🚢 <b>{nom}</b>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee; width: 30%;"><b>🕒 ETA</b></td>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{eta_line}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🆔 IMO</b></td>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{imo}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🛳️ Type</b></td>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{type_nav}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🏢 Agent</b></td>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{cons}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;"><b>🌍 Prov.</b></td>
+                <td style="padding: 10px;">{prov}</td>
+            </tr>
+        </table>
+    </div>"""
 
 def send_email(to, sub, body):
     if not EMAIL_ENABLED or not EMAIL_USER: return
@@ -197,25 +212,21 @@ def main():
     state, alerts = fetch_and_process_data(state)
     save_state(state)
     
-# === SECTION ENVOI AVEC SALUTATIONS ET FOOTER ===
-    if alerts:
+if alerts:
         for p, vessels in alerts.items():
-            # 1. Préparation des noms pour le sujet
             v_names = ", ".join([v.get('nOM_NAVIREField', 'Unknown') for v in vessels])
             
-            # 2. Construction du Message HTML
-            # --- SALUTATION ---
+            # --- CONSTRUCTION DU CORPS ---
+            # 1. Bonjour
             intro = f"<p style='font-family:Arial; font-size:15px;'>Bonjour,<br><br>Ci-dessous les mouvements prévus au <b>Port de {p}</b> :</p>"
             
-            # --- CORPS (Les Cartes Navires) ---
+            # 2. Cartes Navires (Style Initial)
             cards = "".join([format_vessel_details_premium(v) for v in vessels])
             
-            # --- FOOTER (Signature) ---
+            # 3. Footer et Cordialement
             footer = f"""
             <div style='margin-top: 20px; border-top: 1px solid #e6e9ef; padding-top: 15px;'>
-                <p style='font-family:Arial; font-size:14px; color:#333;'>
-                    Cordialement,
-                </p>
+                <p style='font-family:Arial; font-size:14px; color:#333;'>Cordialement,</p>
                 <p style='font-family:Arial; font-size:12px; color:#777777; font-style: italic;'>
                     Ceci est une génération automatique par le système de surveillance.
                 </p>
@@ -223,16 +234,13 @@ def main():
             
             full_body = intro + cards + footer
             
-            # 3. Sujet
+            # Sujet avec la cloche
             new_subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {v_names} au Port de {p}"
             
-            # 4. Envois
+            # Envois
             send_email(EMAIL_TO, new_subject, full_body)
-            print(f"[EMAIL] Envoyé à VOUS : {new_subject}")
-            
             if p == "Laâyoune" and EMAIL_TO_COLLEAGUE:
                 send_email(EMAIL_TO_COLLEAGUE, new_subject, full_body)
-                print(f"[EMAIL] Envoyé au COLLÈGUE : {new_subject}")
     else:
         print("[LOG] No new PREVU vessels detected. No emails sent.")
 
