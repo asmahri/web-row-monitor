@@ -562,7 +562,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "7325461-201466900": {
       "entry": {
@@ -582,7 +582,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "8514796-201466882": {
       "entry": {
@@ -622,7 +622,7 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "status": "A QUAI",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "9427079-201466794": {
       "entry": {
@@ -642,7 +642,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "9518880-201466779": {
       "entry": {
@@ -662,7 +662,7 @@
         "tYP_NAVIREField": "TANKER"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "7325461-201466605": {
       "entry": {
@@ -682,7 +682,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "A QUAI",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "9139127-201466356": {
       "entry": {
@@ -722,7 +722,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "A QUAI",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "8607359-201466598": {
       "entry": {
@@ -742,7 +742,7 @@
         "tYP_NAVIREField": "CHALUTIER"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "9212448-201466904": {
       "entry": {
@@ -762,7 +762,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     },
     "9128013-201466911": {
       "entry": {
@@ -782,7 +782,27 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-15T11:40:58.195783+00:00"
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
+    },
+    "9409754-201466701": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000130",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "SOCONAV",
+        "dATE_SITUATIONField": "/Date(1768345200000+0100)/",
+        "date_SystemeField": "/Date(1768475752140+0100)/",
+        "hEURE_SITUATIONField": "/Date(40200000+0100)/",
+        "nOM_NAVIREField": "RUKBAT STAR",
+        "nUMERO_ESCALEField": 201466701,
+        "nUMERO_LLOYDField": "9409754",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "AGADIR",
+        "sITUATIONField": "A QUAI",
+        "tYP_NAVIREField": "CONVENTIONEL"
+      },
+      "status": "A QUAI",
+      "last_seen": "2026-01-15T12:36:28.621737+00:00"
     }
   },
   "history": [
