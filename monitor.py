@@ -232,17 +232,25 @@ def main():
                 p = port_name(live['e'].get("cODE_SOCIETEField"))
                 alerts.setdefault(p, []).append(live["e"])
 
+# ==========================================
     # 5. Garbage Collection (Cleanup old/stale data)
+    # ==========================================
     # Removes vessels that haven't been seen in the API for 3 days
-    # This prevents the active list from growing infinitely
     cutoff = now_utc - timedelta(days=3)
+    
+    initial_count = len(active)
+    
+    # Filter only recently seen vessels
     state["active"] = {
         k: v for k, v in active.items() 
         if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff
     }
+    
+    cleaned_count = initial_count - len(state["active"])
+    if cleaned_count > 0:
+        print(f"[LOG] GC: Removed {cleaned_count} stale vessel records.")
 
     # Keep history manageable (last 100 entries)
-    state["active"] = active
     state["history"] = history[-100:] 
     
     save_state(state)
