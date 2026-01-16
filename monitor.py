@@ -99,6 +99,7 @@ def format_vessel_details_premium(entry: dict) -> str:
     nom = entry.get("nOM_NAVIREField", "INCONNU")
     imo = entry.get("nUMERO_LLOYDField", "N/A")
     cons = entry.get("cONSIGNATAIREField", "N/A")
+    escale = entry.get("nUMERO_ESCALEField", "N/A")
     eta_line = f"{fmt_dt(entry.get('dATE_SITUATIONField'))} {fmt_time_only(entry.get('hEURE_SITUATIONField'))}"
     prov = entry.get("pROVField", "Inconnue")
     type_nav = entry.get("tYP_NAVIREField", "N/A")
@@ -116,6 +117,10 @@ def format_vessel_details_premium(entry: dict) -> str:
             <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🆔 IMO</b></td>
                 <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{imo}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>⚓ Escale</b></td>
+                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{escale}</td>
             </tr>
             <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🛳️ Type</b></td>
