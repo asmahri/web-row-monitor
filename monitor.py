@@ -67,8 +67,6 @@ def fmt_dt(json_date: str) -> str:
     """Formats date into French localized string."""
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
-    # NOTE: Morocco switches timezones. Using fixed GMT+1 for simplicity 
-    # but consider using ZoneInfo("Africa/Casablanca") for 100% accuracy.
     dt_m = dt.astimezone(timezone(timedelta(hours=1))) 
     jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
     mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
@@ -96,13 +94,13 @@ def port_name(code: str) -> str:
 # 📧 EMAIL TEMPLATE (PREMIUM BLUE STYLE)
 # ==========================================
 def format_vessel_details_premium(entry: dict) -> str:
-    nom = entry.get("nOM_NAVIREField", "INCONNU")
-    imo = entry.get("nUMERO_LLOYDField", "N/A")
-    cons = entry.get("cONSIGNATAIREField", "N/A")
-    escale = entry.get("nUMERO_ESCALEField", "N/A")
+    nom = entry.get("nOM_NAVIREField") or "INCONNU"
+    imo = entry.get("nUMERO_LLOYDField") or "N/A"
+    cons = entry.get("cONSIGNATAIREField") or "N/A"
+    escale = entry.get("nUMERO_ESCALEField") or "N/A"
     eta_line = f"{fmt_dt(entry.get('dATE_SITUATIONField'))} {fmt_time_only(entry.get('hEURE_SITUATIONField'))}"
-    prov = entry.get("pROVField", "Inconnue")
-    type_nav = entry.get("tYP_NAVIREField", "N/A")
+    prov = entry.get("pROVField") or "Inconnue"
+    type_nav = entry.get("tYP_NAVIREField") or "N/A"
 
     return f"""
     <div style="font-family: Arial, sans-serif; margin: 15px 0; border: 1px solid #d0d7e1; border-radius: 8px; overflow: hidden;">
@@ -142,7 +140,7 @@ def send_email(to, sub, body):
     msg = MIMEText(body, "html", "utf-8")
     msg["Subject"], msg["From"], msg["To"] = sub, EMAIL_USER, to
     try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=20) as server:
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, [to], msg.as_string())
@@ -160,16 +158,16 @@ def main():
 
     if RUN_MODE == "report":
         print(f"[LOG] Generating report for {len(history)} past movements.")
-        # Placeholder: You can add logic here to email a summary of the history list
         return
 
-    # 1. Fetch Data
+    # 1. Fetch Data (Hardened)
     try:
         resp = requests.get(TARGET_URL, timeout=30)
+        resp.raise_for_status()
         all_data = resp.json()
         print(f"[LOG] API Data Fetched: {len(all_data)} vessels.")
     except Exception as e:
-        print(f"[CRITICAL] API Error: {e}")
+        print(f"[CRITICAL] API Fetch Error: {e}")
         return
 
     now_utc = datetime.now(timezone.utc)
@@ -178,8 +176,11 @@ def main():
     # Parse live data
     for e in all_data:
         if str(e.get("cODE_SOCIETEField")) in ALLOWED_PORTS:
-            v_id = f"{e.get('nUMERO_LLOYDField')}-{e.get('nUMERO_ESCALEField')}"
-            live_vessels[v_id] = {"e": e, "status": e.get("sITUATIONField","").upper()}
+            # Safer ID generation to handle missing IMOs or Escales
+            imo = e.get('nUMERO_LLOYDField') or "0000000"
+            esc = e.get('nUMERO_ESCALEField') or "0"
+            v_id = f"{imo}-{esc}"
+            live_vessels[v_id] = {"e": e, "status": (e.get("sITUATIONField") or "").upper()}
 
     alerts = {}
     to_remove = []
@@ -187,36 +188,29 @@ def main():
     # 2. Update Existing Vessels (Transitions)
     for v_id, stored in active.items():
         live = live_vessels.get(v_id)
-        
-        # If vessel still exists in feed
         if live:
             prev_status = stored["status"]
             new_status = live["status"]
             
-            # Logic: Arrival (Quai)
             if prev_status != "A QUAI" and new_status == "A QUAI":
                 stored["quai_at"] = now_utc.isoformat()
-                print(f"[LOG] Arrival detected: {stored['entry']['nOM_NAVIREField']}")
+                print(f"[LOG] Arrival detected: {stored['entry'].get('nOM_NAVIREField')}")
             
-            # Logic: Departure
             if prev_status == "A QUAI" and new_status == "APPAREILLAGE":
                 quai_time = stored.get("quai_at", stored["last_seen"])
                 dur = calculate_duration_hours(quai_time, now_utc)
-                
                 history.append({
-                    "vessel": stored["entry"]["nOM_NAVIREField"],
-                    "port": port_name(stored["entry"]["cODE_SOCIETEField"]),
+                    "vessel": stored["entry"].get('nOM_NAVIREField'),
+                    "port": port_name(stored["entry"].get('cODE_SOCIETEField')),
                     "duration": round(dur, 2),
                     "departure": now_utc.isoformat()
                 })
                 to_remove.append(v_id)
-                print(f"[LOG] Departure detected: {stored['entry']['nOM_NAVIREField']} (Stay: {round(dur,2)}h)")
+                print(f"[LOG] Departure detected: {stored['entry'].get('nOM_NAVIREField')} (Stay: {round(dur,2)}h)")
             
-            # Update memory
             stored["status"] = new_status
             stored["last_seen"] = now_utc.isoformat()
 
-    # 3. Cleanup Departed Vessels from Active List
     for vid in to_remove: 
         active.pop(vid, None)
 
@@ -232,36 +226,23 @@ def main():
                 p = port_name(live['e'].get("cODE_SOCIETEField"))
                 alerts.setdefault(p, []).append(live["e"])
 
-# ==========================================
-    # 5. Garbage Collection (Cleanup old/stale data)
-    # ==========================================
-    # Removes vessels that haven't been seen in the API for 3 days
+    # 5. Garbage Collection (Fixed Logic)
     cutoff = now_utc - timedelta(days=3)
-    
-    initial_count = len(active)
-    
-    # Filter only recently seen vessels
     state["active"] = {
         k: v for k, v in active.items() 
         if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff
     }
-    
-    cleaned_count = initial_count - len(state["active"])
-    if cleaned_count > 0:
-        print(f"[LOG] GC: Removed {cleaned_count} stale vessel records.")
-
-    # Keep history manageable (last 100 entries)
     state["history"] = history[-100:] 
-    
     save_state(state)
 
     # 6. Sending Alerts
     if alerts:
         for p, vessels in alerts.items():
             v_names = ", ".join([v.get('nOM_NAVIREField', 'Unknown') for v in vessels])
-            
             intro = f"<p style='font-family:Arial; font-size:15px;'>Bonjour,<br><br>Ci-dessous les mouvements prévus au <b>Port de {p}</b> :</p>"
             cards = "".join([format_vessel_details_premium(v) for v in vessels])
+            
+            # RESTORED ORIGINAL PREMIUM FOOTER
             footer = f"""
             <div style='margin-top: 20px; border-top: 1px solid #e6e9ef; padding-top: 15px;'>
                 <p style='font-family:Arial; font-size:14px; color:#333;'>Cordialement,</p>
