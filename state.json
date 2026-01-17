@@ -62,27 +62,6 @@
       "status": "EN RADE",
       "rade_at": "2026-01-12T14:00:00"
     },
-    "9409754-201466701-17": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000130",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "SOCONAV",
-        "dATE_SITUATIONField": "/Date(1767826800000+0100)/",
-        "date_SystemeField": "/Date(1768252546087+0100)/",
-        "hEURE_SITUATIONField": "/Date(70500000+0100)/",
-        "nOM_NAVIREField": "RUKBAT STAR",
-        "nUMERO_ESCALEField": 201466701,
-        "nUMERO_LLOYDField": "9409754",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "AGADIR",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "CONVENTIONEL"
-      },
-      "last_seen": "2026-01-14T10:50:11.121441+00:00",
-      "status": "EN RADE",
-      "rade_at": "2026-01-08T19:35:00"
-    },
     "9777541-201466485-17": {
       "entry": {
         "cODE_CONSIGNATAIREField": "000130",
@@ -185,7 +164,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "7325461-201466900": {
       "entry": {
@@ -225,7 +204,7 @@
         "tYP_NAVIREField": "FRIGORIFIQUE"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9777541-201466485": {
       "entry": {
@@ -265,7 +244,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "A QUAI",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00",
+      "last_seen": "2026-01-17T11:13:33.883355+00:00",
       "quai_at": "2026-01-15T13:36:46.552529+00:00"
     },
     "9518880-201466779": {
@@ -306,7 +285,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "A QUAI",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9139127-201466356": {
       "entry": {
@@ -346,7 +325,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "A QUAI",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "8607359-201466598": {
       "entry": {
@@ -366,7 +345,7 @@
         "tYP_NAVIREField": "CHALUTIER"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9212448-201466904": {
       "entry": {
@@ -386,7 +365,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9128013-201466911": {
       "entry": {
@@ -406,7 +385,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9409754-201466701": {
       "entry": {
@@ -426,7 +405,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9073880-201466938": {
       "entry": {
@@ -446,7 +425,7 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "EN RADE",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9393395-201466955": {
       "entry": {
@@ -466,7 +445,7 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9428889-201466962": {
       "entry": {
@@ -486,7 +465,7 @@
         "tYP_NAVIREField": "TANKER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "9393395-201466963": {
       "entry": {
@@ -506,7 +485,7 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     },
     "7325461-201466965": {
       "entry": {
@@ -526,7 +505,7 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-01-17T10:42:35.567642+00:00"
+      "last_seen": "2026-01-17T11:13:33.883355+00:00"
     }
   },
   "history": [
