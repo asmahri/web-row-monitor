@@ -23,13 +23,14 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_ENABLED = str(os.getenv("EMAIL_ENABLED", "true")).lower() == "true"
 RUN_MODE = os.getenv("RUN_MODE", "monitor") 
+
+# Target Ports: Tan Tan, Laâyoune, Dakhla
 ALLOWED_PORTS = {"16", "17", "18"} 
 
 # ==========================================
 # 💾 STATE MANAGEMENT
 # ==========================================
 def load_state() -> Dict:
-    """Loads state from file or environment variable."""
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE, "r", encoding="utf-8") as f:
@@ -45,7 +46,6 @@ def load_state() -> Dict:
         return {"active": {}, "history": []}
 
 def save_state(state: Dict):
-    """Saves state to file."""
     try:
         with open(STATE_FILE, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2, ensure_ascii=False)
@@ -56,7 +56,6 @@ def save_state(state: Dict):
 # 📅 DATE & TIME HELPERS
 # ==========================================
 def parse_ms_date(date_str: str) -> Optional[datetime]:
-    """Parses Microsoft JSON date format /Date(timestamp)/."""
     if not date_str: return None
     m = re.search(r"/Date\((\d+)([+-]\d{4})?\)/", date_str)
     if m: 
@@ -64,7 +63,6 @@ def parse_ms_date(date_str: str) -> Optional[datetime]:
     return None
 
 def fmt_dt(json_date: str) -> str:
-    """Formats date into French localized string."""
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
     dt_m = dt.astimezone(timezone(timedelta(hours=1))) 
@@ -73,13 +71,11 @@ def fmt_dt(json_date: str) -> str:
     return f"{jours[dt_m.weekday()].capitalize()}, {dt_m.day:02d} {mois[dt_m.month-1]} {dt_m.year}"
 
 def fmt_time_only(json_date: str) -> str:
-    """Formats time into HH:MM."""
     dt = parse_ms_date(json_date)
     if not dt: return "N/A"
     return dt.astimezone(timezone(timedelta(hours=1))).strftime("%H:%M")
 
 def calculate_duration_hours(start_iso: str, end_dt: datetime) -> float:
-    """Calculates hours difference between ISO string and datetime object."""
     try:
         start_dt = datetime.fromisoformat(start_iso)
         if start_dt.tzinfo is None: start_dt = start_dt.replace(tzinfo=timezone.utc)
@@ -91,7 +87,7 @@ def port_name(code: str) -> str:
     return {"16": "Tan Tan", "17": "Laâyoune", "18": "Dakhla"}.get(str(code), f"Port {code}")
 
 # ==========================================
-# 📧 EMAIL TEMPLATE (PREMIUM BLUE STYLE)
+# 📧 EMAIL TEMPLATES (PREMIUM STYLE)
 # ==========================================
 def format_vessel_details_premium(entry: dict) -> str:
     nom = entry.get("nOM_NAVIREField") or "INCONNU"
@@ -108,32 +104,95 @@ def format_vessel_details_premium(entry: dict) -> str:
             🚢 <b>{nom}</b>
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee; width: 30%;"><b>🕒 ETA</b></td>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{eta_line}</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🆔 IMO</b></td>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{imo}</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>⚓ Escale</b></td>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{escale}</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🛳️ Type</b></td>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{type_nav}</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🏢 Agent</b></td>
-                <td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{cons}</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px;"><b>🌍 Prov.</b></td>
-                <td style="padding: 10px;">{prov}</td>
-            </tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #eeeeee; width: 30%;"><b>🕒 ETA</b></td><td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{eta_line}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🆔 IMO</b></td><td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{imo}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>⚓ Escale</b></td><td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{escale}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🛳️ Type</b></td><td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{type_nav}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid #eeeeee;"><b>🏢 Agent</b></td><td style="padding: 10px; border-bottom: 1px solid #eeeeee;">{cons}</td></tr>
+            <tr><td style="padding: 10px;"><b>🌍 Prov.</b></td><td style="padding: 10px;">{prov}</td></tr>
         </table>
     </div>"""
+
+def send_monthly_report(history: list, specific_port: str):
+    if not history: return
+
+    # 1. Process Stats
+    stats = {}
+    for h in history:
+        agent = h.get('agent', 'Inconnu')
+        if agent not in stats: stats[agent] = {"calls": 0, "quay_sum": 0.0, "anch_sum": 0.0}
+        stats[agent]["calls"] += 1
+        stats[agent]["quay_sum"] += h.get('duration', 0)
+        stats[agent]["anch_sum"] += h.get('anchorage_duration', 0)
+
+    # 2. Build Agent Statistics Table
+    agent_rows = ""
+    sorted_agents = sorted(stats.items(), key=lambda x: x[1]['calls'], reverse=True)
+    for agent, data in sorted_agents:
+        total_calls = data['calls']
+        agent_rows += f"""
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 10px; font-weight: bold; color: #333;">{agent}</td>
+            <td style="padding: 10px; text-align: center;">{total_calls}</td>
+            <td style="padding: 10px; text-align: center;">{round(data['anch_sum']/total_calls, 1)}h</td>
+            <td style="padding: 10px; text-align: center;">{round(data['quay_sum']/total_calls, 1)}h</td>
+        </tr>"""
+
+    # 3. Build Detailed Vessel History Table
+    vessel_rows = ""
+    sorted_history = sorted(history, key=lambda x: x.get('departure', ''), reverse=True)
+    for h in sorted_history:
+        try:
+            dt_obj = datetime.fromisoformat(h['departure'])
+            date_str = dt_obj.astimezone(timezone(timedelta(hours=1))).strftime("%d/%m/%Y %H:%M")
+        except: date_str = "N/A"
+        
+        vessel_rows += f"""
+        <tr style="border-bottom: 1px solid #f0f0f0;">
+            <td style="padding: 8px; color: #333;">{h['vessel']}</td>
+            <td style="padding: 8px; font-size: 12px;">{h.get('agent', '-')}</td>
+            <td style="padding: 8px; text-align: center;">{h.get('anchorage_duration', 0)}h</td>
+            <td style="padding: 8px; text-align: center;">{h.get('duration', 0)}h</td>
+            <td style="padding: 8px; font-size: 12px;">{date_str}</td>
+        </tr>"""
+
+    subject = f"📊 Rapport Mensuel : Port de {specific_port} ({len(history)} Mouvements)"
+    body = f"""
+    <div style="font-family: Arial, sans-serif; max-width: 900px; margin: auto;">
+        <div style="background: #0a3d62; color: white; padding: 15px; border-radius: 8px 8px 0 0;">
+            <h2 style="margin: 0; font-size: 20px;">📊 Rapport de Performance</h2>
+            <p style="margin: 5px 0 0; opacity: 0.9; font-size: 14px;">Port de {specific_port} - Statistiques Mensuelles</p>
+        </div>
+        <div style="background: #f8f9fa; padding: 20px; border: 1px solid #d0d7e1; border-top: none; border-radius: 0 0 8px 8px;">
+            <p>Bonjour,</p>
+            <p>Voici le récapitulatif d'activité mensuel pour le <b>Port de {specific_port}</b>.</p>
+            
+            <h3 style="color: #0a3d62; border-bottom: 2px solid #0a3d62; padding-bottom: 10px;">🏢 Statistiques par Agent</h3>
+            <table style="width: 100%; border-collapse: collapse; background: white; margin-bottom: 30px; border-radius: 4px; overflow: hidden;">
+                <thead><tr style="background: #e9ecef; text-align: left;">
+                    <th style="padding: 12px;">Agent</th><th style="padding: 12px; text-align: center;">Escales</th>
+                    <th style="padding: 12px; text-align: center;">⚓ Attente</th><th style="padding: 12px; text-align: center;">🏗️ Quai</th>
+                </tr></thead>
+                <tbody>{agent_rows}</tbody>
+            </table>
+
+            <h3 style="color: #0a3d62; border-bottom: 2px solid #0a3d62; padding-bottom: 10px;">📋 Liste Détaillée</h3>
+            <table style="width: 100%; border-collapse: collapse; background: white; font-size: 13px; border-radius: 4px; overflow: hidden;">
+                <thead><tr style="background: #e9ecef; text-align: left;">
+                    <th style="padding: 10px;">Navire</th><th style="padding: 10px;">Agent</th>
+                    <th style="padding: 10px; text-align: center;">⚓ Poste</th><th style="padding: 10px; text-align: center;">🏗️ Quai</th>
+                    <th style="padding: 10px;">Date</th>
+                </tr></thead>
+                <tbody>{vessel_rows}</tbody>
+            </table>
+            
+            <div style='margin-top: 30px; border-top: 1px solid #e6e9ef; padding-top: 15px;'>
+                <p style='font-size:14px; color:#333;'>Cordialement,</p>
+                <p style='font-size:12px; color:#777777; font-style: italic;'>Ceci est une génération automatique par le système de surveillance.</p>
+            </div>
+        </div>
+    </div>"""
+    send_email(EMAIL_TO, subject, body)
 
 def send_email(to, sub, body):
     if not EMAIL_ENABLED or not EMAIL_USER: return
@@ -156,112 +215,97 @@ def main():
     active = state.get("active", {})
     history = state.get("history", [])
 
+    # REPORT MODE Logic
     if RUN_MODE == "report":
-        print(f"[LOG] Generating report for {len(history)} past movements.")
+        print(f"[LOG] Generating monthly reports for {len(history)} movements.")
+        for p_code in ALLOWED_PORTS:
+            p_name = port_name(p_code)
+            p_hist = [h for h in history if h.get("port") == p_name]
+            if p_hist:
+                print(f"[LOG] Sending report for {p_name}")
+                send_monthly_report(p_hist, p_name)
         return
 
-    # 1. Fetch Data (Hardened)
+    # MONITOR MODE Logic
     try:
         resp = requests.get(TARGET_URL, timeout=30)
         resp.raise_for_status()
         all_data = resp.json()
-        print(f"[LOG] API Data Fetched: {len(all_data)} vessels.")
     except Exception as e:
-        print(f"[CRITICAL] API Fetch Error: {e}")
-        return
+        print(f"[CRITICAL] API Error: {e}"); return
 
     now_utc = datetime.now(timezone.utc)
     live_vessels = {}
-    
-    # Parse live data
     for e in all_data:
         if str(e.get("cODE_SOCIETEField")) in ALLOWED_PORTS:
-            # Safer ID generation to handle missing IMOs or Escales
-            imo = e.get('nUMERO_LLOYDField') or "0000000"
-            esc = e.get('nUMERO_ESCALEField') or "0"
-            v_id = f"{imo}-{esc}"
+            v_id = f"{e.get('nUMERO_LLOYDField','0')}-{e.get('nUMERO_ESCALEField','0')}"
             live_vessels[v_id] = {"e": e, "status": (e.get("sITUATIONField") or "").upper()}
 
-    alerts = {}
-    to_remove = []
+    alerts, to_remove = {}, []
 
-    # 2. Update Existing Vessels (Transitions)
+    # Transitions & Tracking
     for v_id, stored in active.items():
         live = live_vessels.get(v_id)
         if live:
-            prev_status = stored["status"]
-            new_status = live["status"]
+            prev, new = stored["status"], live["status"]
             
-            if prev_status != "A QUAI" and new_status == "A QUAI":
+            if new == "ANCRE" and prev != "ANCRE":
+                stored["anchored_at"] = now_utc.isoformat()
+                
+            if prev != "A QUAI" and new == "A QUAI":
                 stored["quai_at"] = now_utc.isoformat()
-                print(f"[LOG] Arrival detected: {stored['entry'].get('nOM_NAVIREField')}")
-            
-            if prev_status == "A QUAI" and new_status == "APPAREILLAGE":
-                quai_time = stored.get("quai_at", stored["last_seen"])
-                dur = calculate_duration_hours(quai_time, now_utc)
+                anch_start = stored.get("anchored_at", now_utc.isoformat())
+                stored["anchorage_duration"] = round(calculate_duration_hours(anch_start, now_utc), 2)
+                
+            if prev == "A QUAI" and new == "APPAREILLAGE":
+                q_start = stored.get("quai_at", stored["last_seen"])
                 history.append({
                     "vessel": stored["entry"].get('nOM_NAVIREField'),
+                    "agent": stored["entry"].get("cONSIGNATAIREField", "Inconnu"),
                     "port": port_name(stored["entry"].get('cODE_SOCIETEField')),
-                    "duration": round(dur, 2),
+                    "duration": round(calculate_duration_hours(q_start, now_utc), 2),
+                    "anchorage_duration": stored.get("anchorage_duration", 0.0),
                     "departure": now_utc.isoformat()
                 })
                 to_remove.append(v_id)
-                print(f"[LOG] Departure detected: {stored['entry'].get('nOM_NAVIREField')} (Stay: {round(dur,2)}h)")
-            
-            stored["status"] = new_status
-            stored["last_seen"] = now_utc.isoformat()
+                
+            stored.update({"status": new, "last_seen": now_utc.isoformat()})
 
-    for vid in to_remove: 
-        active.pop(vid, None)
+    for vid in to_remove: active.pop(vid, None)
 
-    # 4. Detect New Vessels (PREVU)
+    # New Vessels (PREVU Alerts)
     for v_id, live in live_vessels.items():
         if v_id not in active:
-            active[v_id] = {
-                "entry": live["e"], 
-                "status": live["status"], 
-                "last_seen": now_utc.isoformat()
-            }
+            # First run check: ignore non-PREVU to avoid false alerts on existing ships
+            if len(active) == 0 and live["status"] != "PREVU": continue
+            
+            active[v_id] = {"entry": live["e"], "status": live["status"], "last_seen": now_utc.isoformat()}
             if live["status"] == "PREVU":
                 p = port_name(live['e'].get("cODE_SOCIETEField"))
                 alerts.setdefault(p, []).append(live["e"])
 
-    # 5. Garbage Collection (Fixed Logic)
+    # State Cleanup & Save
     cutoff = now_utc - timedelta(days=3)
-    state["active"] = {
-        k: v for k, v in active.items() 
-        if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff
-    }
-    state["history"] = history[-100:] 
+    state["active"] = {k: v for k, v in active.items() if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff}
+    state["history"] = history[-100:]
     save_state(state)
 
-    # 6. Sending Alerts
+    # Send Arrival Alerts
     if alerts:
         for p, vessels in alerts.items():
             v_names = ", ".join([v.get('nOM_NAVIREField', 'Unknown') for v in vessels])
-            intro = f"<p style='font-family:Arial; font-size:15px;'>Bonjour,<br><br>Ci-dessous les mouvements prévus au <b>Port de {p}</b> :</p>"
+            intro = f"<p style='font-family:Arial; font-size:15px;'>Bonjour,<br><br>Mouvements prévus au <b>Port de {p}</b> :</p>"
             cards = "".join([format_vessel_details_premium(v) for v in vessels])
-            
-            # RESTORED ORIGINAL PREMIUM FOOTER
-            footer = f"""
-            <div style='margin-top: 20px; border-top: 1px solid #e6e9ef; padding-top: 15px;'>
-                <p style='font-family:Arial; font-size:14px; color:#333;'>Cordialement,</p>
-                <p style='font-family:Arial; font-size:12px; color:#777777; font-style: italic;'>
-                    Ceci est une génération automatique par le système de surveillance.
-                </p>
-            </div>"""
+            footer = "<p style='font-size:12px; color:#777; font-style:italic;'>Rapport automatique par le système de surveillance.</p>"
             
             full_body = intro + cards + footer
-            new_subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {v_names} au Port de {p}"
+            subject = f"🔔 NOUVELLE ARRIVÉE PRÉVUE | {v_names} au Port de {p}"
             
-            send_email(EMAIL_TO, new_subject, full_body)
-            print(f"[EMAIL] Sent to YOU for {p}: {v_names}")
-            
+            send_email(EMAIL_TO, subject, full_body)
             if p == "Laâyoune" and EMAIL_TO_COLLEAGUE:
-                send_email(EMAIL_TO_COLLEAGUE, new_subject, full_body)
-                print(f"[EMAIL] Sent to COLLEAGUE for {p}: {v_names}")
+                send_email(EMAIL_TO_COLLEAGUE, subject, full_body)
     else:
-        print("[LOG] No new PREVU vessels detected.")
+        print("[LOG] No new PREVU vessels.")
 
 if __name__ == "__main__":
     main()
