@@ -287,7 +287,7 @@ def main():
     # State Cleanup & Save
     cutoff = now_utc - timedelta(days=3)
     state["active"] = {k: v for k, v in active.items() if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff}
-    state["history"] = history[-100:]
+    state["history"] = history[-1000:]
     save_state(state)
 
     # Send Arrival Alerts
