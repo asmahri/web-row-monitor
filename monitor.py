@@ -12,6 +12,7 @@ from typing import Dict, List, Optional
 # ==========================================
 TARGET_URL = "https://www.anp.org.ma/_vti_bin/WS/Service.svc/mvmnv/all"
 STATE_FILE = "state.json" 
+HISTORY_FILE = "history.json"
 STATE_ENV_VAR = "VESSEL_STATE_DATA" 
 
 EMAIL_USER = os.getenv("EMAIL_USER")
@@ -207,7 +208,7 @@ def send_email(to, sub, body):
         print(f"[ERROR] Email Error: {e}")
 
 # ==========================================
-# 🔄 MAIN PROCESS
+# 🔄 MAIN PROCESS WITH MOVE-ON-REPORT
 # ==========================================
 def main():
     print(f"{'='*30}\nMODE: {RUN_MODE.upper()}\n{'='*30}")
@@ -215,15 +216,51 @@ def main():
     active = state.get("active", {})
     history = state.get("history", [])
 
-    # REPORT MODE Logic
+    # REPORT MODE Logic with Move-on-Report
     if RUN_MODE == "report":
-        print(f"[LOG] Generating monthly reports for {len(history)} movements.")
+        print(f"[LOG] Generating monthly reports for {len(history)} completed movements.")
+        
+        # 1. Send reports for each port
         for p_code in ALLOWED_PORTS:
             p_name = port_name(p_code)
             p_hist = [h for h in history if h.get("port") == p_name]
             if p_hist:
                 print(f"[LOG] Sending report for {p_name}")
                 send_monthly_report(p_hist, p_name)
+        
+        # 2. MOVE reported vessels to history.json (the permanent archive)
+        existing_archive = []
+        if os.path.exists(HISTORY_FILE):
+            try:
+                with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                    existing_archive = json.load(f)
+            except Exception as e:
+                print(f"[WARNING] Failed to load history archive: {e}")
+        
+        # Append current history to the permanent archive
+        existing_archive.extend(history)
+        
+        try:
+            with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+                json.dump(existing_archive, f, indent=2, ensure_ascii=False)
+            print(f"[LOG] Moved {len(history)} completed movements to history.json")
+        except Exception as e:
+            print(f"[ERROR] Failed to save history archive: {e}")
+            return  # Don't clear history if we can't archive
+        
+        # 3. CLEAR the history from state.json so it's fresh for the new month
+        state["history"] = []
+        
+        # 4. Also clean up very old active vessels (older than 30 days)
+        now_utc = datetime.now(timezone.utc)
+        cutoff = now_utc - timedelta(days=30)
+        state["active"] = {
+            k: v for k, v in active.items() 
+            if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff
+        }
+        
+        save_state(state)
+        print("[LOG] Monthly report completed. State history cleared, old active vessels cleaned.")
         return
 
     # MONITOR MODE Logic
