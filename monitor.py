@@ -43,9 +43,13 @@ def fetch_vessel_data_with_retry(max_retries=3, initial_delay=5):
                 TARGET_URL, 
                 timeout=(10, 60),  # 10s connect, 60s read
                 headers={
-                    'User-Agent': 'Mozilla/5.0 (compatible; VesselMonitor/1.0)',
-                    'Accept': 'application/json'
-                }
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'application/json',
+    'Accept-Language': 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.anp.org.ma/',
+    'Connection': 'keep-alive'
+}
             )
             resp.raise_for_status()
             
