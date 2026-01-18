@@ -3,6 +3,7 @@ import json
 import re
 import requests
 import smtplib
+import time
 from email.mime.text import MIMEText
 from datetime import datetime, timedelta, timezone 
 from typing import Dict, List, Optional
@@ -29,6 +30,66 @@ RUN_MODE = os.getenv("RUN_MODE", "monitor")
 ALLOWED_PORTS = {"16", "17", "18"} 
 
 # ==========================================
+# 🌐 NETWORK RESILIENCE
+# ==========================================
+def fetch_vessel_data_with_retry(max_retries=3, initial_delay=5):
+    """Fetch vessel data with exponential backoff retry"""
+    for attempt in range(max_retries):
+        try:
+            print(f"[INFO] Fetching vessel data (attempt {attempt + 1}/{max_retries})")
+            
+            # Different timeouts for connect vs read
+            resp = requests.get(
+                TARGET_URL, 
+                timeout=(10, 60),  # 10s connect, 60s read
+                headers={
+                    'User-Agent': 'Mozilla/5.0 (compatible; VesselMonitor/1.0)',
+                    'Accept': 'application/json'
+                }
+            )
+            resp.raise_for_status()
+            
+            # Validate response is JSON
+            data = resp.json()
+            if not isinstance(data, list):
+                raise ValueError("API response is not a list")
+                
+            print(f"[SUCCESS] Fetched {len(data)} vessel records")
+            return data
+            
+        except requests.exceptions.Timeout as e:
+            print(f"[WARNING] Timeout on attempt {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                wait_time = initial_delay * (2 ** attempt)  # Exponential backoff
+                print(f"[INFO] Waiting {wait_time}s before retry...")
+                time.sleep(wait_time)
+            else:
+                print("[ERROR] All retries failed due to timeout")
+                raise
+                
+        except requests.exceptions.ConnectionError as e:
+            print(f"[WARNING] Connection error on attempt {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                wait_time = initial_delay * (2 ** attempt)
+                print(f"[INFO] Waiting {wait_time}s before retry...")
+                time.sleep(wait_time)
+            else:
+                print("[ERROR] All retries failed due to connection issues")
+                raise
+                
+        except requests.exceptions.RequestException as e:
+            print(f"[ERROR] Request failed: {e}")
+            raise
+        except ValueError as e:
+            print(f"[ERROR] Invalid response format: {e}")
+            raise
+        except Exception as e:
+            print(f"[ERROR] Unexpected error: {e}")
+            raise
+    
+    raise Exception("All retry attempts failed")
+
+# ==========================================
 # 💾 STATE MANAGEMENT
 # ==========================================
 def load_state() -> Dict:
@@ -36,22 +97,37 @@ def load_state() -> Dict:
         try:
             with open(STATE_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except Exception: pass
+        except Exception as e:
+            print(f"[WARNING] Failed to load state: {e}")
 
     state_data = os.getenv(STATE_ENV_VAR)
     if not state_data: return {"active": {}, "history": []}
     try:
         data = json.loads(state_data)
         return data if "active" in data else {"active": {}, "history": []}
-    except (json.JSONDecodeError, TypeError):
+    except (json.JSONDecodeError, TypeError) as e:
+        print(f"[WARNING] Failed to parse state from env: {e}")
         return {"active": {}, "history": []}
 
 def save_state(state: Dict):
     try:
-        with open(STATE_FILE, "w", encoding="utf-8") as f:
+        # Save to temp file first
+        temp_file = f"{STATE_FILE}.tmp"
+        with open(temp_file, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2, ensure_ascii=False)
-    except IOError as e:
+        
+        # Validate it's valid JSON
+        with open(temp_file, "r", encoding="utf-8") as f:
+            json.load(f)
+        
+        # Replace original
+        os.replace(temp_file, STATE_FILE)
+        
+    except Exception as e:
         print(f"[ERROR] Save failed: {e}")
+        # Clean up temp file if it exists
+        if os.path.exists(temp_file):
+            os.remove(temp_file)
 
 # ==========================================
 # 📅 DATE & TIME HELPERS
@@ -88,7 +164,7 @@ def port_name(code: str) -> str:
     return {"16": "Tan Tan", "17": "Laâyoune", "18": "Dakhla"}.get(str(code), f"Port {code}")
 
 # ==========================================
-# 📧 EMAIL TEMPLATES (PREMIUM STYLE)
+# 📧 EMAIL TEMPLATES
 # ==========================================
 def format_vessel_details_premium(entry: dict) -> str:
     nom = entry.get("nOM_NAVIREField") or "INCONNU"
@@ -200,7 +276,7 @@ def send_email(to, sub, body):
     msg = MIMEText(body, "html", "utf-8")
     msg["Subject"], msg["From"], msg["To"] = sub, EMAIL_USER, to
     try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=20) as server:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30) as server:  # Increased email timeout too
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, [to], msg.as_string())
@@ -208,7 +284,7 @@ def send_email(to, sub, body):
         print(f"[ERROR] Email Error: {e}")
 
 # ==========================================
-# 🔄 MAIN PROCESS WITH MOVE-ON-REPORT
+# 🔄 MAIN PROCESS
 # ==========================================
 def main():
     print(f"{'='*30}\nMODE: {RUN_MODE.upper()}\n{'='*30}")
@@ -216,11 +292,9 @@ def main():
     active = state.get("active", {})
     history = state.get("history", [])
 
-    # REPORT MODE Logic with Move-on-Report
+    # REPORT MODE Logic
     if RUN_MODE == "report":
-        print(f"[LOG] Generating monthly reports for {len(history)} completed movements.")
-        
-        # 1. Send reports for each port
+        print(f"[LOG] Generating monthly reports for {len(history)} movements.")
         for p_code in ALLOWED_PORTS:
             p_name = port_name(p_code)
             p_hist = [h for h in history if h.get("port") == p_name]
@@ -228,48 +302,37 @@ def main():
                 print(f"[LOG] Sending report for {p_name}")
                 send_monthly_report(p_hist, p_name)
         
-        # 2. MOVE reported vessels to history.json (the permanent archive)
+        # Move to history.json and clear state history
+        archive_file = "history.json"
         existing_archive = []
-        if os.path.exists(HISTORY_FILE):
+        if os.path.exists(archive_file):
             try:
-                with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                with open(archive_file, "r", encoding="utf-8") as f:
                     existing_archive = json.load(f)
             except Exception as e:
                 print(f"[WARNING] Failed to load history archive: {e}")
         
-        # Append current history to the permanent archive
         existing_archive.extend(history)
         
         try:
-            with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+            with open(archive_file, "w", encoding="utf-8") as f:
                 json.dump(existing_archive, f, indent=2, ensure_ascii=False)
             print(f"[LOG] Moved {len(history)} completed movements to history.json")
         except Exception as e:
             print(f"[ERROR] Failed to save history archive: {e}")
-            return  # Don't clear history if we can't archive
+            return
         
-        # 3. CLEAR the history from state.json so it's fresh for the new month
         state["history"] = []
-        
-        # 4. Also clean up very old active vessels (older than 30 days)
-        now_utc = datetime.now(timezone.utc)
-        cutoff = now_utc - timedelta(days=30)
-        state["active"] = {
-            k: v for k, v in active.items() 
-            if datetime.fromisoformat(v["last_seen"]).replace(tzinfo=timezone.utc) > cutoff
-        }
-        
         save_state(state)
-        print("[LOG] Monthly report completed. State history cleared, old active vessels cleaned.")
+        print("[LOG] Monthly report completed. State history cleared.")
         return
 
-    # MONITOR MODE Logic
+    # MONITOR MODE Logic with retry
     try:
-        resp = requests.get(TARGET_URL, timeout=30)
-        resp.raise_for_status()
-        all_data = resp.json()
+        all_data = fetch_vessel_data_with_retry(max_retries=3, initial_delay=5)
     except Exception as e:
-        print(f"[CRITICAL] API Error: {e}"); return
+        print(f"[CRITICAL] API Error after retries: {e}")
+        return
 
     now_utc = datetime.now(timezone.utc)
     live_vessels = {}
