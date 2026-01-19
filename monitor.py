@@ -31,31 +31,43 @@ RUN_MODE = os.getenv("RUN_MODE", "monitor")
 ALLOWED_PORTS = {"16", "17", "18"} 
 
 # ==========================================
-# 🚦 STATUS NORMALIZATION (USER REQUEST)
+# 🚦 STATUS NORMALIZATION (CORRECTED VERSION)
 # ==========================================
-# The API returns granular statuses (e.g., "EN CHARGEMENT").
-# We normalize them to the 4 main states you want to track.
+# CORRECTION CRITIQUE: La fonction normalise maintenant TOUS les statuts correctement
 
-# 1. Define the granular statuses that map to main states
-LOADING_STATUSES = {"EN DECHARGEMENT", "EN CHARGEMENT"}
-
-# 2. Main Tracking Categories
-ANCHORAGE_STATUSES = {"EN RADE"}      # Wait at anchor
-BERTH_STATUSES = {"A QUAI"}           # At Berth
-COMPLETED_STATUSES = {"APPAREILLAGE", "TERMINE"} 
+# Define all granular statuses from the API
+LOADING_STATUSES = {"EN CHARGEMENT", "EN DECHARGEMENT"}
+COMPLETED_STATUSES = {"APPAREILLAGE", "TERMINE"}
+ANCHORAGE_STATUSES = {"EN RADE"}
+BERTH_STATUSES = {"A QUAI"} | LOADING_STATUSES  # Include loading statuses
+PLANNED_STATUSES = {"PREVU"}
 
 def normalize_status(raw_status: str) -> str:
     """
     Normalizes granular API statuses to the 4 main tracking states.
+    CORRECTED VERSION based on your requirements and data analysis.
     """
-    if not raw_status: return "UNKNOWN"
-    status = raw_status.upper()
+    if not raw_status: 
+        return "UNKNOWN"
     
-    # If it's a loading/unloading state, treat it as "A QUAI"
+    status = raw_status.strip().upper()
+    
+    # 1. Loading/Unloading → "A QUAI"
     if status in LOADING_STATUSES:
         return "A QUAI"
-        
-    # Return clean status
+    
+    # 2. Completed/Departure → "APPAREILLAGE"
+    if status in COMPLETED_STATUSES:
+        return "APPAREILLAGE"
+    
+    # 3. For other main statuses, return as-is if they're already normalized
+    # These are the 4 main states you want to track
+    if status in {"PREVU", "EN RADE", "A QUAI", "APPAREILLAGE"}:
+        return status
+    
+    # 4. If it's an unknown status, log it but return as-is
+    # (This handles any unexpected statuses from the API)
+    print(f"[WARNING] Unknown status encountered: '{raw_status}' → Keeping as-is")
     return status
 
 # ==========================================
@@ -469,10 +481,10 @@ def send_email(to, sub, body):
         print(f"[ERROR] Email sending failed: {e}")
 
 # ==========================================
-# 🔄 MAIN PROCESS (BI UPGRADE)
+# 🔄 MAIN PROCESS (CORRECTED VERSION)
 # ==========================================
 def main():
-    print(f"{'='*50}\n🚢 VESSEL MONITOR - Business Intelligence Edition\n{'='*50}")
+    print(f"{'='*50}\n🚢 VESSEL MONITOR - Business Intelligence Edition (CORRECTED)\n{'='*50}")
     print(f"MODE: {RUN_MODE.upper()}\nPorts: Tan Tan (16), Laâyoune (17), Dakhla (18)")
     print(f"{'='*50}")
     
@@ -540,10 +552,10 @@ def main():
     now_utc = datetime.now(timezone.utc)
     live_vessels = {}
     
-    # Process live data
+    # Process live data with CORRECTED normalization
     for e in all_data:
         if str(e.get("cODE_SOCIETEField")) in ALLOWED_PORTS:
-            # NORMALIZATION STEP HERE
+            # NORMALIZATION STEP (CORRECTED)
             raw_status = e.get("sITUATIONField") or ""
             clean_status = normalize_status(raw_status)
             
@@ -566,8 +578,8 @@ def main():
             # Update time accumulators based on status change (Stopwatch Logic)
             stored = update_vessel_timers(stored, new_status, now_utc)
             
-            # Check for state transitions
-            if prev_status == "A QUAI" and new_status == "APPAREILLAGE":
+            # Check for state transitions (CORRECTED: include "TERMINE" as departure)
+            if prev_status == "A QUAI" and new_status in {"APPAREILLAGE", "TERMINE"}:
                 # Vessel completed its stay - add to history with BI metrics
                 history.append({
                     "vessel": stored["entry"].get('nOM_NAVIREField', 'Unknown'),
@@ -640,6 +652,7 @@ def main():
     # Print current tracking stats
     print(f"[STATS] Tracking {len(active_cleaned)} active vessels")
     print(f"[STATS] Total history entries: {len(history)}")
+    print(f"[STATS] Port distribution in live data: Tan Tan: {sum(1 for v in live_vessels.values() if v['e'].get('cODE_SOCIETEField') == '16')}, Laâyoune: {sum(1 for v in live_vessels.values() if v['e'].get('cODE_SOCIETEField') == '17')}, Dakhla: {sum(1 for v in live_vessels.values() if v['e'].get('cODE_SOCIETEField') == '18')}")
 
     # Send Arrival Alerts
     if alerts:
