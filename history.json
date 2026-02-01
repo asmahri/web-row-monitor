@@ -1,1 +1,88 @@
-{}
+[
+  {
+    "vessel": "BELOMORYE",
+    "consignataire": "MADES DE PECHE",
+    "port": "Dakhla",
+    "arrived_rade": "2025-12-31T16:00:00",
+    "arrived_quai": "N/A",
+    "departed": "2026-01-09T13:25:00",
+    "rade_duration_hours": 213.41666666666666,
+    "quai_duration_hours": 0.0
+  },
+  {
+    "vessel": "VASILIY LOZOVSKIY",
+    "consignataire": "MADES DE PECHE",
+    "port": "Dakhla",
+    "arrived_rade": "2025-12-31T11:00:00",
+    "arrived_quai": "N/A",
+    "departed": "2026-01-09T14:15:00",
+    "rade_duration_hours": 219.25,
+    "quai_duration_hours": 0.0
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 0.0,
+    "berth_hours": 38.3,
+    "arrival": "2026-01-20T15:30:44.143131+00:00",
+    "departure": "2026-01-20T15:30:44.143131+00:00",
+    "total_duration": 38.3
+  },
+  {
+    "vessel": "NQ LILIUM",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "port_code": "18",
+    "anchorage_hours": 8.8,
+    "berth_hours": 22.8,
+    "arrival": "2026-01-22T15:26:05.009695+00:00",
+    "departure": "2026-01-22T15:26:05.009695+00:00",
+    "total_duration": 31.6
+  },
+  {
+    "vessel": "STORM I",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "port_code": "18",
+    "anchorage_hours": 3.7,
+    "berth_hours": 72.5,
+    "arrival": "2026-01-26T17:52:00.905834+00:00",
+    "departure": "2026-01-26T17:52:00.905834+00:00",
+    "total_duration": 76.2
+  },
+  {
+    "vessel": "BBC BELEM",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 63.4,
+    "berth_hours": 161.0,
+    "arrival": "2026-01-28T09:36:52.588990+00:00",
+    "departure": "2026-01-28T09:36:52.588990+00:00",
+    "total_duration": 224.4
+  },
+  {
+    "vessel": "WAGON C ",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 182.2,
+    "berth_hours": 66.2,
+    "arrival": "2026-01-29T09:37:48.813798+00:00",
+    "departure": "2026-01-29T09:37:48.813798+00:00",
+    "total_duration": 248.4
+  },
+  {
+    "vessel": "RIGHT STEP",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 225.2,
+    "berth_hours": 32.2,
+    "arrival": "2026-01-29T18:37:12.193185+00:00",
+    "departure": "2026-01-29T18:37:12.193185+00:00",
+    "total_duration": 257.4
+  }
+]
