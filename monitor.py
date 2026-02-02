@@ -418,14 +418,6 @@ def send_monthly_report(history: list, specific_port: str):
             </table>
             
             <div style='margin-top: 40px; padding-top: 20px; border-top: 2px solid #e6e9ef;'>
-                <h4 style='color: #2c3e50; margin-bottom: 15px;'>🔍 Insights Clés pour {specific_port}</h4>
-                <ul style='font-size: 14px; color: #34495e; line-height:1.6;'>
-                    <li><strong>Négociation:</strong> Utilisez ces données pour les négociations de tarifs portuaires avec les agents</li>
-                    <li><strong>Planification:</strong> Prévoyez les ressources en fonction des temps d'attente moyens</li>
-                    <li><strong>Benchmarking:</strong> Comparez les performances entre agents pour identifier les meilleures pratiques</li>
-                    <li><strong>Optimisation:</strong> Ciblez les agents avec les plus longs temps d'attente pour amélioration</li>
-                </ul>
-                
                 <div style='background: #f9f9f9; padding: 15px; border-radius: 6px; margin-top: 20px;'>
                     <p style='font-size:14px; color:#333; margin: 0;'><strong>Cordialement,</strong></p>
                     <p style='font-size:12px; color:#777777; font-style: italic; margin: 5px 0 0 0;'>
