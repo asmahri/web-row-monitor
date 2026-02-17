@@ -18,10 +18,10 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "A QUAI",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00",
       "current_status": "A QUAI",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "berth_hours": 717.2069673675005
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "berth_hours": 717.723405019445
     },
     "9488645-201466415": {
       "entry": {
@@ -41,10 +41,10 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "A QUAI",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00",
       "current_status": "A QUAI",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "berth_hours": 717.2069673675005
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "berth_hours": 717.723405019445
     },
     "9393395-201466963": {
       "entry": {
@@ -64,11 +64,11 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00",
       "current_status": "A QUAI",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
       "anchorage_hours": 188.91715401027776,
-      "berth_hours": 419.1616091597223
+      "berth_hours": 419.6780468116667
     },
     "7325461-201466965": {
       "entry": {
@@ -88,10 +88,10 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00",
       "current_status": "EN RADE",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "anchorage_hours": 688.575529328056
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "anchorage_hours": 689.0919669800004
     },
     "7427659-201467152": {
       "entry": {
@@ -111,11 +111,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 591.1520261538894,
+      "anchorage_hours": 591.6684638058339,
       "berth_hours": 0.0,
       "first_seen": "2026-01-23T23:17:04.577390+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "9409754-201467168": {
       "entry": {
@@ -135,35 +135,11 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 525.0231751927779,
+      "anchorage_hours": 525.5396128447223,
       "berth_hours": 0.0,
       "first_seen": "2026-01-25T15:15:51.541607+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
-    },
-    "0006999-201467053": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "9543",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "NABIH SERVICES",
-        "dATE_SITUATIONField": "/Date(1771023600000+0100)/",
-        "date_SystemeField": "/Date(1771103752803+0100)/",
-        "hEURE_SITUATIONField": "/Date(34200000+0100)/",
-        "nOM_NAVIREField": "LE VIZIR",
-        "nUMERO_ESCALEField": 201467053,
-        "nUMERO_LLOYDField": "0006999",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "DAKHLA",
-        "sITUATIONField": "APPAREILLAGE",
-        "tYP_NAVIREField": "CHALUTIER"
-      },
-      "current_status": "APPAREILLAGE",
-      "anchorage_hours": 50.9002624388889,
-      "berth_hours": 0.0,
-      "first_seen": "2026-01-28T23:22:03.378882+00:00",
-      "last_updated": "2026-02-14T22:49:06.330527+00:00",
-      "last_seen": "2026-02-14T22:49:06.330527+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0006830-201467163": {
       "entry": {
@@ -208,10 +184,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 9.2463775375,
-      "berth_hours": 317.7566292441668,
+      "berth_hours": 318.27306689611123,
       "first_seen": "2026-02-02T10:39:25.445198+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0081066-201467499": {
       "entry": {
@@ -234,8 +210,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-09T10:33:24.219789+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0008060-201467498": {
       "entry": {
@@ -258,8 +234,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-09T10:33:24.219789+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0008448-201467497": {
       "entry": {
@@ -282,8 +258,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-09T10:33:24.219789+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0008407-201467496": {
       "entry": {
@@ -351,11 +327,11 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 84.92639954249998,
+      "anchorage_hours": 85.44283719444442,
       "berth_hours": 0.0,
       "first_seen": "2026-02-09T12:58:22.307883+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0000812-201467541": {
       "entry": {
@@ -381,30 +357,6 @@
       "last_updated": "2026-02-16T10:43:19.500184+00:00",
       "last_seen": "2026-02-16T10:43:19.500184+00:00"
     },
-    "0008519-201467540": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "C1035",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "SAFNEA SERVICES",
-        "dATE_SITUATIONField": "/Date(1771023600000+0100)/",
-        "date_SystemeField": "/Date(1771103752803+0100)/",
-        "hEURE_SITUATIONField": "/Date(39600000+0100)/",
-        "nOM_NAVIREField": "AL GHAZALI",
-        "nUMERO_ESCALEField": 201467540,
-        "nUMERO_LLOYDField": "0008519",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "AGADIR",
-        "sITUATIONField": "APPAREILLAGE",
-        "tYP_NAVIREField": "CHALUTIER"
-      },
-      "current_status": "APPAREILLAGE",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-02-10T16:02:37.708129+00:00",
-      "last_updated": "2026-02-14T22:49:06.330527+00:00",
-      "last_seen": "2026-02-14T22:49:06.330527+00:00"
-    },
     "9933913-201467549": {
       "entry": {
         "cODE_CONSIGNATAIREField": "000303",
@@ -426,8 +378,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-10T22:05:00.041077+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "9478298-201467577": {
       "entry": {
@@ -472,10 +424,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 75.70856614777777,
-      "berth_hours": 8.362816273055556,
+      "berth_hours": 8.879253925,
       "first_seen": "2026-02-12T16:29:08.017810+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "9904285-201467602": {
       "entry": {
@@ -498,8 +450,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-12T19:48:15.151126+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0063484-201467620": {
       "entry": {
@@ -543,11 +495,11 @@
         "tYP_NAVIREField": "CHIMIQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 35.71032716611111,
+      "anchorage_hours": 36.22676481805555,
       "berth_hours": 0.0,
       "first_seen": "2026-02-13T16:39:18.923601+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "9874562-201467643": {
       "entry": {
@@ -570,8 +522,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-14T22:18:09.588114+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0081062-201467644": {
       "entry": {
@@ -594,8 +546,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-14T22:18:09.588114+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0010103-201467661": {
       "entry": {
@@ -618,8 +570,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-16T04:21:39.830478+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0001094-201467662": {
       "entry": {
@@ -642,8 +594,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-16T04:21:39.830478+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0008594-201467681": {
       "entry": {
@@ -666,8 +618,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-16T17:09:04.467053+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0001016-201467670": {
       "entry": {
@@ -738,8 +690,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-16T17:38:16.846212+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "7325461-201467684": {
       "entry": {
@@ -762,8 +714,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-16T17:38:16.846212+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0008550-201467683": {
       "entry": {
@@ -906,8 +858,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-17T09:42:05.482738+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0006183-201467704": {
       "entry": {
@@ -930,8 +882,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-17T10:40:03.385596+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0001258-201467691": {
       "entry": {
@@ -954,8 +906,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-17T11:36:25.024421+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "0001071-201467692": {
       "entry": {
@@ -978,8 +930,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-17T11:36:25.024421+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     },
     "9501655-201467312": {
       "entry": {
@@ -1002,8 +954,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-02-17T12:53:19.942520+00:00",
-      "last_updated": "2026-02-17T22:25:56.677982+00:00",
-      "last_seen": "2026-02-17T22:25:56.677982+00:00"
+      "last_updated": "2026-02-17T22:56:55.853529+00:00",
+      "last_seen": "2026-02-17T22:56:55.853529+00:00"
     }
   },
   "history": [
