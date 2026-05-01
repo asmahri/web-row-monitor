@@ -502,5 +502,170 @@
     "arrival": "2026-03-25T14:19:34.405395+00:00",
     "departure": "2026-03-31T13:06:04.198254+00:00",
     "total_duration": 49.3
+  },
+  {
+    "vessel": "GAS VICTORY",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 48.4,
+    "berth_hours": 25.7,
+    "arrival": "2026-03-22T21:21:24.907629+00:00",
+    "departure": "2026-04-01T14:48:22.619274+00:00",
+    "total_duration": 74.1
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "port_code": "18",
+    "anchorage_hours": 53.0,
+    "berth_hours": 2.8,
+    "arrival": "2026-04-02T11:41:52.821676+00:00",
+    "departure": "2026-04-09T17:56:06.458809+00:00",
+    "total_duration": 55.8
+  },
+  {
+    "vessel": "TINA THERESA",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 20.7,
+    "berth_hours": 40.4,
+    "arrival": "2026-04-05T14:31:59.869022+00:00",
+    "departure": "2026-04-12T11:04:52.449764+00:00",
+    "total_duration": 61.0
+  },
+  {
+    "vessel": "FT QUINTO",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 21.9,
+    "berth_hours": 51.1,
+    "arrival": "2026-04-06T13:50:17.060580+00:00",
+    "departure": "2026-04-15T14:52:36.100246+00:00",
+    "total_duration": 72.9
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 50.2,
+    "berth_hours": 75.8,
+    "arrival": "2026-04-06T14:41:43.902037+00:00",
+    "departure": "2026-04-15T14:52:36.100246+00:00",
+    "total_duration": 126.0
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 35.1,
+    "berth_hours": 47.2,
+    "arrival": "2026-04-10T21:32:11.891485+00:00",
+    "departure": "2026-04-17T14:01:52.489683+00:00",
+    "total_duration": 82.2
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 0.0,
+    "berth_hours": 24.5,
+    "arrival": "2026-04-16T16:53:43.779597+00:00",
+    "departure": "2026-04-19T15:33:24.339419+00:00",
+    "total_duration": 24.5
+  },
+  {
+    "vessel": "DH BLOSSOMING",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 62.9,
+    "berth_hours": 49.8,
+    "arrival": "2026-04-08T13:10:16.683887+00:00",
+    "departure": "2026-04-20T15:51:41.052877+00:00",
+    "total_duration": 112.7
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 19.9,
+    "berth_hours": 26.9,
+    "arrival": "2026-04-16T16:53:43.779597+00:00",
+    "departure": "2026-04-22T20:29:04.738863+00:00",
+    "total_duration": 46.8
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 33.3,
+    "berth_hours": 1.7,
+    "arrival": "2026-04-21T14:57:05.404768+00:00",
+    "departure": "2026-04-24T14:51:58.234061+00:00",
+    "total_duration": 35.0
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 7.9,
+    "berth_hours": 24.2,
+    "arrival": "2026-04-20T22:38:28.988225+00:00",
+    "departure": "2026-04-25T13:21:08.934197+00:00",
+    "total_duration": 32.0
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "port_code": "18",
+    "anchorage_hours": 11.6,
+    "berth_hours": 20.3,
+    "arrival": "2026-04-23T13:16:00.871924+00:00",
+    "departure": "2026-04-28T15:02:25.563601+00:00",
+    "total_duration": 31.8
+  },
+  {
+    "vessel": "FT PORTORIA",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 0.0,
+    "berth_hours": 48.6,
+    "arrival": "2026-04-23T11:37:52.850643+00:00",
+    "departure": "2026-04-29T14:04:38.176967+00:00",
+    "total_duration": 48.6
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 0.0,
+    "berth_hours": 25.7,
+    "arrival": "2026-04-23T15:25:01.975311+00:00",
+    "departure": "2026-04-30T15:45:25.447127+00:00",
+    "total_duration": 25.7
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "port_code": "17",
+    "anchorage_hours": 3.7,
+    "berth_hours": 25.7,
+    "arrival": "2026-04-27T13:28:04.985183+00:00",
+    "departure": "2026-04-30T15:45:25.447127+00:00",
+    "total_duration": 29.4
   }
 ]
