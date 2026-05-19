@@ -18,10 +18,10 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "A QUAI",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00",
       "current_status": "A QUAI",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "berth_hours": 2883.4378223827784
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "berth_hours": 2887.1564509208342
     },
     "9488645-201466415": {
       "entry": {
@@ -41,10 +41,10 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "status": "A QUAI",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00",
       "current_status": "A QUAI",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "berth_hours": 2883.4378223827784
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "berth_hours": 2887.1564509208342
     },
     "9393395-201466963": {
       "entry": {
@@ -64,11 +64,11 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00",
       "current_status": "A QUAI",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
       "anchorage_hours": 188.91715401027776,
-      "berth_hours": 2585.392464175
+      "berth_hours": 2589.1110927130558
     },
     "7325461-201466965": {
       "entry": {
@@ -88,10 +88,10 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "status": "PREVU",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00",
       "current_status": "EN RADE",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "anchorage_hours": 2854.806384343333
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "anchorage_hours": 2858.5250128813886
     },
     "7427659-201467152": {
       "entry": {
@@ -111,11 +111,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 2757.3828811691674,
+      "anchorage_hours": 2761.101509707223,
       "berth_hours": 0.0,
       "first_seen": "2026-01-23T23:17:04.577390+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9409754-201467168": {
       "entry": {
@@ -136,10 +136,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 614.9643380591668,
-      "berth_hours": 2076.2896921488896,
+      "berth_hours": 2080.0083206869454,
       "first_seen": "2026-01-25T15:15:51.541607+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9212448-201467327": {
       "entry": {
@@ -160,10 +160,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 9.2463775375,
-      "berth_hours": 2483.9874842594477,
+      "berth_hours": 2487.7061127975035,
       "first_seen": "2026-02-02T10:39:25.445198+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9444936-201467750": {
       "entry": {
@@ -184,10 +184,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 6.860541780555556,
-      "berth_hours": 2027.063301043056,
+      "berth_hours": 2030.7819295811116,
       "first_seen": "2026-02-18T14:04:57.430673+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9566708-201468046": {
       "entry": {
@@ -208,10 +208,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 74.74004272472222,
-      "berth_hours": 1697.983155948888,
+      "berth_hours": 1701.7017844869436,
       "first_seen": "2026-03-02T01:45:38.411727+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9346407-201468071": {
       "entry": {
@@ -232,10 +232,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 90.55946336111107,
-      "berth_hours": 1669.6632193244436,
+      "berth_hours": 1673.3818478624992,
       "first_seen": "2026-03-03T01:47:40.062479+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9501655-201468264": {
       "entry": {
@@ -256,10 +256,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 26.22998233222222,
-      "berth_hours": 1617.0102646169435,
+      "berth_hours": 1620.728893154999,
       "first_seen": "2026-03-10T01:28:46.326246+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9841421-201468277": {
       "entry": {
@@ -280,10 +280,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 8.549634364166668,
-      "berth_hours": 1576.003264709444,
+      "berth_hours": 1579.7218932474996,
       "first_seen": "2026-03-10T12:56:05.235080+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9904285-201468309": {
       "entry": {
@@ -303,11 +303,11 @@
         "tYP_NAVIREField": "REMORQUEUR"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 1603.0895011277767,
+      "anchorage_hours": 1606.8081296658322,
       "berth_hours": 0.0,
       "first_seen": "2026-03-11T14:02:47.386594+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9427079-201468768": {
       "entry": {
@@ -328,10 +328,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 4.451807704444445,
-      "berth_hours": 1119.6456343080563,
+      "berth_hours": 1123.3642628461118,
       "first_seen": "2026-03-31T11:43:55.736411+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9437854-201468795": {
       "entry": {
@@ -352,10 +352,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 0.0,
-      "berth_hours": 1118.0373624361118,
+      "berth_hours": 1121.7559909741674,
       "first_seen": "2026-04-01T13:09:12.068610+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9045728-201469007": {
       "entry": {
@@ -376,10 +376,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 55.570155471388894,
-      "berth_hours": 708.0977328508332,
+      "berth_hours": 711.8163613888887,
       "first_seen": "2026-04-10T13:53:58.661438+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9508639-201469503": {
       "entry": {
@@ -400,10 +400,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 32.653114832777774,
-      "berth_hours": 323.6233461099999,
+      "berth_hours": 327.34197464805544,
       "first_seen": "2026-05-02T03:57:58.473692+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9518880-201469511": {
       "entry": {
@@ -424,10 +424,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 0.0,
-      "berth_hours": 280.2151694627778,
+      "berth_hours": 283.93379800083335,
       "first_seen": "2026-05-02T11:40:29.421733+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9437854-201469527": {
       "entry": {
@@ -448,10 +448,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 25.92622055527778,
-      "berth_hours": 280.2151694627778,
+      "berth_hours": 283.93379800083335,
       "first_seen": "2026-05-04T12:18:48.396483+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9427079-201469646": {
       "entry": {
@@ -460,7 +460,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1778886000000+0100)/",
-        "date_SystemeField": "/Date(1779164212420+0100)/",
+        "date_SystemeField": "/Date(1779178583400+0100)/",
         "hEURE_SITUATIONField": "/Date(43800000+0100)/",
         "nOM_NAVIREField": "BBC GREENLAND",
         "nUMERO_ESCALEField": 201469646,
@@ -472,10 +472,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 0.0,
-      "berth_hours": 63.48472311750001,
+      "berth_hours": 67.20335165555557,
       "first_seen": "2026-05-09T10:31:10.383276+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9841421-201469656": {
       "entry": {
@@ -508,7 +508,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1778972400000+0100)/",
-        "date_SystemeField": "/Date(1779164212420+0100)/",
+        "date_SystemeField": "/Date(1779178583397+0100)/",
         "hEURE_SITUATIONField": "/Date(48000000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201469718,
@@ -520,10 +520,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 15.882418633055554,
-      "berth_hours": 38.62824785861111,
+      "berth_hours": 42.346876396666666,
       "first_seen": "2026-05-12T22:55:00.089871+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9841421-201469734": {
       "entry": {
@@ -556,7 +556,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1779058800000+0100)/",
-        "date_SystemeField": "/Date(1779164212420+0100)/",
+        "date_SystemeField": "/Date(1779178583397+0100)/",
         "hEURE_SITUATIONField": "/Date(900000+0100)/",
         "nOM_NAVIREField": "RIX ONYX",
         "nUMERO_ESCALEField": 201469779,
@@ -567,11 +567,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 27.19783405138889,
+      "anchorage_hours": 30.916462589444446,
       "berth_hours": 0.0,
       "first_seen": "2026-05-15T10:43:46.899426+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     },
     "9437854-201469684": {
       "entry": {
@@ -604,7 +604,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1778886000000+0100)/",
-        "date_SystemeField": "/Date(1779164212420+0100)/",
+        "date_SystemeField": "/Date(1779178583400+0100)/",
         "hEURE_SITUATIONField": "/Date(63000000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201469813,
@@ -615,11 +615,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 14.987546641666668,
+      "anchorage_hours": 18.706175179722223,
       "berth_hours": 0.0,
       "first_seen": "2026-05-18T13:40:32.588127+00:00",
-      "last_updated": "2026-05-19T04:39:47.756037+00:00",
-      "last_seen": "2026-05-19T04:39:47.756037+00:00"
+      "last_updated": "2026-05-19T08:22:54.818774+00:00",
+      "last_seen": "2026-05-19T08:22:54.818774+00:00"
     }
   },
   "history": [
