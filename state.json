@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780449357307+0100)/",
+        "date_SystemeField": "/Date(1780470954167+0100)/",
         "hEURE_SITUATIONField": "/Date(21617000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -21,8 +21,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T02:05:37.920547+00:00",
-      "last_seen": "2026-06-03T02:05:37.920547+00:00"
+      "last_updated": "2026-06-03T07:20:16.557430+00:00",
+      "last_seen": "2026-06-03T07:20:16.557430+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780449357307+0100)/",
+        "date_SystemeField": "/Date(1780470954173+0100)/",
         "hEURE_SITUATIONField": "/Date(46500000+0100)/",
         "nOM_NAVIREField": "BBC GREENLAND",
         "nUMERO_ESCALEField": 201470025,
@@ -66,11 +66,11 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 12.153792478055554,
+      "anchorage_hours": 17.397858278888886,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T02:05:37.920547+00:00",
-      "last_seen": "2026-06-03T02:05:37.920547+00:00"
+      "last_updated": "2026-06-03T07:20:16.557430+00:00",
+      "last_seen": "2026-06-03T07:20:16.557430+00:00"
     },
     "9508639-201470063": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780449357307+0100)/",
+        "date_SystemeField": "/Date(1780470954173+0100)/",
         "hEURE_SITUATIONField": "/Date(49500000+0100)/",
         "nOM_NAVIREField": "RIX ONYX",
         "nUMERO_ESCALEField": 201470063,
@@ -91,10 +91,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 8.793618140277777,
-      "berth_hours": 12.153792478055554,
+      "berth_hours": 17.397858278888886,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T02:05:37.920547+00:00",
-      "last_seen": "2026-06-03T02:05:37.920547+00:00"
+      "last_updated": "2026-06-03T07:20:16.557430+00:00",
+      "last_seen": "2026-06-03T07:20:16.557430+00:00"
     },
     "9648788-201469962": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780009200000+0100)/",
-        "date_SystemeField": "/Date(1780449357313+0100)/",
+        "date_SystemeField": "/Date(1780470954173+0100)/",
         "hEURE_SITUATIONField": "/Date(39480000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201470024,
@@ -139,10 +139,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 0.0,
-      "berth_hours": 39.565178322777776,
+      "berth_hours": 44.80924412361111,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T02:05:37.920547+00:00",
-      "last_seen": "2026-06-03T02:05:37.920547+00:00"
+      "last_updated": "2026-06-03T07:20:16.557430+00:00",
+      "last_seen": "2026-06-03T07:20:16.557430+00:00"
     },
     "9392042-201470020": {
       "entry": {
@@ -151,7 +151,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1779836400000+0100)/",
-        "date_SystemeField": "/Date(1780449357317+0100)/",
+        "date_SystemeField": "/Date(1780470954173+0100)/",
         "hEURE_SITUATIONField": "/Date(80640000+0100)/",
         "nOM_NAVIREField": "GAS EXELERO",
         "nUMERO_ESCALEField": 201470020,
@@ -162,11 +162,11 @@
         "tYP_NAVIREField": "GAZIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 39.565178322777776,
+      "anchorage_hours": 44.80924412361111,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T02:05:37.920547+00:00",
-      "last_seen": "2026-06-03T02:05:37.920547+00:00"
+      "last_updated": "2026-06-03T07:20:16.557430+00:00",
+      "last_seen": "2026-06-03T07:20:16.557430+00:00"
     }
   },
   "history": [
