@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780488995670+0100)/",
+        "date_SystemeField": "/Date(1780506970497+0100)/",
         "hEURE_SITUATIONField": "/Date(21617000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -21,8 +21,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T12:17:47.618732+00:00",
-      "last_seen": "2026-06-03T12:17:47.618732+00:00"
+      "last_updated": "2026-06-03T17:25:01.888950+00:00",
+      "last_seen": "2026-06-03T17:25:01.888950+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780488995677+0100)/",
+        "date_SystemeField": "/Date(1780506970503+0100)/",
         "hEURE_SITUATIONField": "/Date(80400000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470053,
@@ -42,11 +42,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 0.0,
+      "anchorage_hours": 5.120630616111112,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T12:17:47.618732+00:00",
-      "last_seen": "2026-06-03T12:17:47.618732+00:00"
+      "last_updated": "2026-06-03T17:25:01.888950+00:00",
+      "last_seen": "2026-06-03T17:25:01.888950+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780488995677+0100)/",
+        "date_SystemeField": "/Date(1780506970503+0100)/",
         "hEURE_SITUATIONField": "/Date(46500000+0100)/",
         "nOM_NAVIREField": "BBC GREENLAND",
         "nUMERO_ESCALEField": 201470025,
@@ -66,59 +66,11 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 22.35648641833333,
+      "anchorage_hours": 27.47711703444444,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T12:17:47.618732+00:00",
-      "last_seen": "2026-06-03T12:17:47.618732+00:00"
-    },
-    "9508639-201470063": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000130",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "SOCONAV",
-        "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780488995677+0100)/",
-        "hEURE_SITUATIONField": "/Date(49500000+0100)/",
-        "nOM_NAVIREField": "RIX ONYX",
-        "nUMERO_ESCALEField": 201470063,
-        "nUMERO_LLOYDField": "9508639",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "AGADIR",
-        "sITUATIONField": "A QUAI",
-        "tYP_NAVIREField": "VRAQUIER"
-      },
-      "current_status": "A QUAI",
-      "anchorage_hours": 8.793618140277777,
-      "berth_hours": 22.35648641833333,
-      "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T12:17:47.618732+00:00",
-      "last_seen": "2026-06-03T12:17:47.618732+00:00"
-    },
-    "9648788-201469962": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "306",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "COMANAV",
-        "dATE_SITUATIONField": "/Date(1780182000000+0100)/",
-        "date_SystemeField": "/Date(1780406174497+0100)/",
-        "hEURE_SITUATIONField": "/Date(47700000+0100)/",
-        "nOM_NAVIREField": "GOLDEN ODYSSEY",
-        "nUMERO_ESCALEField": 201469962,
-        "nUMERO_LLOYDField": "9648788",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "PHILIPSBURG",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "YAGHT"
-      },
-      "current_status": "EN RADE",
-      "anchorage_hours": 27.411385844722222,
-      "berth_hours": 0.0,
-      "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-02T13:56:24.267626+00:00",
-      "last_seen": "2026-06-02T13:56:24.267626+00:00"
+      "last_updated": "2026-06-03T17:25:01.888950+00:00",
+      "last_seen": "2026-06-03T17:25:01.888950+00:00"
     },
     "9437854-201470024": {
       "entry": {
@@ -150,23 +102,47 @@
         "cODE_PORTField": "",
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
-        "dATE_SITUATIONField": "/Date(1779836400000+0100)/",
-        "date_SystemeField": "/Date(1780488995677+0100)/",
-        "hEURE_SITUATIONField": "/Date(80640000+0100)/",
+        "dATE_SITUATIONField": "/Date(1780441200000+0100)/",
+        "date_SystemeField": "/Date(1780506970497+0100)/",
+        "hEURE_SITUATIONField": "/Date(52200000+0100)/",
         "nOM_NAVIREField": "GAS EXELERO",
         "nUMERO_ESCALEField": 201470020,
         "nUMERO_LLOYDField": "9392042",
         "oPERATEURField": "MARSA MAROC",
         "pROVField": "SINES",
-        "sITUATIONField": "EN RADE",
+        "sITUATIONField": "A QUAI",
         "tYP_NAVIREField": "GAZIER"
       },
-      "current_status": "EN RADE",
-      "anchorage_hours": 49.76787226305555,
+      "current_status": "A QUAI",
+      "anchorage_hours": 54.888502879166666,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T12:17:47.618732+00:00",
-      "last_seen": "2026-06-03T12:17:47.618732+00:00"
+      "last_updated": "2026-06-03T17:25:01.888950+00:00",
+      "last_seen": "2026-06-03T17:25:01.888950+00:00"
+    },
+    "9508639-201470063": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000130",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "SOCONAV",
+        "dATE_SITUATIONField": "/Date(1780441200000+0100)/",
+        "date_SystemeField": "/Date(1780506970497+0100)/",
+        "hEURE_SITUATIONField": "/Date(50700000+0100)/",
+        "nOM_NAVIREField": "RIX ONYX",
+        "nUMERO_ESCALEField": 201470063,
+        "nUMERO_LLOYDField": "9508639",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "AGADIR",
+        "sITUATIONField": "APPAREILLAGE",
+        "tYP_NAVIREField": "VRAQUIER"
+      },
+      "current_status": "APPAREILLAGE",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "first_seen": "2026-06-03T17:25:01.888950+00:00",
+      "last_updated": "2026-06-03T17:25:01.888950+00:00",
+      "last_seen": "2026-06-03T17:25:01.888950+00:00"
     }
   },
   "history": [
@@ -223,6 +199,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-06-01T20:52:16.831055+00:00",
       "departure": "2026-06-01T22:58:51.304867+00:00"
+    },
+    {
+      "vessel": "RIX ONYX",
+      "agent": "SOCONAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 8.8,
+      "berth_hours": 27.5,
+      "arrival": "2026-06-01T10:31:43.278585+00:00",
+      "departure": "2026-06-03T17:25:01.888950+00:00"
     }
   ]
 }
