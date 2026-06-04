@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780578997673+0100)/",
+        "date_SystemeField": "/Date(1780589714117+0100)/",
         "hEURE_SITUATIONField": "/Date(29400000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 0.0,
+      "anchorage_hours": 2.909982453611111,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-04T13:55:30.199773+00:00",
-      "last_seen": "2026-06-04T13:55:30.199773+00:00"
+      "last_updated": "2026-06-04T16:50:06.136606+00:00",
+      "last_seen": "2026-06-04T16:50:06.136606+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -30,23 +30,23 @@
         "cODE_PORTField": "",
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
-        "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780578997677+0100)/",
-        "hEURE_SITUATIONField": "/Date(80400000+0100)/",
+        "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
+        "date_SystemeField": "/Date(1780589714117+0100)/",
+        "hEURE_SITUATIONField": "/Date(56100000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470053,
         "nUMERO_LLOYDField": "9518880",
         "oPERATEURField": "MARSA MAROC",
         "pROVField": "CARTAGENA",
-        "sITUATIONField": "EN RADE",
+        "sITUATIONField": "A QUAI",
         "tYP_NAVIREField": "TANKER"
       },
-      "current_status": "EN RADE",
-      "anchorage_hours": 25.628494733611113,
+      "current_status": "A QUAI",
+      "anchorage_hours": 28.538477187222224,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-04T13:55:30.199773+00:00",
-      "last_seen": "2026-06-04T13:55:30.199773+00:00"
+      "last_updated": "2026-06-04T16:50:06.136606+00:00",
+      "last_seen": "2026-06-04T16:50:06.136606+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -68,30 +68,6 @@
       "current_status": "EN RADE",
       "anchorage_hours": 47.98498115194444,
       "berth_hours": 0.0,
-      "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-04T13:55:30.199773+00:00",
-      "last_seen": "2026-06-04T13:55:30.199773+00:00"
-    },
-    "9392042-201470020": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000303",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "COMANAV",
-        "dATE_SITUATIONField": "/Date(1780441200000+0100)/",
-        "date_SystemeField": "/Date(1780578997677+0100)/",
-        "hEURE_SITUATIONField": "/Date(52200000+0100)/",
-        "nOM_NAVIREField": "GAS EXELERO",
-        "nUMERO_ESCALEField": 201470020,
-        "nUMERO_LLOYDField": "9392042",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "SINES",
-        "sITUATIONField": "A QUAI",
-        "tYP_NAVIREField": "GAZIER"
-      },
-      "current_status": "A QUAI",
-      "anchorage_hours": 54.888502879166666,
-      "berth_hours": 20.5078641175,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
       "last_updated": "2026-06-04T13:55:30.199773+00:00",
       "last_seen": "2026-06-04T13:55:30.199773+00:00"
@@ -119,6 +95,30 @@
       "first_seen": "2026-06-03T23:01:31.387171+00:00",
       "last_updated": "2026-06-03T23:01:31.387171+00:00",
       "last_seen": "2026-06-03T23:01:31.387171+00:00"
+    },
+    "9392042-201470020": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000303",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "COMANAV",
+        "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
+        "date_SystemeField": "/Date(1780589714117+0100)/",
+        "hEURE_SITUATIONField": "/Date(52500000+0100)/",
+        "nOM_NAVIREField": "GAS EXELERO",
+        "nUMERO_ESCALEField": 201470020,
+        "nUMERO_LLOYDField": "9392042",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "SINES",
+        "sITUATIONField": "APPAREILLAGE",
+        "tYP_NAVIREField": "GAZIER"
+      },
+      "current_status": "APPAREILLAGE",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "first_seen": "2026-06-04T16:50:06.136606+00:00",
+      "last_updated": "2026-06-04T16:50:06.136606+00:00",
+      "last_seen": "2026-06-04T16:50:06.136606+00:00"
     }
   },
   "history": [
@@ -202,6 +202,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-06-03T20:35:04.675608+00:00",
       "departure": "2026-06-03T23:01:31.387171+00:00"
+    },
+    {
+      "vessel": "GAS EXELERO",
+      "agent": "COMANAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 54.9,
+      "berth_hours": 23.4,
+      "arrival": "2026-06-01T10:31:43.278585+00:00",
+      "departure": "2026-06-04T16:50:06.136606+00:00"
     }
   ]
 }
