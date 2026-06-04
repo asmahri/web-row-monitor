@@ -7,22 +7,22 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780524991527+0100)/",
-        "hEURE_SITUATIONField": "/Date(21617000+0100)/",
+        "date_SystemeField": "/Date(1780578997673+0100)/",
+        "hEURE_SITUATIONField": "/Date(29400000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
         "nUMERO_LLOYDField": "9322633",
         "oPERATEURField": "MARSA MAROC",
         "pROVField": "BARCELONA",
-        "sITUATIONField": "PREVU",
+        "sITUATIONField": "EN RADE",
         "tYP_NAVIREField": "TANKER"
       },
-      "current_status": "PREVU",
+      "current_status": "EN RADE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T23:01:31.387171+00:00",
-      "last_seen": "2026-06-03T23:01:31.387171+00:00"
+      "last_updated": "2026-06-04T13:55:30.199773+00:00",
+      "last_seen": "2026-06-04T13:55:30.199773+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780524991530+0100)/",
+        "date_SystemeField": "/Date(1780578997677+0100)/",
         "hEURE_SITUATIONField": "/Date(80400000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470053,
@@ -42,11 +42,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 10.72882456638889,
+      "anchorage_hours": 25.628494733611113,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T23:01:31.387171+00:00",
-      "last_seen": "2026-06-03T23:01:31.387171+00:00"
+      "last_updated": "2026-06-04T13:55:30.199773+00:00",
+      "last_seen": "2026-06-04T13:55:30.199773+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780354800000+0100)/",
-        "date_SystemeField": "/Date(1780524991530+0100)/",
+        "date_SystemeField": "/Date(1780578997677+0100)/",
         "hEURE_SITUATIONField": "/Date(46500000+0100)/",
         "nOM_NAVIREField": "BBC GREENLAND",
         "nUMERO_ESCALEField": 201470025,
@@ -66,35 +66,11 @@
         "tYP_NAVIREField": "CONVENTIONEL"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 33.08531098472222,
+      "anchorage_hours": 47.98498115194444,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T23:01:31.387171+00:00",
-      "last_seen": "2026-06-03T23:01:31.387171+00:00"
-    },
-    "9437854-201470024": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000303",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "COMANAV",
-        "dATE_SITUATIONField": "/Date(1780009200000+0100)/",
-        "date_SystemeField": "/Date(1780470954173+0100)/",
-        "hEURE_SITUATIONField": "/Date(39480000+0100)/",
-        "nOM_NAVIREField": "CKR ZEYNEP",
-        "nUMERO_ESCALEField": 201470024,
-        "nUMERO_LLOYDField": "9437854",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "SANTA CRUZ DE TENERIFE",
-        "sITUATIONField": "A QUAI",
-        "tYP_NAVIREField": "VRAQUIER"
-      },
-      "current_status": "A QUAI",
-      "anchorage_hours": 0.0,
-      "berth_hours": 44.80924412361111,
-      "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T07:20:16.557430+00:00",
-      "last_seen": "2026-06-03T07:20:16.557430+00:00"
+      "last_updated": "2026-06-04T13:55:30.199773+00:00",
+      "last_seen": "2026-06-04T13:55:30.199773+00:00"
     },
     "9392042-201470020": {
       "entry": {
@@ -103,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780441200000+0100)/",
-        "date_SystemeField": "/Date(1780524991527+0100)/",
+        "date_SystemeField": "/Date(1780578997677+0100)/",
         "hEURE_SITUATIONField": "/Date(52200000+0100)/",
         "nOM_NAVIREField": "GAS EXELERO",
         "nUMERO_ESCALEField": 201470020,
@@ -115,10 +91,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 54.888502879166666,
-      "berth_hours": 5.608193950277778,
+      "berth_hours": 20.5078641175,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-03T23:01:31.387171+00:00",
-      "last_seen": "2026-06-03T23:01:31.387171+00:00"
+      "last_updated": "2026-06-04T13:55:30.199773+00:00",
+      "last_seen": "2026-06-04T13:55:30.199773+00:00"
     },
     "9508639-201470063": {
       "entry": {
