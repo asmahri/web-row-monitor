@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780589714117+0100)/",
+        "date_SystemeField": "/Date(1780600547537+0100)/",
         "hEURE_SITUATIONField": "/Date(29400000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 2.909982453611111,
+      "anchorage_hours": 5.420342153888889,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-04T16:50:06.136606+00:00",
-      "last_seen": "2026-06-04T16:50:06.136606+00:00"
+      "last_updated": "2026-06-04T19:20:43.431527+00:00",
+      "last_seen": "2026-06-04T19:20:43.431527+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780589714117+0100)/",
+        "date_SystemeField": "/Date(1780600547537+0100)/",
         "hEURE_SITUATIONField": "/Date(56100000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470053,
@@ -43,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 28.538477187222224,
-      "berth_hours": 0.0,
+      "berth_hours": 2.5103597002777778,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-04T16:50:06.136606+00:00",
-      "last_seen": "2026-06-04T16:50:06.136606+00:00"
+      "last_updated": "2026-06-04T19:20:43.431527+00:00",
+      "last_seen": "2026-06-04T19:20:43.431527+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -103,7 +103,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780589714117+0100)/",
+        "date_SystemeField": "/Date(1780600547537+0100)/",
         "hEURE_SITUATIONField": "/Date(52500000+0100)/",
         "nOM_NAVIREField": "GAS EXELERO",
         "nUMERO_ESCALEField": 201470020,
@@ -116,9 +116,9 @@
       "current_status": "APPAREILLAGE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-06-04T16:50:06.136606+00:00",
-      "last_updated": "2026-06-04T16:50:06.136606+00:00",
-      "last_seen": "2026-06-04T16:50:06.136606+00:00"
+      "first_seen": "2026-06-04T19:20:43.431527+00:00",
+      "last_updated": "2026-06-04T19:20:43.431527+00:00",
+      "last_seen": "2026-06-04T19:20:43.431527+00:00"
     }
   },
   "history": [
@@ -211,6 +211,15 @@
       "berth_hours": 23.4,
       "arrival": "2026-06-01T10:31:43.278585+00:00",
       "departure": "2026-06-04T16:50:06.136606+00:00"
+    },
+    {
+      "vessel": "GAS EXELERO",
+      "agent": "COMANAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "arrival": "2026-06-04T16:50:06.136606+00:00",
+      "departure": "2026-06-04T19:20:43.431527+00:00"
     }
   ]
 }
