@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780658190630+0100)/",
+        "date_SystemeField": "/Date(1780668953667+0100)/",
         "hEURE_SITUATIONField": "/Date(29400000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -18,35 +18,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 22.043050099722223,
+      "anchorage_hours": 25.011105644444445,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-05T11:58:05.180132+00:00",
-      "last_seen": "2026-06-05T11:58:05.180132+00:00"
-    },
-    "9518880-201470053": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000130",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "SOCONAV",
-        "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780658190630+0100)/",
-        "hEURE_SITUATIONField": "/Date(56100000+0100)/",
-        "nOM_NAVIREField": "ARGAN",
-        "nUMERO_ESCALEField": 201470053,
-        "nUMERO_LLOYDField": "9518880",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "CARTAGENA",
-        "sITUATIONField": "A QUAI",
-        "tYP_NAVIREField": "TANKER"
-      },
-      "current_status": "A QUAI",
-      "anchorage_hours": 28.538477187222224,
-      "berth_hours": 19.13306764611111,
-      "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-05T11:58:05.180132+00:00",
-      "last_seen": "2026-06-05T11:58:05.180132+00:00"
+      "last_updated": "2026-06-05T14:56:10.180093+00:00",
+      "last_seen": "2026-06-05T14:56:10.180093+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -55,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780658190630+0100)/",
+        "date_SystemeField": "/Date(1780668953667+0100)/",
         "hEURE_SITUATIONField": "/Date(54000000+0100)/",
         "nOM_NAVIREField": "BBC GREENLAND",
         "nUMERO_ESCALEField": 201470025,
@@ -67,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 70.02803125166666,
-      "berth_hours": 0.0,
+      "berth_hours": 2.968055544722222,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-05T11:58:05.180132+00:00",
-      "last_seen": "2026-06-05T11:58:05.180132+00:00"
+      "last_updated": "2026-06-05T14:56:10.180093+00:00",
+      "last_seen": "2026-06-05T14:56:10.180093+00:00"
     },
     "9392042-201470020": {
       "entry": {
@@ -95,6 +71,30 @@
       "first_seen": "2026-06-04T22:51:59.835353+00:00",
       "last_updated": "2026-06-04T22:51:59.835353+00:00",
       "last_seen": "2026-06-04T22:51:59.835353+00:00"
+    },
+    "9518880-201470053": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000130",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "SOCONAV",
+        "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
+        "date_SystemeField": "/Date(1780668953663+0100)/",
+        "hEURE_SITUATIONField": "/Date(55500000+0100)/",
+        "nOM_NAVIREField": "ARGAN",
+        "nUMERO_ESCALEField": 201470053,
+        "nUMERO_LLOYDField": "9518880",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "CARTAGENA",
+        "sITUATIONField": "APPAREILLAGE",
+        "tYP_NAVIREField": "TANKER"
+      },
+      "current_status": "APPAREILLAGE",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "first_seen": "2026-06-05T14:56:10.180093+00:00",
+      "last_updated": "2026-06-05T14:56:10.180093+00:00",
+      "last_seen": "2026-06-05T14:56:10.180093+00:00"
     }
   },
   "history": [
@@ -214,6 +214,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-06-04T21:10:15.010712+00:00",
       "departure": "2026-06-04T22:51:59.835353+00:00"
+    },
+    {
+      "vessel": "ARGAN",
+      "agent": "SOCONAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 28.5,
+      "berth_hours": 22.1,
+      "arrival": "2026-06-01T10:31:43.278585+00:00",
+      "departure": "2026-06-05T14:56:10.180093+00:00"
     }
   ]
 }
