@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780632990250+0100)/",
+        "date_SystemeField": "/Date(1780647399090+0100)/",
         "hEURE_SITUATIONField": "/Date(29400000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 14.982950896666665,
+      "anchorage_hours": 18.749133819166666,
       "berth_hours": 0.0,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-05T04:54:28.823001+00:00",
-      "last_seen": "2026-06-05T04:54:28.823001+00:00"
+      "last_updated": "2026-06-05T08:40:27.081522+00:00",
+      "last_seen": "2026-06-05T08:40:27.081522+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780632990250+0100)/",
+        "date_SystemeField": "/Date(1780647399090+0100)/",
         "hEURE_SITUATIONField": "/Date(56100000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470053,
@@ -43,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 28.538477187222224,
-      "berth_hours": 12.072968443055554,
+      "berth_hours": 15.839151365555555,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-05T04:54:28.823001+00:00",
-      "last_seen": "2026-06-05T04:54:28.823001+00:00"
+      "last_updated": "2026-06-05T08:40:27.081522+00:00",
+      "last_seen": "2026-06-05T08:40:27.081522+00:00"
     },
     "9427079-201470025": {
       "entry": {
