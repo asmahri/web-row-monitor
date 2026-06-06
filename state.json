@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
-        "date_SystemeField": "/Date(1780701357077+0100)/",
+        "date_SystemeField": "/Date(1780719395937+0100)/",
         "hEURE_SITUATIONField": "/Date(59100000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 27.292125846111112,
-      "berth_hours": 6.816439806111111,
+      "berth_hours": 11.35586275861111,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-06T00:02:01.036121+00:00",
-      "last_seen": "2026-06-06T00:02:01.036121+00:00"
+      "last_updated": "2026-06-06T04:34:22.958750+00:00",
+      "last_seen": "2026-06-06T04:34:22.958750+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780701357077+0100)/",
+        "date_SystemeField": "/Date(1780719395947+0100)/",
         "hEURE_SITUATIONField": "/Date(54000000+0100)/",
         "nOM_NAVIREField": "BBC GREENLAND",
         "nUMERO_ESCALEField": 201470025,
@@ -43,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 70.02803125166666,
-      "berth_hours": 12.0655155525,
+      "berth_hours": 16.604938505,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-06T00:02:01.036121+00:00",
-      "last_seen": "2026-06-06T00:02:01.036121+00:00"
+      "last_updated": "2026-06-06T04:34:22.958750+00:00",
+      "last_seen": "2026-06-06T04:34:22.958750+00:00"
     },
     "9437854-201470207": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
-        "date_SystemeField": "/Date(1780701357077+0100)/",
+        "date_SystemeField": "/Date(1780719395937+0100)/",
         "hEURE_SITUATIONField": "/Date(68400000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201470207,
@@ -66,11 +66,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 4.782338161666667,
+      "anchorage_hours": 9.321761114166666,
       "berth_hours": 0.0,
       "first_seen": "2026-06-05T19:15:04.618739+00:00",
-      "last_updated": "2026-06-06T00:02:01.036121+00:00",
-      "last_seen": "2026-06-06T00:02:01.036121+00:00"
+      "last_updated": "2026-06-06T04:34:22.958750+00:00",
+      "last_seen": "2026-06-06T04:34:22.958750+00:00"
     },
     "9518880-201470053": {
       "entry": {
@@ -95,6 +95,30 @@
       "first_seen": "2026-06-05T22:39:18.756200+00:00",
       "last_updated": "2026-06-05T22:39:18.756200+00:00",
       "last_seen": "2026-06-05T22:39:18.756200+00:00"
+    },
+    "9508639-201470212": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000130",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "SOCONAV",
+        "dATE_SITUATIONField": "/Date(1780873200000+0100)/",
+        "date_SystemeField": "/Date(1780719395933+0100)/",
+        "hEURE_SITUATIONField": "/Date(43202000+0100)/",
+        "nOM_NAVIREField": "RIX ONYX",
+        "nUMERO_ESCALEField": 201470212,
+        "nUMERO_LLOYDField": "9508639",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "AGADIR",
+        "sITUATIONField": "PREVU",
+        "tYP_NAVIREField": "VRAQUIER"
+      },
+      "current_status": "PREVU",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "first_seen": "2026-06-06T04:34:22.958750+00:00",
+      "last_updated": "2026-06-06T04:34:22.958750+00:00",
+      "last_seen": "2026-06-06T04:34:22.958750+00:00"
     }
   },
   "history": [
