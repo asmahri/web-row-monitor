@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
-        "date_SystemeField": "/Date(1780852552523+0100)/",
+        "date_SystemeField": "/Date(1780859750747+0100)/",
         "hEURE_SITUATIONField": "/Date(59100000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -19,34 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 27.292125846111112,
-      "berth_hours": 48.793674733888885,
+      "berth_hours": 50.66520518083333,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-07T18:00:39.081861+00:00",
-      "last_seen": "2026-06-07T18:00:39.081861+00:00"
-    },
-    "9427079-201470025": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000303",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "COMANAV",
-        "dATE_SITUATIONField": "/Date(1780527600000+0100)/",
-        "date_SystemeField": "/Date(1780852552527+0100)/",
-        "hEURE_SITUATIONField": "/Date(54000000+0100)/",
-        "nOM_NAVIREField": "BBC GREENLAND",
-        "nUMERO_ESCALEField": 201470025,
-        "nUMERO_LLOYDField": "9427079",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "PUERTO DE GRANADILLA",
-        "sITUATIONField": "A QUAI",
-        "tYP_NAVIREField": "CONVENTIONEL"
-      },
-      "current_status": "A QUAI",
-      "anchorage_hours": 70.02803125166666,
-      "berth_hours": 54.042750480277775,
-      "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-07T18:00:39.081861+00:00",
-      "last_seen": "2026-06-07T18:00:39.081861+00:00"
+      "last_updated": "2026-06-07T19:52:56.591470+00:00",
+      "last_seen": "2026-06-07T19:52:56.591470+00:00"
     },
     "9437854-201470207": {
       "entry": {
@@ -55,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
-        "date_SystemeField": "/Date(1780852552523+0100)/",
+        "date_SystemeField": "/Date(1780859750747+0100)/",
         "hEURE_SITUATIONField": "/Date(68400000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201470207,
@@ -66,11 +42,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 46.759573089444444,
+      "anchorage_hours": 48.63110353638889,
       "berth_hours": 0.0,
       "first_seen": "2026-06-05T19:15:04.618739+00:00",
-      "last_updated": "2026-06-07T18:00:39.081861+00:00",
-      "last_seen": "2026-06-07T18:00:39.081861+00:00"
+      "last_updated": "2026-06-07T19:52:56.591470+00:00",
+      "last_seen": "2026-06-07T19:52:56.591470+00:00"
     },
     "9508639-201470212": {
       "entry": {
@@ -79,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780873200000+0100)/",
-        "date_SystemeField": "/Date(1780852552520+0100)/",
+        "date_SystemeField": "/Date(1780859750743+0100)/",
         "hEURE_SITUATIONField": "/Date(43202000+0100)/",
         "nOM_NAVIREField": "RIX ONYX",
         "nUMERO_ESCALEField": 201470212,
@@ -93,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-06T04:34:22.958750+00:00",
-      "last_updated": "2026-06-07T18:00:39.081861+00:00",
-      "last_seen": "2026-06-07T18:00:39.081861+00:00"
+      "last_updated": "2026-06-07T19:52:56.591470+00:00",
+      "last_seen": "2026-06-07T19:52:56.591470+00:00"
     },
     "9522738-201470221": {
       "entry": {
@@ -103,7 +79,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1780959600000+0100)/",
-        "date_SystemeField": "/Date(1780852552517+0100)/",
+        "date_SystemeField": "/Date(1780859750740+0100)/",
         "hEURE_SITUATIONField": "/Date(55501000+0100)/",
         "nOM_NAVIREField": "GRONA HAWK",
         "nUMERO_ESCALEField": 201470221,
@@ -117,8 +93,32 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-07T15:20:33.420280+00:00",
-      "last_updated": "2026-06-07T18:00:39.081861+00:00",
-      "last_seen": "2026-06-07T18:00:39.081861+00:00"
+      "last_updated": "2026-06-07T19:52:56.591470+00:00",
+      "last_seen": "2026-06-07T19:52:56.591470+00:00"
+    },
+    "9427079-201470025": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "000303",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "17",
+        "cONSIGNATAIREField": "COMANAV",
+        "dATE_SITUATIONField": "/Date(1780786800000+0100)/",
+        "date_SystemeField": "/Date(1780859750743+0100)/",
+        "hEURE_SITUATIONField": "/Date(67200000+0100)/",
+        "nOM_NAVIREField": "BBC GREENLAND",
+        "nUMERO_ESCALEField": 201470025,
+        "nUMERO_LLOYDField": "9427079",
+        "oPERATEURField": "MARSA MAROC",
+        "pROVField": "PUERTO DE GRANADILLA",
+        "sITUATIONField": "APPAREILLAGE",
+        "tYP_NAVIREField": "CONVENTIONEL"
+      },
+      "current_status": "APPAREILLAGE",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "first_seen": "2026-06-07T19:52:56.591470+00:00",
+      "last_updated": "2026-06-07T19:52:56.591470+00:00",
+      "last_seen": "2026-06-07T19:52:56.591470+00:00"
     }
   },
   "history": [
@@ -283,6 +283,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-06-05T21:06:17.094128+00:00",
       "departure": "2026-06-05T22:39:18.756200+00:00"
+    },
+    {
+      "vessel": "BBC GREENLAND",
+      "agent": "COMANAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 70.0,
+      "berth_hours": 55.9,
+      "arrival": "2026-06-01T10:31:43.278585+00:00",
+      "departure": "2026-06-07T19:52:56.591470+00:00"
     }
   ]
 }
