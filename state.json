@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
-        "date_SystemeField": "/Date(1780928184923+0100)/",
+        "date_SystemeField": "/Date(1780938958500+0100)/",
         "hEURE_SITUATIONField": "/Date(59100000+0100)/",
         "nOM_NAVIREField": "YM EARTH",
         "nUMERO_ESCALEField": 201469981,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 27.292125846111112,
-      "berth_hours": 69.05741119,
+      "berth_hours": 72.33978886527777,
       "first_seen": "2026-06-01T10:31:43.278585+00:00",
-      "last_updated": "2026-06-08T14:16:28.533103+00:00",
-      "last_seen": "2026-06-08T14:16:28.533103+00:00"
+      "last_updated": "2026-06-08T17:33:25.092734+00:00",
+      "last_seen": "2026-06-08T17:33:25.092734+00:00"
     },
     "9437854-201470207": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780614000000+0100)/",
-        "date_SystemeField": "/Date(1780928184920+0100)/",
+        "date_SystemeField": "/Date(1780938958500+0100)/",
         "hEURE_SITUATIONField": "/Date(68400000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201470207,
@@ -42,11 +42,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 67.02330954555556,
+      "anchorage_hours": 70.30568722083333,
       "berth_hours": 0.0,
       "first_seen": "2026-06-05T19:15:04.618739+00:00",
-      "last_updated": "2026-06-08T14:16:28.533103+00:00",
-      "last_seen": "2026-06-08T14:16:28.533103+00:00"
+      "last_updated": "2026-06-08T17:33:25.092734+00:00",
+      "last_seen": "2026-06-08T17:33:25.092734+00:00"
     },
     "9508639-201470212": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1780873200000+0100)/",
-        "date_SystemeField": "/Date(1780928184920+0100)/",
+        "date_SystemeField": "/Date(1780938958497+0100)/",
         "hEURE_SITUATIONField": "/Date(30300000+0100)/",
         "nOM_NAVIREField": "RIX ONYX",
         "nUMERO_ESCALEField": 201470212,
@@ -67,10 +67,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 9.097569632222221,
-      "berth_hours": 0.0,
+      "berth_hours": 3.282377675277778,
       "first_seen": "2026-06-06T04:34:22.958750+00:00",
-      "last_updated": "2026-06-08T14:16:28.533103+00:00",
-      "last_seen": "2026-06-08T14:16:28.533103+00:00"
+      "last_updated": "2026-06-08T17:33:25.092734+00:00",
+      "last_seen": "2026-06-08T17:33:25.092734+00:00"
     },
     "9522738-201470221": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1780959600000+0100)/",
-        "date_SystemeField": "/Date(1780928184917+0100)/",
+        "date_SystemeField": "/Date(1780938958497+0100)/",
         "hEURE_SITUATIONField": "/Date(55501000+0100)/",
         "nOM_NAVIREField": "GRONA HAWK",
         "nUMERO_ESCALEField": 201470221,
@@ -93,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-07T15:20:33.420280+00:00",
-      "last_updated": "2026-06-08T14:16:28.533103+00:00",
-      "last_seen": "2026-06-08T14:16:28.533103+00:00"
+      "last_updated": "2026-06-08T17:33:25.092734+00:00",
+      "last_seen": "2026-06-08T17:33:25.092734+00:00"
     },
     "9427079-201470025": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1781478000000+0100)/",
-        "date_SystemeField": "/Date(1780928184910+0100)/",
+        "date_SystemeField": "/Date(1780938958493+0100)/",
         "hEURE_SITUATIONField": "/Date(43242000+0100)/",
         "nOM_NAVIREField": "MAYOURY",
         "nUMERO_ESCALEField": 201470232,
@@ -141,8 +141,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-08T14:16:28.533103+00:00",
-      "last_updated": "2026-06-08T14:16:28.533103+00:00",
-      "last_seen": "2026-06-08T14:16:28.533103+00:00"
+      "last_updated": "2026-06-08T17:33:25.092734+00:00",
+      "last_seen": "2026-06-08T17:33:25.092734+00:00"
     },
     "9648788-201469962": {
       "entry": {
@@ -151,7 +151,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1780873200000+0100)/",
-        "date_SystemeField": "/Date(1780928184920+0100)/",
+        "date_SystemeField": "/Date(1780938958497+0100)/",
         "hEURE_SITUATIONField": "/Date(52500000+0100)/",
         "nOM_NAVIREField": "GOLDEN ODYSSEY",
         "nUMERO_ESCALEField": 201469962,
@@ -164,9 +164,9 @@
       "current_status": "APPAREILLAGE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-06-08T14:16:28.533103+00:00",
-      "last_updated": "2026-06-08T14:16:28.533103+00:00",
-      "last_seen": "2026-06-08T14:16:28.533103+00:00"
+      "first_seen": "2026-06-08T17:33:25.092734+00:00",
+      "last_updated": "2026-06-08T17:33:25.092734+00:00",
+      "last_seen": "2026-06-08T17:33:25.092734+00:00"
     }
   },
   "history": [
@@ -358,6 +358,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-06-07T21:05:30.257231+00:00",
       "departure": "2026-06-07T22:35:08.962182+00:00"
+    },
+    {
+      "vessel": "GOLDEN ODYSSEY",
+      "agent": "COMANAV",
+      "port": "Dakhla",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "arrival": "2026-06-08T14:16:28.533103+00:00",
+      "departure": "2026-06-08T17:33:25.092734+00:00"
     }
   ]
 }
