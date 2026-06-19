@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "GLOBE MARINE",
         "dATE_SITUATIONField": "/Date(1781478000000+0100)/",
-        "date_SystemeField": "/Date(1781824518427+0100)/",
+        "date_SystemeField": "/Date(1781853383547+0100)/",
         "hEURE_SITUATIONField": "/Date(52200000+0100)/",
         "nOM_NAVIREField": "OBIRIX",
         "nUMERO_ESCALEField": 201470256,
@@ -43,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 55.368113702222225,
-      "berth_hours": 79.52766337416668,
+      "berth_hours": 87.87077064611113,
       "first_seen": "2026-06-13T08:21:59.716000+00:00",
-      "last_updated": "2026-06-18T23:15:44.513475+00:00",
-      "last_seen": "2026-06-18T23:15:44.513475+00:00"
+      "last_updated": "2026-06-19T07:36:19.699654+00:00",
+      "last_seen": "2026-06-19T07:36:19.699654+00:00"
     },
     "9508639-201470457": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1781996400000+0100)/",
-        "date_SystemeField": "/Date(1781824518420+0100)/",
+        "date_SystemeField": "/Date(1781853383543+0100)/",
         "hEURE_SITUATIONField": "/Date(28809000+0100)/",
         "nOM_NAVIREField": "TINGIS",
         "nUMERO_ESCALEField": 201470484,
@@ -93,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-18T16:24:13.645153+00:00",
-      "last_updated": "2026-06-18T23:15:44.513475+00:00",
-      "last_seen": "2026-06-18T23:15:44.513475+00:00"
+      "last_updated": "2026-06-19T07:36:19.699654+00:00",
+      "last_seen": "2026-06-19T07:36:19.699654+00:00"
     },
     "9777541-201470232": {
       "entry": {
