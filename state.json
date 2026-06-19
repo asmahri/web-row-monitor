@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "GLOBE MARINE",
         "dATE_SITUATIONField": "/Date(1781478000000+0100)/",
-        "date_SystemeField": "/Date(1781907390620+0100)/",
+        "date_SystemeField": "/Date(1781910976773+0100)/",
         "hEURE_SITUATIONField": "/Date(52200000+0100)/",
         "nOM_NAVIREField": "OBIRIX",
         "nUMERO_ESCALEField": 201470256,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 55.368113702222225,
-      "berth_hours": 102.75701264861112,
+      "berth_hours": 103.89886069611113,
       "first_seen": "2026-06-13T08:21:59.716000+00:00",
-      "last_updated": "2026-06-19T22:29:30.170863+00:00",
-      "last_seen": "2026-06-19T22:29:30.170863+00:00"
+      "last_updated": "2026-06-19T23:38:00.823834+00:00",
+      "last_seen": "2026-06-19T23:38:00.823834+00:00"
     },
     "9310197-201470484": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1781996400000+0100)/",
-        "date_SystemeField": "/Date(1781907390617+0100)/",
+        "date_SystemeField": "/Date(1781910976767+0100)/",
         "hEURE_SITUATIONField": "/Date(28809000+0100)/",
         "nOM_NAVIREField": "TINGIS",
         "nUMERO_ESCALEField": 201470484,
@@ -45,8 +45,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-18T16:24:13.645153+00:00",
-      "last_updated": "2026-06-19T22:29:30.170863+00:00",
-      "last_seen": "2026-06-19T22:29:30.170863+00:00"
+      "last_updated": "2026-06-19T23:38:00.823834+00:00",
+      "last_seen": "2026-06-19T23:38:00.823834+00:00"
     },
     "9310197-201470504": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "COMANAV LAAYOUNE",
         "dATE_SITUATIONField": "/Date(1781910000000+0100)/",
-        "date_SystemeField": "/Date(1781907390617+0100)/",
+        "date_SystemeField": "/Date(1781910976770+0100)/",
         "hEURE_SITUATIONField": "/Date(18041000+0100)/",
         "nOM_NAVIREField": "TINGIS",
         "nUMERO_ESCALEField": 201470504,
@@ -69,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-19T12:01:20.804451+00:00",
-      "last_updated": "2026-06-19T22:29:30.170863+00:00",
-      "last_seen": "2026-06-19T22:29:30.170863+00:00"
+      "last_updated": "2026-06-19T23:38:00.823834+00:00",
+      "last_seen": "2026-06-19T23:38:00.823834+00:00"
     },
     "9478298-201470267": {
       "entry": {
