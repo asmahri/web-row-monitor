@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "GLOBE MARINE",
         "dATE_SITUATIONField": "/Date(1781478000000+0100)/",
-        "date_SystemeField": "/Date(1781982951863+0100)/",
+        "date_SystemeField": "/Date(1781986560413+0100)/",
         "hEURE_SITUATIONField": "/Date(52200000+0100)/",
         "nOM_NAVIREField": "OBIRIX",
         "nUMERO_ESCALEField": 201470256,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 55.368113702222225,
-      "berth_hours": 123.54549438944446,
+      "berth_hours": 125.07493357055557,
       "first_seen": "2026-06-13T08:21:59.716000+00:00",
-      "last_updated": "2026-06-20T19:16:48.705130+00:00",
-      "last_seen": "2026-06-20T19:16:48.705130+00:00"
+      "last_updated": "2026-06-20T20:48:34.686182+00:00",
+      "last_seen": "2026-06-20T20:48:34.686182+00:00"
     },
     "9310197-201470484": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "COMANAV LAAYOUNE",
         "dATE_SITUATIONField": "/Date(1781910000000+0100)/",
-        "date_SystemeField": "/Date(1781982951860+0100)/",
+        "date_SystemeField": "/Date(1781986560407+0100)/",
         "hEURE_SITUATIONField": "/Date(18041000+0100)/",
         "nOM_NAVIREField": "TINGIS",
         "nUMERO_ESCALEField": 201470504,
@@ -69,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-19T12:01:20.804451+00:00",
-      "last_updated": "2026-06-20T19:16:48.705130+00:00",
-      "last_seen": "2026-06-20T19:16:48.705130+00:00"
+      "last_updated": "2026-06-20T20:48:34.686182+00:00",
+      "last_seen": "2026-06-20T20:48:34.686182+00:00"
     },
     "9478298-201470267": {
       "entry": {
@@ -103,13 +103,13 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782428400000+0100)/",
-        "date_SystemeField": "/Date(1781982951857+0100)/",
+        "date_SystemeField": "/Date(1781986560397+0100)/",
         "hEURE_SITUATIONField": "/Date(43234000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470528,
         "nUMERO_LLOYDField": "9933913",
         "oPERATEURField": "MARSA MAROC",
-        "pROVField": "DAKHLA",
+        "pROVField": "CARTAGENA , DAKHLA",
         "sITUATIONField": "PREVU",
         "tYP_NAVIREField": "PETROLIER"
       },
@@ -117,8 +117,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-20T12:13:51.445784+00:00",
-      "last_updated": "2026-06-20T19:16:48.705130+00:00",
-      "last_seen": "2026-06-20T19:16:48.705130+00:00"
+      "last_updated": "2026-06-20T20:48:34.686182+00:00",
+      "last_seen": "2026-06-20T20:48:34.686182+00:00"
     },
     "9933913-201470527": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782169200000+0100)/",
-        "date_SystemeField": "/Date(1781982951857+0100)/",
+        "date_SystemeField": "/Date(1781986560397+0100)/",
         "hEURE_SITUATIONField": "/Date(75640000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470527,
@@ -141,8 +141,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-20T12:13:51.445784+00:00",
-      "last_updated": "2026-06-20T19:16:48.705130+00:00",
-      "last_seen": "2026-06-20T19:16:48.705130+00:00"
+      "last_updated": "2026-06-20T20:48:34.686182+00:00",
+      "last_seen": "2026-06-20T20:48:34.686182+00:00"
     },
     "9437854-201470529": {
       "entry": {
@@ -151,7 +151,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782082800000+0100)/",
-        "date_SystemeField": "/Date(1781982951860+0100)/",
+        "date_SystemeField": "/Date(1781986560407+0100)/",
         "hEURE_SITUATIONField": "/Date(36049000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201470529,
@@ -165,8 +165,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-20T12:13:51.445784+00:00",
-      "last_updated": "2026-06-20T19:16:48.705130+00:00",
-      "last_seen": "2026-06-20T19:16:48.705130+00:00"
+      "last_updated": "2026-06-20T20:48:34.686182+00:00",
+      "last_seen": "2026-06-20T20:48:34.686182+00:00"
     }
   },
   "history": [
