@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "GLOBE MARINE",
         "dATE_SITUATIONField": "/Date(1781478000000+0100)/",
-        "date_SystemeField": "/Date(1782011733117+0100)/",
+        "date_SystemeField": "/Date(1782029730497+0100)/",
         "hEURE_SITUATIONField": "/Date(52200000+0100)/",
         "nOM_NAVIREField": "OBIRIX",
         "nUMERO_ESCALEField": 201470256,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 55.368113702222225,
-      "berth_hours": 131.83522828305559,
+      "berth_hours": 136.66981054055557,
       "first_seen": "2026-06-13T08:21:59.716000+00:00",
-      "last_updated": "2026-06-21T03:34:11.747147+00:00",
-      "last_seen": "2026-06-21T03:34:11.747147+00:00"
+      "last_updated": "2026-06-21T08:24:16.243274+00:00",
+      "last_seen": "2026-06-21T08:24:16.243274+00:00"
     },
     "9310197-201470484": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782428400000+0100)/",
-        "date_SystemeField": "/Date(1782011733103+0100)/",
+        "date_SystemeField": "/Date(1782029730487+0100)/",
         "hEURE_SITUATIONField": "/Date(43234000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470528,
@@ -93,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-20T12:13:51.445784+00:00",
-      "last_updated": "2026-06-21T03:34:11.747147+00:00",
-      "last_seen": "2026-06-21T03:34:11.747147+00:00"
+      "last_updated": "2026-06-21T08:24:16.243274+00:00",
+      "last_seen": "2026-06-21T08:24:16.243274+00:00"
     },
     "9933913-201470527": {
       "entry": {
@@ -103,7 +103,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782169200000+0100)/",
-        "date_SystemeField": "/Date(1782011733107+0100)/",
+        "date_SystemeField": "/Date(1782029730490+0100)/",
         "hEURE_SITUATIONField": "/Date(75640000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470527,
@@ -117,8 +117,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-20T12:13:51.445784+00:00",
-      "last_updated": "2026-06-21T03:34:11.747147+00:00",
-      "last_seen": "2026-06-21T03:34:11.747147+00:00"
+      "last_updated": "2026-06-21T08:24:16.243274+00:00",
+      "last_seen": "2026-06-21T08:24:16.243274+00:00"
     },
     "9437854-201470529": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782082800000+0100)/",
-        "date_SystemeField": "/Date(1782011733110+0100)/",
+        "date_SystemeField": "/Date(1782029730490+0100)/",
         "hEURE_SITUATIONField": "/Date(36049000+0100)/",
         "nOM_NAVIREField": "CKR ZEYNEP",
         "nUMERO_ESCALEField": 201470529,
@@ -141,8 +141,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-20T12:13:51.445784+00:00",
-      "last_updated": "2026-06-21T03:34:11.747147+00:00",
-      "last_seen": "2026-06-21T03:34:11.747147+00:00"
+      "last_updated": "2026-06-21T08:24:16.243274+00:00",
+      "last_seen": "2026-06-21T08:24:16.243274+00:00"
     }
   },
   "history": [
