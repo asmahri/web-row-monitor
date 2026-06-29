@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1782428400000+0100)/",
-        "date_SystemeField": "/Date(1782764200657+0100)/",
+        "date_SystemeField": "/Date(1782767745023+0100)/",
         "hEURE_SITUATIONField": "/Date(45000000+0100)/",
         "nOM_NAVIREField": "XT HOPE",
         "nUMERO_ESCALEField": 201470585,
@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "CHIMIQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 79.85846218138889,
+      "anchorage_hours": 81.33729270972222,
       "berth_hours": 0.0,
       "first_seen": "2026-06-22T18:05:13.275159+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "9151890-201470590": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "MADES DE PECHE",
         "dATE_SITUATIONField": "/Date(1782082800000+0100)/",
-        "date_SystemeField": "/Date(1782764200660+0100)/",
+        "date_SystemeField": "/Date(1782767745023+0100)/",
         "hEURE_SITUATIONField": "/Date(66900000+0100)/",
         "nOM_NAVIREField": "ODIN",
         "nUMERO_ESCALEField": 201470590,
@@ -42,11 +42,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 167.04346412527775,
+      "anchorage_hours": 168.52229465361108,
       "berth_hours": 0.0,
       "first_seen": "2026-06-22T18:05:13.275159+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "9478298-201470621": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1782860400000+0100)/",
-        "date_SystemeField": "/Date(1782764200647+0100)/",
+        "date_SystemeField": "/Date(1782767745013+0100)/",
         "hEURE_SITUATIONField": "/Date(54035000+0100)/",
         "nOM_NAVIREField": "TINA THERESA",
         "nUMERO_ESCALEField": 201470621,
@@ -69,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-23T23:51:53.378319+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "9661443-201470620": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1782601200000+0100)/",
-        "date_SystemeField": "/Date(1782764200657+0100)/",
+        "date_SystemeField": "/Date(1782767745020+0100)/",
         "hEURE_SITUATIONField": "/Date(49320000+0100)/",
         "nOM_NAVIREField": "MARS",
         "nUMERO_ESCALEField": 201470620,
@@ -90,11 +90,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 4.743196799444444,
+      "anchorage_hours": 6.222027327777777,
       "berth_hours": 0.0,
       "first_seen": "2026-06-23T23:51:53.378319+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "1019917-201470654": {
       "entry": {
@@ -103,7 +103,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782601200000+0100)/",
-        "date_SystemeField": "/Date(1782764200657+0100)/",
+        "date_SystemeField": "/Date(1782767745020+0100)/",
         "hEURE_SITUATIONField": "/Date(68760000+0100)/",
         "nOM_NAVIREField": "BWEK BEACON",
         "nUMERO_ESCALEField": 201470654,
@@ -114,11 +114,11 @@
         "tYP_NAVIREField": "GAZIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 4.743196799444444,
+      "anchorage_hours": 6.222027327777777,
       "berth_hours": 0.0,
       "first_seen": "2026-06-24T17:49:42.151719+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "9478298-201470669": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1782601200000+0100)/",
-        "date_SystemeField": "/Date(1782764200657+0100)/",
+        "date_SystemeField": "/Date(1782767745020+0100)/",
         "hEURE_SITUATIONField": "/Date(82500000+0100)/",
         "nOM_NAVIREField": "TINA THERESA",
         "nUMERO_ESCALEField": 201470669,
@@ -138,11 +138,11 @@
         "tYP_NAVIREField": "CHIMIQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 4.743196799444444,
+      "anchorage_hours": 6.222027327777777,
       "berth_hours": 0.0,
       "first_seen": "2026-06-25T16:19:02.087863+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "9522738-201470732": {
       "entry": {
@@ -151,7 +151,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1782860400000+0100)/",
-        "date_SystemeField": "/Date(1782764200647+0100)/",
+        "date_SystemeField": "/Date(1782767745013+0100)/",
         "hEURE_SITUATIONField": "/Date(57616000+0100)/",
         "nOM_NAVIREField": "GRONA HAWK",
         "nUMERO_ESCALEField": 201470732,
@@ -165,8 +165,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-29T15:36:57.842610+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "1048-201470749": {
       "entry": {
@@ -175,7 +175,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "MADES DE PECHE",
         "dATE_SITUATIONField": "/Date(1782860400000+0100)/",
-        "date_SystemeField": "/Date(1782764200647+0100)/",
+        "date_SystemeField": "/Date(1782767745017+0100)/",
         "hEURE_SITUATIONField": "/Date(3932000+0100)/",
         "nOM_NAVIREField": "JELWA",
         "nUMERO_ESCALEField": 201470749,
@@ -189,8 +189,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-29T18:05:13.807022+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "8607177-201470747": {
       "entry": {
@@ -199,7 +199,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "MADES DE PECHE",
         "dATE_SITUATIONField": "/Date(1782774000000+0100)/",
-        "date_SystemeField": "/Date(1782764200650+0100)/",
+        "date_SystemeField": "/Date(1782767745017+0100)/",
         "hEURE_SITUATIONField": "/Date(27012000+0100)/",
         "nOM_NAVIREField": "ALEKSANDR MIRONENKO",
         "nUMERO_ESCALEField": 201470747,
@@ -213,8 +213,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-29T18:05:13.807022+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     },
     "9933913-201470528": {
       "entry": {
@@ -223,7 +223,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1782687600000+0100)/",
-        "date_SystemeField": "/Date(1782764200657+0100)/",
+        "date_SystemeField": "/Date(1782767745020+0100)/",
         "hEURE_SITUATIONField": "/Date(45300000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470528,
@@ -236,9 +236,9 @@
       "current_status": "APPAREILLAGE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-06-29T20:21:33.351088+00:00",
-      "last_updated": "2026-06-29T20:21:33.351088+00:00",
-      "last_seen": "2026-06-29T20:21:33.351088+00:00"
+      "first_seen": "2026-06-29T21:50:17.140990+00:00",
+      "last_updated": "2026-06-29T21:50:17.140990+00:00",
+      "last_seen": "2026-06-29T21:50:17.140990+00:00"
     }
   },
   "history": [
@@ -934,6 +934,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-06-29T18:05:13.807022+00:00",
       "departure": "2026-06-29T20:21:33.351088+00:00"
+    },
+    {
+      "vessel": "CHALLAH",
+      "agent": "COMANAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "arrival": "2026-06-29T20:21:33.351088+00:00",
+      "departure": "2026-06-29T21:50:17.140990+00:00"
     }
   ]
 }
