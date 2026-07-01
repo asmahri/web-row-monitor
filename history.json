@@ -7,5 +7,716 @@
     "berth_hours": 0.0,
     "arrival": "2026-06-01T10:31:43.278585+00:00",
     "departure": "2026-06-01T10:36:26.766705+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 6.0,
+    "arrival": "2026-06-01T10:31:43.278585+00:00",
+    "departure": "2026-06-01T16:33:52.708493+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-01T10:36:26.766705+00:00",
+    "departure": "2026-06-01T16:33:52.708493+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-01T16:33:52.708493+00:00",
+    "departure": "2026-06-01T20:52:16.831055+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-01T16:33:52.708493+00:00",
+    "departure": "2026-06-01T20:52:16.831055+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-01T20:52:16.831055+00:00",
+    "departure": "2026-06-01T22:58:51.304867+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-01T20:52:16.831055+00:00",
+    "departure": "2026-06-01T22:58:51.304867+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 8.8,
+    "berth_hours": 27.5,
+    "arrival": "2026-06-01T10:31:43.278585+00:00",
+    "departure": "2026-06-03T17:25:01.888950+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-03T17:25:01.888950+00:00",
+    "departure": "2026-06-03T20:35:04.675608+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-03T20:35:04.675608+00:00",
+    "departure": "2026-06-03T23:01:31.387171+00:00"
+  },
+  {
+    "vessel": "GAS EXELERO",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 54.9,
+    "berth_hours": 23.4,
+    "arrival": "2026-06-01T10:31:43.278585+00:00",
+    "departure": "2026-06-04T16:50:06.136606+00:00"
+  },
+  {
+    "vessel": "GAS EXELERO",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-04T16:50:06.136606+00:00",
+    "departure": "2026-06-04T19:20:43.431527+00:00"
+  },
+  {
+    "vessel": "GAS EXELERO",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-04T19:20:43.431527+00:00",
+    "departure": "2026-06-04T21:10:15.010712+00:00"
+  },
+  {
+    "vessel": "GAS EXELERO",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-04T21:10:15.010712+00:00",
+    "departure": "2026-06-04T22:51:59.835353+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 28.5,
+    "berth_hours": 22.1,
+    "arrival": "2026-06-01T10:31:43.278585+00:00",
+    "departure": "2026-06-05T14:56:10.180093+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-05T14:56:10.180093+00:00",
+    "departure": "2026-06-05T17:13:01.852819+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-05T17:13:01.852819+00:00",
+    "departure": "2026-06-05T19:15:04.618739+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-05T19:15:04.618739+00:00",
+    "departure": "2026-06-05T21:06:17.094128+00:00"
+  },
+  {
+    "vessel": "ARGAN",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-05T21:06:17.094128+00:00",
+    "departure": "2026-06-05T22:39:18.756200+00:00"
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 70.0,
+    "berth_hours": 55.9,
+    "arrival": "2026-06-01T10:31:43.278585+00:00",
+    "departure": "2026-06-07T19:52:56.591470+00:00"
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-07T19:52:56.591470+00:00",
+    "departure": "2026-06-07T21:05:30.257231+00:00"
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-07T21:05:30.257231+00:00",
+    "departure": "2026-06-07T22:35:08.962182+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-08T14:16:28.533103+00:00",
+    "departure": "2026-06-08T17:33:25.092734+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-08T17:33:25.092734+00:00",
+    "departure": "2026-06-08T20:06:58.655716+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-08T20:06:58.655716+00:00",
+    "departure": "2026-06-08T22:07:56.429383+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 9.1,
+    "berth_hours": 20.2,
+    "arrival": "2026-06-06T04:34:22.958750+00:00",
+    "departure": "2026-06-09T10:30:55.805375+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T10:30:55.805375+00:00",
+    "departure": "2026-06-09T13:40:51.395314+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-08T23:44:09.638042+00:00",
+    "departure": "2026-06-09T16:28:31.796411+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T13:40:51.395314+00:00",
+    "departure": "2026-06-09T16:28:31.796411+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T16:28:31.796411+00:00",
+    "departure": "2026-06-09T18:30:49.787286+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T16:28:31.796411+00:00",
+    "departure": "2026-06-09T18:30:49.787286+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T18:30:49.787286+00:00",
+    "departure": "2026-06-09T20:52:39.788151+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T18:30:49.787286+00:00",
+    "departure": "2026-06-09T20:52:39.788151+00:00"
+  },
+  {
+    "vessel": "GOLDEN ODYSSEY",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T20:52:39.788151+00:00",
+    "departure": "2026-06-09T22:19:36.613376+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T20:52:39.788151+00:00",
+    "departure": "2026-06-09T22:19:36.613376+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 87.3,
+    "berth_hours": 75.7,
+    "arrival": "2026-06-05T19:15:04.618739+00:00",
+    "departure": "2026-06-12T14:10:12.888896+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-12T14:10:12.888896+00:00",
+    "departure": "2026-06-12T17:20:10.567862+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-12T17:20:10.567862+00:00",
+    "departure": "2026-06-12T19:27:38.840538+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-12T19:27:38.840538+00:00",
+    "departure": "2026-06-12T21:12:52.050440+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-12T21:12:52.050440+00:00",
+    "departure": "2026-06-12T22:54:40.763389+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 32.4,
+    "arrival": "2026-06-11T16:34:45.876514+00:00",
+    "departure": "2026-06-14T20:46:02.534680+00:00"
+  },
+  {
+    "vessel": "RIX ONYX",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-14T20:46:02.534680+00:00",
+    "departure": "2026-06-14T22:04:45.733930+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "anchorage_hours": 43.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-09T10:30:55.805375+00:00",
+    "departure": "2026-06-15T15:44:04.925328+00:00"
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 73.6,
+    "arrival": "2026-06-09T13:40:51.395314+00:00",
+    "departure": "2026-06-15T15:44:04.925328+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-15T15:44:04.925328+00:00",
+    "departure": "2026-06-15T19:42:08.176526+00:00"
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-15T15:44:04.925328+00:00",
+    "departure": "2026-06-15T19:42:08.176526+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV SARL",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-15T19:42:08.176526+00:00",
+    "departure": "2026-06-15T22:13:39.334799+00:00"
+  },
+  {
+    "vessel": "BBC GREENLAND",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-15T19:42:08.176526+00:00",
+    "departure": "2026-06-15T22:13:39.334799+00:00"
+  },
+  {
+    "vessel": "YM EARTH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 225.4,
+    "berth_hours": 89.3,
+    "arrival": "2026-06-01T10:31:43.278585+00:00",
+    "departure": "2026-06-17T16:35:21.393481+00:00"
+  },
+  {
+    "vessel": "YM EARTH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-17T16:35:21.393481+00:00",
+    "departure": "2026-06-17T19:21:11.567300+00:00"
+  },
+  {
+    "vessel": "YM EARTH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-17T19:21:11.567300+00:00",
+    "departure": "2026-06-17T21:27:14.502945+00:00"
+  },
+  {
+    "vessel": "YM EARTH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-17T21:27:14.502945+00:00",
+    "departure": "2026-06-17T22:57:00.879964+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 13.0,
+    "berth_hours": 20.2,
+    "arrival": "2026-06-08T14:16:28.533103+00:00",
+    "departure": "2026-06-18T12:48:04.018512+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-18T12:48:04.018512+00:00",
+    "departure": "2026-06-18T16:24:13.645153+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-18T16:24:13.645153+00:00",
+    "departure": "2026-06-18T18:40:16.244877+00:00"
+  },
+  {
+    "vessel": "MAYOURY",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-18T18:40:16.244877+00:00",
+    "departure": "2026-06-18T21:20:34.405137+00:00"
+  },
+  {
+    "vessel": "TINA THERESA",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-19T17:51:01.427270+00:00",
+    "departure": "2026-06-19T19:41:44.059584+00:00"
+  },
+  {
+    "vessel": "TINA THERESA",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-19T19:41:44.059584+00:00",
+    "departure": "2026-06-19T21:04:30.363807+00:00"
+  },
+  {
+    "vessel": "TINA THERESA",
+    "agent": "SOCONAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-19T21:04:30.363807+00:00",
+    "departure": "2026-06-19T22:29:30.170863+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 4.6,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-20T12:13:51.445784+00:00",
+    "departure": "2026-06-22T18:05:13.275159+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-22T18:05:13.275159+00:00",
+    "departure": "2026-06-22T21:18:56.880237+00:00"
+  },
+  {
+    "vessel": "CKR ZEYNEP",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-22T21:18:56.880237+00:00",
+    "departure": "2026-06-22T22:59:44.022507+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 55.4,
+    "berth_hours": 210.6,
+    "arrival": "2026-06-13T08:21:59.716000+00:00",
+    "departure": "2026-06-24T10:17:52.491258+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-24T10:17:52.491258+00:00",
+    "departure": "2026-06-24T12:32:20.354185+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-24T12:32:20.354185+00:00",
+    "departure": "2026-06-24T15:30:54.455887+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-24T15:30:54.455887+00:00",
+    "departure": "2026-06-24T17:49:42.151719+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-24T17:49:42.151719+00:00",
+    "departure": "2026-06-24T19:38:18.047527+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-24T19:38:18.047527+00:00",
+    "departure": "2026-06-24T21:18:46.250768+00:00"
+  },
+  {
+    "vessel": "OBIRIX",
+    "agent": "GLOBE MARINE",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-24T21:18:46.250768+00:00",
+    "departure": "2026-06-24T22:47:41.124429+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 22.7,
+    "arrival": "2026-06-20T12:13:51.445784+00:00",
+    "departure": "2026-06-25T11:12:38.575746+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-25T11:12:38.575746+00:00",
+    "departure": "2026-06-25T13:33:27.778415+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-25T13:33:27.778415+00:00",
+    "departure": "2026-06-25T16:19:02.087863+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-25T16:19:02.087863+00:00",
+    "departure": "2026-06-25T18:30:45.059797+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-25T18:30:45.059797+00:00",
+    "departure": "2026-06-25T20:52:20.199686+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Dakhla",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-25T20:52:20.199686+00:00",
+    "departure": "2026-06-25T22:17:17.085487+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 77.3,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-20T12:13:51.445784+00:00",
+    "departure": "2026-06-29T15:36:57.842610+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-29T15:36:57.842610+00:00",
+    "departure": "2026-06-29T18:05:13.807022+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-29T18:05:13.807022+00:00",
+    "departure": "2026-06-29T20:21:33.351088+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-29T20:21:33.351088+00:00",
+    "departure": "2026-06-29T21:50:17.140990+00:00"
+  },
+  {
+    "vessel": "CHALLAH",
+    "agent": "COMANAV",
+    "port": "Laâyoune",
+    "anchorage_hours": 0.0,
+    "berth_hours": 0.0,
+    "arrival": "2026-06-29T21:50:17.140990+00:00",
+    "departure": "2026-06-29T22:51:03.866303+00:00"
   }
 ]
