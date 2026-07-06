@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783119600000+0100)/",
-        "date_SystemeField": "/Date(1783311399773+0100)/",
+        "date_SystemeField": "/Date(1783325816357+0100)/",
         "hEURE_SITUATIONField": "/Date(64080000+0100)/",
         "nOM_NAVIREField": "TINA THERESA",
         "nUMERO_ESCALEField": 201470621,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 25.726783824722226,
-      "berth_hours": 34.73779178333333,
+      "berth_hours": 38.86189313277777,
       "first_seen": "2026-06-23T23:51:53.378319+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     },
     "9522738-201470732": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1782946800000+0100)/",
-        "date_SystemeField": "/Date(1783311399773+0100)/",
+        "date_SystemeField": "/Date(1783325816360+0100)/",
         "hEURE_SITUATIONField": "/Date(58800000+0100)/",
         "nOM_NAVIREField": "GRONA HAWK",
         "nUMERO_ESCALEField": 201470732,
@@ -43,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 8.886527131111112,
-      "berth_hours": 83.14269967583334,
+      "berth_hours": 87.26680102527779,
       "first_seen": "2026-06-29T15:36:57.842610+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     },
     "9145217-201470760": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "COMANAV LAAYOUNE",
         "dATE_SITUATIONField": "/Date(1783292400000+0100)/",
-        "date_SystemeField": "/Date(1783311399770+0100)/",
+        "date_SystemeField": "/Date(1783325816353+0100)/",
         "hEURE_SITUATIONField": "/Date(25215000+0100)/",
         "nOM_NAVIREField": "COSTA LA LUZ",
         "nUMERO_ESCALEField": 201470760,
@@ -69,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-06-30T13:07:40.661382+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     },
     "9478315-201470792": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1783206000000+0100)/",
-        "date_SystemeField": "/Date(1783311399770+0100)/",
+        "date_SystemeField": "/Date(1783325816353+0100)/",
         "hEURE_SITUATIONField": "/Date(73500000+0100)/",
         "nOM_NAVIREField": "CATHY THERESA",
         "nUMERO_ESCALEField": 201470792,
@@ -90,11 +90,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 5.871381214166667,
+      "anchorage_hours": 9.995482563611112,
       "berth_hours": 0.0,
       "first_seen": "2026-07-01T18:22:43.319990+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     },
     "9508639-201470799": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1783119600000+0100)/",
-        "date_SystemeField": "/Date(1783311399773+0100)/",
+        "date_SystemeField": "/Date(1783325816360+0100)/",
         "hEURE_SITUATIONField": "/Date(33600000+0100)/",
         "nOM_NAVIREField": "STORM I",
         "nUMERO_ESCALEField": 201470817,
@@ -138,11 +138,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 41.9711642975,
+      "anchorage_hours": 46.09526564694445,
       "berth_hours": 0.0,
       "first_seen": "2026-07-02T13:18:52.961308+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     },
     "9834105-201470867": {
       "entry": {
@@ -151,7 +151,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1783378800000+0100)/",
-        "date_SystemeField": "/Date(1783311399767+0100)/",
+        "date_SystemeField": "/Date(1783325816353+0100)/",
         "hEURE_SITUATIONField": "/Date(64837000+0100)/",
         "nOM_NAVIREField": "LESSE",
         "nUMERO_ESCALEField": 201470867,
@@ -165,8 +165,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-04T15:39:36.349032+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     },
     "9933913-201470872": {
       "entry": {
@@ -175,7 +175,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783311399763+0100)/",
+        "date_SystemeField": "/Date(1783325816347+0100)/",
         "hEURE_SITUATIONField": "/Date(39651000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -189,8 +189,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-06T04:49:11.029022+00:00",
-      "last_seen": "2026-07-06T04:49:11.029022+00:00"
+      "last_updated": "2026-07-06T08:56:37.793880+00:00",
+      "last_seen": "2026-07-06T08:56:37.793880+00:00"
     }
   },
   "history": [
