@@ -24,30 +24,6 @@
       "last_updated": "2026-07-07T15:23:19.275423+00:00",
       "last_seen": "2026-07-07T15:23:19.275423+00:00"
     },
-    "9145217-201470760": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000303",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "16",
-        "cONSIGNATAIREField": "COMANAV LAAYOUNE",
-        "dATE_SITUATIONField": "/Date(1783292400000+0100)/",
-        "date_SystemeField": "/Date(1783376189517+0100)/",
-        "hEURE_SITUATIONField": "/Date(25215000+0100)/",
-        "nOM_NAVIREField": "COSTA LA LUZ",
-        "nUMERO_ESCALEField": 201470760,
-        "nUMERO_LLOYDField": "9145217",
-        "oPERATEURField": "ANP",
-        "pROVField": "FIGUEIRA DA FOZ",
-        "sITUATIONField": "PREVU",
-        "tYP_NAVIREField": "DRAGUE"
-      },
-      "current_status": "PREVU",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-06-30T13:07:40.661382+00:00",
-      "last_updated": "2026-07-06T23:01:54.711316+00:00",
-      "last_seen": "2026-07-06T23:01:54.711316+00:00"
-    },
     "9478315-201470792": {
       "entry": {
         "cODE_CONSIGNATAIREField": "000303",
@@ -55,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1783378800000+0100)/",
-        "date_SystemeField": "/Date(1783462544177+0100)/",
+        "date_SystemeField": "/Date(1783466153553+0100)/",
         "hEURE_SITUATIONField": "/Date(66000000+0100)/",
         "nOM_NAVIREField": "CATHY THERESA",
         "nUMERO_ESCALEField": 201470792,
@@ -67,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 44.83551611055555,
-      "berth_hours": 2.8062507266666668,
+      "berth_hours": 4.105655965277778,
       "first_seen": "2026-07-01T18:22:43.319990+00:00",
-      "last_updated": "2026-07-07T22:35:24.417265+00:00",
-      "last_seen": "2026-07-07T22:35:24.417265+00:00"
+      "last_updated": "2026-07-07T23:53:22.276124+00:00",
+      "last_seen": "2026-07-07T23:53:22.276124+00:00"
     },
     "9834105-201470867": {
       "entry": {
@@ -103,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783462544170+0100)/",
+        "date_SystemeField": "/Date(1783466153547+0100)/",
         "hEURE_SITUATIONField": "/Date(39651000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -117,56 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-07T22:35:24.417265+00:00",
-      "last_seen": "2026-07-07T22:35:24.417265+00:00"
-    },
-    "9508639-201470799": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "000130",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "17",
-        "cONSIGNATAIREField": "SOCONAV",
-        "dATE_SITUATIONField": "/Date(1783292400000+0100)/",
-        "date_SystemeField": "/Date(1783376189517+0100)/",
-        "hEURE_SITUATIONField": "/Date(72000000+0100)/",
-        "nOM_NAVIREField": "RIX ONYX",
-        "nUMERO_ESCALEField": 201470799,
-        "nUMERO_LLOYDField": "9508639",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "AGADIR",
-        "sITUATIONField": "APPAREILLAGE",
-        "tYP_NAVIREField": "VRAQUIER"
-      },
-      "current_status": "APPAREILLAGE",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-06T23:01:54.711316+00:00",
-      "last_updated": "2026-07-06T23:01:54.711316+00:00",
-      "last_seen": "2026-07-06T23:01:54.711316+00:00"
-    },
-    "9522738-201470732": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "1985",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "SOCONAV SARL",
-        "dATE_SITUATIONField": "/Date(1783292400000+0100)/",
-        "date_SystemeField": "/Date(1783376189517+0100)/",
-        "hEURE_SITUATIONField": "/Date(49500000+0100)/",
-        "nOM_NAVIREField": "GRONA HAWK",
-        "nUMERO_ESCALEField": 201470732,
-        "nUMERO_LLOYDField": "9522738",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "AGADIR",
-        "sITUATIONField": "APPAREILLAGE",
-        "tYP_NAVIREField": "VRAQUIER"
-      },
-      "current_status": "APPAREILLAGE",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-06T23:01:54.711316+00:00",
-      "last_updated": "2026-07-06T23:01:54.711316+00:00",
-      "last_seen": "2026-07-06T23:01:54.711316+00:00"
+      "last_updated": "2026-07-07T23:53:22.276124+00:00",
+      "last_seen": "2026-07-07T23:53:22.276124+00:00"
     },
     "9933913-201470910": {
       "entry": {
@@ -175,7 +103,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1783551600000+0100)/",
-        "date_SystemeField": "/Date(1783462544173+0100)/",
+        "date_SystemeField": "/Date(1783466153553+0100)/",
         "hEURE_SITUATIONField": "/Date(39636000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470910,
@@ -189,8 +117,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T09:31:39.677687+00:00",
-      "last_updated": "2026-07-07T22:35:24.417265+00:00",
-      "last_seen": "2026-07-07T22:35:24.417265+00:00"
+      "last_updated": "2026-07-07T23:53:22.276124+00:00",
+      "last_seen": "2026-07-07T23:53:22.276124+00:00"
     },
     "9870678-201470909": {
       "entry": {
@@ -199,7 +127,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1783551600000+0100)/",
-        "date_SystemeField": "/Date(1783462544173+0100)/",
+        "date_SystemeField": "/Date(1783466153553+0100)/",
         "hEURE_SITUATIONField": "/Date(21620000+0100)/",
         "nOM_NAVIREField": "TOSCA",
         "nUMERO_ESCALEField": 201470909,
@@ -213,8 +141,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T09:31:39.677687+00:00",
-      "last_updated": "2026-07-07T22:35:24.417265+00:00",
-      "last_seen": "2026-07-07T22:35:24.417265+00:00"
+      "last_updated": "2026-07-07T23:53:22.276124+00:00",
+      "last_seen": "2026-07-07T23:53:22.276124+00:00"
     },
     "9870678-201470927": {
       "entry": {
@@ -223,7 +151,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783462544170+0100)/",
+        "date_SystemeField": "/Date(1783466153547+0100)/",
         "hEURE_SITUATIONField": "/Date(21652000+0100)/",
         "nOM_NAVIREField": "TOSCA",
         "nUMERO_ESCALEField": 201470927,
@@ -237,8 +165,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T17:31:12.399726+00:00",
-      "last_updated": "2026-07-07T22:35:24.417265+00:00",
-      "last_seen": "2026-07-07T22:35:24.417265+00:00"
+      "last_updated": "2026-07-07T23:53:22.276124+00:00",
+      "last_seen": "2026-07-07T23:53:22.276124+00:00"
     },
     "9212448-201470817": {
       "entry": {
