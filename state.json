@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "COMANAV",
         "dATE_SITUATIONField": "/Date(1783378800000+0100)/",
-        "date_SystemeField": "/Date(1783487980933+0100)/",
+        "date_SystemeField": "/Date(1783498621737+0100)/",
         "hEURE_SITUATIONField": "/Date(66000000+0100)/",
         "nOM_NAVIREField": "CATHY THERESA",
         "nUMERO_ESCALEField": 201470792,
@@ -43,10 +43,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 44.83551611055555,
-      "berth_hours": 9.794430847222223,
+      "berth_hours": 12.50143206388889,
       "first_seen": "2026-07-01T18:22:43.319990+00:00",
-      "last_updated": "2026-07-08T05:34:41.865699+00:00",
-      "last_seen": "2026-07-08T05:34:41.865699+00:00"
+      "last_updated": "2026-07-08T08:17:07.070079+00:00",
+      "last_seen": "2026-07-08T08:17:07.070079+00:00"
     },
     "9834105-201470867": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783487980930+0100)/",
+        "date_SystemeField": "/Date(1783498621720+0100)/",
         "hEURE_SITUATIONField": "/Date(39651000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -93,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-08T05:34:41.865699+00:00",
-      "last_seen": "2026-07-08T05:34:41.865699+00:00"
+      "last_updated": "2026-07-08T08:17:07.070079+00:00",
+      "last_seen": "2026-07-08T08:17:07.070079+00:00"
     },
     "9933913-201470910": {
       "entry": {
@@ -103,7 +103,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1783551600000+0100)/",
-        "date_SystemeField": "/Date(1783487980930+0100)/",
+        "date_SystemeField": "/Date(1783498621733+0100)/",
         "hEURE_SITUATIONField": "/Date(39636000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470910,
@@ -117,8 +117,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T09:31:39.677687+00:00",
-      "last_updated": "2026-07-08T05:34:41.865699+00:00",
-      "last_seen": "2026-07-08T05:34:41.865699+00:00"
+      "last_updated": "2026-07-08T08:17:07.070079+00:00",
+      "last_seen": "2026-07-08T08:17:07.070079+00:00"
     },
     "9870678-201470909": {
       "entry": {
@@ -127,7 +127,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1783551600000+0100)/",
-        "date_SystemeField": "/Date(1783487980930+0100)/",
+        "date_SystemeField": "/Date(1783498621737+0100)/",
         "hEURE_SITUATIONField": "/Date(21620000+0100)/",
         "nOM_NAVIREField": "TOSCA",
         "nUMERO_ESCALEField": 201470909,
@@ -141,8 +141,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T09:31:39.677687+00:00",
-      "last_updated": "2026-07-08T05:34:41.865699+00:00",
-      "last_seen": "2026-07-08T05:34:41.865699+00:00"
+      "last_updated": "2026-07-08T08:17:07.070079+00:00",
+      "last_seen": "2026-07-08T08:17:07.070079+00:00"
     },
     "9870678-201470927": {
       "entry": {
@@ -151,7 +151,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783487980930+0100)/",
+        "date_SystemeField": "/Date(1783498621720+0100)/",
         "hEURE_SITUATIONField": "/Date(21652000+0100)/",
         "nOM_NAVIREField": "TOSCA",
         "nUMERO_ESCALEField": 201470927,
@@ -165,8 +165,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T17:31:12.399726+00:00",
-      "last_updated": "2026-07-08T05:34:41.865699+00:00",
-      "last_seen": "2026-07-08T05:34:41.865699+00:00"
+      "last_updated": "2026-07-08T08:17:07.070079+00:00",
+      "last_seen": "2026-07-08T08:17:07.070079+00:00"
     },
     "9212448-201470817": {
       "entry": {
