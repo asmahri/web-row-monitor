@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783747178500+0100)/",
+        "date_SystemeField": "/Date(1783754151687+0100)/",
         "hEURE_SITUATIONField": "/Date(39651000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -21,8 +21,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-11T05:24:45.171756+00:00",
-      "last_seen": "2026-07-11T05:24:45.171756+00:00"
+      "last_updated": "2026-07-11T07:22:58.611300+00:00",
+      "last_seen": "2026-07-11T07:22:58.611300+00:00"
     },
     "9933913-201470910": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1783551600000+0100)/",
-        "date_SystemeField": "/Date(1783747178507+0100)/",
+        "date_SystemeField": "/Date(1783754151693+0100)/",
         "hEURE_SITUATIONField": "/Date(48600000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470910,
@@ -42,35 +42,11 @@
         "tYP_NAVIREField": "PETROLIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 39.37630064083333,
+      "anchorage_hours": 41.34670051416666,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T09:31:39.677687+00:00",
-      "last_updated": "2026-07-11T05:24:45.171756+00:00",
-      "last_seen": "2026-07-11T05:24:45.171756+00:00"
-    },
-    "9870678-201470909": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "1985",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "SOCONAV SARL",
-        "dATE_SITUATIONField": "/Date(1783551600000+0100)/",
-        "date_SystemeField": "/Date(1783664337557+0100)/",
-        "hEURE_SITUATIONField": "/Date(27900000+0100)/",
-        "nOM_NAVIREField": "TOSCA",
-        "nUMERO_ESCALEField": 201470909,
-        "nUMERO_LLOYDField": "9870678",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "ALGECIRAS",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "CONVENTIONEL"
-      },
-      "current_status": "EN RADE",
-      "anchorage_hours": 19.213657981666664,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-07T09:31:39.677687+00:00",
-      "last_updated": "2026-07-10T06:25:45.931726+00:00",
-      "last_seen": "2026-07-10T06:25:45.931726+00:00"
+      "last_updated": "2026-07-11T07:22:58.611300+00:00",
+      "last_seen": "2026-07-11T07:22:58.611300+00:00"
     },
     "9870678-201470927": {
       "entry": {
@@ -79,7 +55,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783747178503+0100)/",
+        "date_SystemeField": "/Date(1783754151690+0100)/",
         "hEURE_SITUATIONField": "/Date(21652000+0100)/",
         "nOM_NAVIREField": "TOSCA",
         "nUMERO_ESCALEField": 201470927,
@@ -93,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T17:31:12.399726+00:00",
-      "last_updated": "2026-07-11T05:24:45.171756+00:00",
-      "last_seen": "2026-07-11T05:24:45.171756+00:00"
+      "last_updated": "2026-07-11T07:22:58.611300+00:00",
+      "last_seen": "2026-07-11T07:22:58.611300+00:00"
     },
     "9518880-201470972": {
       "entry": {
@@ -103,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783747178500+0100)/",
+        "date_SystemeField": "/Date(1783754151687+0100)/",
         "hEURE_SITUATIONField": "/Date(75615000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470972,
@@ -117,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-09T16:59:16.256223+00:00",
-      "last_updated": "2026-07-11T05:24:45.171756+00:00",
-      "last_seen": "2026-07-11T05:24:45.171756+00:00"
+      "last_updated": "2026-07-11T07:22:58.611300+00:00",
+      "last_seen": "2026-07-11T07:22:58.611300+00:00"
     }
   },
   "history": [
