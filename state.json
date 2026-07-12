@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783887386597+0100)/",
+        "date_SystemeField": "/Date(1783890964173+0100)/",
         "hEURE_SITUATIONField": "/Date(39651000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -21,8 +21,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-12T21:13:34.868461+00:00",
-      "last_seen": "2026-07-12T21:13:34.868461+00:00"
+      "last_updated": "2026-07-12T22:13:23.260436+00:00",
+      "last_seen": "2026-07-12T22:13:23.260436+00:00"
     },
     "9870678-201470927": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "16",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783887386603+0100)/",
+        "date_SystemeField": "/Date(1783890964183+0100)/",
         "hEURE_SITUATIONField": "/Date(21652000+0100)/",
         "nOM_NAVIREField": "TOSCA",
         "nUMERO_ESCALEField": 201470927,
@@ -45,8 +45,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-07T17:31:12.399726+00:00",
-      "last_updated": "2026-07-12T21:13:34.868461+00:00",
-      "last_seen": "2026-07-12T21:13:34.868461+00:00"
+      "last_updated": "2026-07-12T22:13:23.260436+00:00",
+      "last_seen": "2026-07-12T22:13:23.260436+00:00"
     },
     "9518880-201470972": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783887386597+0100)/",
+        "date_SystemeField": "/Date(1783890964173+0100)/",
         "hEURE_SITUATIONField": "/Date(75615000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470972,
@@ -69,32 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-09T16:59:16.256223+00:00",
-      "last_updated": "2026-07-12T21:13:34.868461+00:00",
-      "last_seen": "2026-07-12T21:13:34.868461+00:00"
-    },
-    "9870678-201470909": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "1985",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "SOCONAV SARL",
-        "dATE_SITUATIONField": "/Date(1783724400000+0100)/",
-        "date_SystemeField": "/Date(1783804560510+0100)/",
-        "hEURE_SITUATIONField": "/Date(36600000+0100)/",
-        "nOM_NAVIREField": "TOSCA",
-        "nUMERO_ESCALEField": 201470909,
-        "nUMERO_LLOYDField": "9870678",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "ALGECIRAS",
-        "sITUATIONField": "APPAREILLAGE",
-        "tYP_NAVIREField": "CONVENTIONEL"
-      },
-      "current_status": "APPAREILLAGE",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-11T22:12:00.645894+00:00",
-      "last_updated": "2026-07-11T22:12:00.645894+00:00",
-      "last_seen": "2026-07-11T22:12:00.645894+00:00"
+      "last_updated": "2026-07-12T22:13:23.260436+00:00",
+      "last_seen": "2026-07-12T22:13:23.260436+00:00"
     },
     "9933913-201470910": {
       "entry": {
@@ -103,7 +79,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783887386600+0100)/",
+        "date_SystemeField": "/Date(1783890964183+0100)/",
         "hEURE_SITUATIONField": "/Date(40800000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470910,
@@ -116,9 +92,9 @@
       "current_status": "APPAREILLAGE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-07-12T21:13:34.868461+00:00",
-      "last_updated": "2026-07-12T21:13:34.868461+00:00",
-      "last_seen": "2026-07-12T21:13:34.868461+00:00"
+      "first_seen": "2026-07-12T22:13:23.260436+00:00",
+      "last_updated": "2026-07-12T22:13:23.260436+00:00",
+      "last_seen": "2026-07-12T22:13:23.260436+00:00"
     }
   },
   "history": [
@@ -625,6 +601,15 @@
       "berth_hours": 0.0,
       "arrival": "2026-07-12T20:07:23.865150+00:00",
       "departure": "2026-07-12T21:13:34.868461+00:00"
+    },
+    {
+      "vessel": "CHALLAH",
+      "agent": "SOCONAV SARL",
+      "port": "Dakhla",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "arrival": "2026-07-12T21:13:34.868461+00:00",
+      "departure": "2026-07-12T22:13:23.260436+00:00"
     }
   ]
 }
