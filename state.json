@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783973772940+0100)/",
+        "date_SystemeField": "/Date(1783980990573+0100)/",
         "hEURE_SITUATIONField": "/Date(44400000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -19,34 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 0.0,
-      "berth_hours": 6.719048772777777,
+      "berth_hours": 8.071105668333333,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-13T21:03:50.134204+00:00",
-      "last_seen": "2026-07-13T21:03:50.134204+00:00"
-    },
-    "9870678-201470927": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "111119",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "16",
-        "cONSIGNATAIREField": "SOCONAV",
-        "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783890964183+0100)/",
-        "hEURE_SITUATIONField": "/Date(21652000+0100)/",
-        "nOM_NAVIREField": "TOSCA",
-        "nUMERO_ESCALEField": 201470927,
-        "nUMERO_LLOYDField": "9870678",
-        "oPERATEURField": "ANP",
-        "pROVField": "ALGECIRAS",
-        "sITUATIONField": "PREVU",
-        "tYP_NAVIREField": "CONVENTIONEL"
-      },
-      "current_status": "PREVU",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-07T17:31:12.399726+00:00",
-      "last_updated": "2026-07-12T22:13:23.260436+00:00",
-      "last_seen": "2026-07-12T22:13:23.260436+00:00"
+      "last_updated": "2026-07-13T22:24:57.539028+00:00",
+      "last_seen": "2026-07-13T22:24:57.539028+00:00"
     },
     "9518880-201470972": {
       "entry": {
@@ -55,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783973772937+0100)/",
+        "date_SystemeField": "/Date(1783980990567+0100)/",
         "hEURE_SITUATIONField": "/Date(75615000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470972,
@@ -69,32 +45,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-09T16:59:16.256223+00:00",
-      "last_updated": "2026-07-13T21:03:50.134204+00:00",
-      "last_seen": "2026-07-13T21:03:50.134204+00:00"
-    },
-    "9933913-201470910": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "1985",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "SOCONAV SARL",
-        "dATE_SITUATIONField": "/Date(1783810800000+0100)/",
-        "date_SystemeField": "/Date(1783890964183+0100)/",
-        "hEURE_SITUATIONField": "/Date(40800000+0100)/",
-        "nOM_NAVIREField": "CHALLAH",
-        "nUMERO_ESCALEField": 201470910,
-        "nUMERO_LLOYDField": "9933913",
-        "oPERATEURField": "MARSA MAROC",
-        "pROVField": "CARTAGENA",
-        "sITUATIONField": "APPAREILLAGE",
-        "tYP_NAVIREField": "PETROLIER"
-      },
-      "current_status": "APPAREILLAGE",
-      "anchorage_hours": 0.0,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-12T22:13:23.260436+00:00",
-      "last_updated": "2026-07-12T22:13:23.260436+00:00",
-      "last_seen": "2026-07-12T22:13:23.260436+00:00"
+      "last_updated": "2026-07-13T22:24:57.539028+00:00",
+      "last_seen": "2026-07-13T22:24:57.539028+00:00"
     },
     "61160-201471040": {
       "entry": {
@@ -103,7 +55,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": null,
         "dATE_SITUATIONField": "/Date(1774998000000+0100)/",
-        "date_SystemeField": "/Date(1783973772947+0100)/",
+        "date_SystemeField": "/Date(1783980990577+0100)/",
         "hEURE_SITUATIONField": "/Date(600000+0100)/",
         "nOM_NAVIREField": "NANOU IV",
         "nUMERO_ESCALEField": 201471040,
@@ -114,11 +66,11 @@
         "tYP_NAVIREField": "VEDETTES"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 6.719048772777777,
+      "anchorage_hours": 8.071105668333333,
       "berth_hours": 0.0,
       "first_seen": "2026-07-13T14:20:41.558622+00:00",
-      "last_updated": "2026-07-13T21:03:50.134204+00:00",
-      "last_seen": "2026-07-13T21:03:50.134204+00:00"
+      "last_updated": "2026-07-13T22:24:57.539028+00:00",
+      "last_seen": "2026-07-13T22:24:57.539028+00:00"
     }
   },
   "history": [
