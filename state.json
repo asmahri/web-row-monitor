@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783897200000+0100)/",
-        "date_SystemeField": "/Date(1783998949137+0100)/",
+        "date_SystemeField": "/Date(1784006378897+0100)/",
         "hEURE_SITUATIONField": "/Date(44400000+0100)/",
         "nOM_NAVIREField": "CHALLAH",
         "nUMERO_ESCALEField": 201470872,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 0.0,
-      "berth_hours": 13.369448573888887,
+      "berth_hours": 15.752189519999998,
       "first_seen": "2026-07-05T09:38:42.174580+00:00",
-      "last_updated": "2026-07-14T03:42:51.573488+00:00",
-      "last_seen": "2026-07-14T03:42:51.573488+00:00"
+      "last_updated": "2026-07-14T06:05:49.440894+00:00",
+      "last_seen": "2026-07-14T06:05:49.440894+00:00"
     },
     "9518880-201470972": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783983600000+0100)/",
-        "date_SystemeField": "/Date(1783998949137+0100)/",
+        "date_SystemeField": "/Date(1784006378893+0100)/",
         "hEURE_SITUATIONField": "/Date(3600000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470972,
@@ -42,11 +42,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 0.0,
+      "anchorage_hours": 2.382740946111111,
       "berth_hours": 0.0,
       "first_seen": "2026-07-09T16:59:16.256223+00:00",
-      "last_updated": "2026-07-14T03:42:51.573488+00:00",
-      "last_seen": "2026-07-14T03:42:51.573488+00:00"
+      "last_updated": "2026-07-14T06:05:49.440894+00:00",
+      "last_seen": "2026-07-14T06:05:49.440894+00:00"
     },
     "61160-201471040": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": null,
         "dATE_SITUATIONField": "/Date(1774998000000+0100)/",
-        "date_SystemeField": "/Date(1783998949147+0100)/",
+        "date_SystemeField": "/Date(1784006378917+0100)/",
         "hEURE_SITUATIONField": "/Date(600000+0100)/",
         "nOM_NAVIREField": "NANOU IV",
         "nUMERO_ESCALEField": 201471040,
@@ -66,11 +66,11 @@
         "tYP_NAVIREField": "VEDETTES"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 13.369448573888887,
+      "anchorage_hours": 15.752189519999998,
       "berth_hours": 0.0,
       "first_seen": "2026-07-13T14:20:41.558622+00:00",
-      "last_updated": "2026-07-14T03:42:51.573488+00:00",
-      "last_seen": "2026-07-14T03:42:51.573488+00:00"
+      "last_updated": "2026-07-14T06:05:49.440894+00:00",
+      "last_seen": "2026-07-14T06:05:49.440894+00:00"
     }
   },
   "history": [
