@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1783983600000+0100)/",
-        "date_SystemeField": "/Date(1784106981647+0100)/",
+        "date_SystemeField": "/Date(1784110575690+0100)/",
         "hEURE_SITUATIONField": "/Date(47700000+0100)/",
         "nOM_NAVIREField": "ARGAN",
         "nUMERO_ESCALEField": 201470972,
@@ -19,10 +19,10 @@
       },
       "current_status": "A QUAI",
       "anchorage_hours": 10.652345194444443,
-      "berth_hours": 19.08268282722222,
+      "berth_hours": 20.768902736666668,
       "first_seen": "2026-07-09T16:59:16.256223+00:00",
-      "last_updated": "2026-07-15T09:26:57.674366+00:00",
-      "last_seen": "2026-07-15T09:26:57.674366+00:00"
+      "last_updated": "2026-07-15T11:08:08.066040+00:00",
+      "last_seen": "2026-07-15T11:08:08.066040+00:00"
     },
     "61160-201471040": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": null,
         "dATE_SITUATIONField": "/Date(1774998000000+0100)/",
-        "date_SystemeField": "/Date(1784106981650+0100)/",
+        "date_SystemeField": "/Date(1784110575697+0100)/",
         "hEURE_SITUATIONField": "/Date(600000+0100)/",
         "nOM_NAVIREField": "NANOU IV",
         "nUMERO_ESCALEField": 201471040,
@@ -42,11 +42,11 @@
         "tYP_NAVIREField": "VEDETTES"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 43.10447659555555,
+      "anchorage_hours": 44.790696505,
       "berth_hours": 0.0,
       "first_seen": "2026-07-13T14:20:41.558622+00:00",
-      "last_updated": "2026-07-15T09:26:57.674366+00:00",
-      "last_seen": "2026-07-15T09:26:57.674366+00:00"
+      "last_updated": "2026-07-15T11:08:08.066040+00:00",
+      "last_seen": "2026-07-15T11:08:08.066040+00:00"
     },
     "9933913-201470872": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1784329200000+0100)/",
-        "date_SystemeField": "/Date(1784106981640+0100)/",
+        "date_SystemeField": "/Date(1784110575680+0100)/",
         "hEURE_SITUATIONField": "/Date(21619000+0100)/",
         "nOM_NAVIREField": "KASSOS",
         "nUMERO_ESCALEField": 201471124,
@@ -93,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-15T09:26:57.674366+00:00",
-      "last_updated": "2026-07-15T09:26:57.674366+00:00",
-      "last_seen": "2026-07-15T09:26:57.674366+00:00"
+      "last_updated": "2026-07-15T11:08:08.066040+00:00",
+      "last_seen": "2026-07-15T11:08:08.066040+00:00"
     }
   },
   "history": [
