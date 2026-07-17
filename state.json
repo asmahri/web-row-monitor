@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": null,
         "dATE_SITUATIONField": "/Date(1774998000000+0100)/",
-        "date_SystemeField": "/Date(1784304959737+0100)/",
+        "date_SystemeField": "/Date(1784312174613+0100)/",
         "hEURE_SITUATIONField": "/Date(600000+0100)/",
         "nOM_NAVIREField": "NANOU IV",
         "nUMERO_ESCALEField": 201471040,
@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "VEDETTES"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 98.76766778833331,
+      "anchorage_hours": 100.19862192916665,
       "berth_hours": 0.0,
       "first_seen": "2026-07-13T14:20:41.558622+00:00",
-      "last_updated": "2026-07-17T17:06:45.162660+00:00",
-      "last_seen": "2026-07-17T17:06:45.162660+00:00"
+      "last_updated": "2026-07-17T18:32:36.597567+00:00",
+      "last_seen": "2026-07-17T18:32:36.597567+00:00"
     },
     "9382164-201471124": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1784329200000+0100)/",
-        "date_SystemeField": "/Date(1784304959723+0100)/",
+        "date_SystemeField": "/Date(1784312174600+0100)/",
         "hEURE_SITUATIONField": "/Date(21619000+0100)/",
         "nOM_NAVIREField": "KASSOS",
         "nUMERO_ESCALEField": 201471124,
@@ -45,8 +45,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-15T09:26:57.674366+00:00",
-      "last_updated": "2026-07-17T17:06:45.162660+00:00",
-      "last_seen": "2026-07-17T17:06:45.162660+00:00"
+      "last_updated": "2026-07-17T18:32:36.597567+00:00",
+      "last_seen": "2026-07-17T18:32:36.597567+00:00"
     },
     "9382164-201471169": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1784588400000+0100)/",
-        "date_SystemeField": "/Date(1784304959720+0100)/",
+        "date_SystemeField": "/Date(1784312174590+0100)/",
         "hEURE_SITUATIONField": "/Date(57622000+0100)/",
         "nOM_NAVIREField": "KASSOS",
         "nUMERO_ESCALEField": 201471169,
@@ -69,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-16T18:38:09.112020+00:00",
-      "last_updated": "2026-07-17T17:06:45.162660+00:00",
-      "last_seen": "2026-07-17T17:06:45.162660+00:00"
+      "last_updated": "2026-07-17T18:32:36.597567+00:00",
+      "last_seen": "2026-07-17T18:32:36.597567+00:00"
     },
     "9478298-201471170": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1784761200000+0100)/",
-        "date_SystemeField": "/Date(1784304959717+0100)/",
+        "date_SystemeField": "/Date(1784312174587+0100)/",
         "hEURE_SITUATIONField": "/Date(21643000+0100)/",
         "nOM_NAVIREField": "TINA THERESA",
         "nUMERO_ESCALEField": 201471170,
@@ -93,32 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-16T19:58:18.026225+00:00",
-      "last_updated": "2026-07-17T17:06:45.162660+00:00",
-      "last_seen": "2026-07-17T17:06:45.162660+00:00"
-    },
-    "8607177-201471162": {
-      "entry": {
-        "cODE_CONSIGNATAIREField": "005970",
-        "cODE_PORTField": "",
-        "cODE_SOCIETEField": "18",
-        "cONSIGNATAIREField": "MADES DE PECHE",
-        "dATE_SITUATIONField": "/Date(1784156400000+0100)/",
-        "date_SystemeField": "/Date(1784304959727+0100)/",
-        "hEURE_SITUATIONField": "/Date(61800000+0100)/",
-        "nOM_NAVIREField": "ALEKSANDR MIRONENKO",
-        "nUMERO_ESCALEField": 201471162,
-        "nUMERO_LLOYDField": "8607177",
-        "oPERATEURField": "DIVERS",
-        "pROVField": "DAKHLA",
-        "sITUATIONField": "EN RADE",
-        "tYP_NAVIREField": "CHALUTIER"
-      },
-      "current_status": "EN RADE",
-      "anchorage_hours": 6.047088645833333,
-      "berth_hours": 0.0,
-      "first_seen": "2026-07-16T22:27:18.275088+00:00",
-      "last_updated": "2026-07-17T17:06:45.162660+00:00",
-      "last_seen": "2026-07-17T17:06:45.162660+00:00"
+      "last_updated": "2026-07-17T18:32:36.597567+00:00",
+      "last_seen": "2026-07-17T18:32:36.597567+00:00"
     },
     "8832069-201471132": {
       "entry": {
@@ -126,23 +102,47 @@
         "cODE_PORTField": "",
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "MADES DE PECHE",
-        "dATE_SITUATIONField": "/Date(1784156400000+0100)/",
-        "date_SystemeField": "/Date(1784304959727+0100)/",
-        "hEURE_SITUATIONField": "/Date(72900000+0100)/",
+        "dATE_SITUATIONField": "/Date(1784242800000+0100)/",
+        "date_SystemeField": "/Date(1784312174603+0100)/",
+        "hEURE_SITUATIONField": "/Date(46800000+0100)/",
         "nOM_NAVIREField": "KAPITAN KIRICHENK",
         "nUMERO_ESCALEField": 201471132,
         "nUMERO_LLOYDField": "8832069",
         "oPERATEURField": "DIVERS",
         "pROVField": "MINDELO",
-        "sITUATIONField": "EN RADE",
+        "sITUATIONField": "APPAREILLAGE",
         "tYP_NAVIREField": "FRIGORIFIQUE"
       },
-      "current_status": "EN RADE",
-      "anchorage_hours": 6.047088645833333,
+      "current_status": "APPAREILLAGE",
+      "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-07-17T11:03:55.643535+00:00",
-      "last_updated": "2026-07-17T17:06:45.162660+00:00",
-      "last_seen": "2026-07-17T17:06:45.162660+00:00"
+      "first_seen": "2026-07-17T18:32:36.597567+00:00",
+      "last_updated": "2026-07-17T18:32:36.597567+00:00",
+      "last_seen": "2026-07-17T18:32:36.597567+00:00"
+    },
+    "8607177-201471162": {
+      "entry": {
+        "cODE_CONSIGNATAIREField": "005970",
+        "cODE_PORTField": "",
+        "cODE_SOCIETEField": "18",
+        "cONSIGNATAIREField": "MADES DE PECHE",
+        "dATE_SITUATIONField": "/Date(1784242800000+0100)/",
+        "date_SystemeField": "/Date(1784312174603+0100)/",
+        "hEURE_SITUATIONField": "/Date(42300000+0100)/",
+        "nOM_NAVIREField": "ALEKSANDR MIRONENKO",
+        "nUMERO_ESCALEField": 201471162,
+        "nUMERO_LLOYDField": "8607177",
+        "oPERATEURField": "DIVERS",
+        "pROVField": "DAKHLA",
+        "sITUATIONField": "APPAREILLAGE",
+        "tYP_NAVIREField": "CHALUTIER"
+      },
+      "current_status": "APPAREILLAGE",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "first_seen": "2026-07-17T18:32:36.597567+00:00",
+      "last_updated": "2026-07-17T18:32:36.597567+00:00",
+      "last_seen": "2026-07-17T18:32:36.597567+00:00"
     }
   },
   "history": [
@@ -820,6 +820,24 @@
       "berth_hours": 0.0,
       "arrival": "2026-07-16T21:02:54.488925+00:00",
       "departure": "2026-07-16T22:27:18.275088+00:00"
+    },
+    {
+      "vessel": "ALEKSANDR MIRONENKO",
+      "agent": "MADES DE PECHE",
+      "port": "Dakhla",
+      "anchorage_hours": 7.5,
+      "berth_hours": 0.0,
+      "arrival": "2026-07-16T22:27:18.275088+00:00",
+      "departure": "2026-07-17T18:32:36.597567+00:00"
+    },
+    {
+      "vessel": "KAPITAN KIRICHENK",
+      "agent": "MADES DE PECHE",
+      "port": "Dakhla",
+      "anchorage_hours": 7.5,
+      "berth_hours": 0.0,
+      "arrival": "2026-07-17T11:03:55.643535+00:00",
+      "departure": "2026-07-17T18:32:36.597567+00:00"
     }
   ]
 }
