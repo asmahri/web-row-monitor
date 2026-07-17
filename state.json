@@ -7,7 +7,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": null,
         "dATE_SITUATIONField": "/Date(1774998000000+0100)/",
-        "date_SystemeField": "/Date(1784269184027+0100)/",
+        "date_SystemeField": "/Date(1784276202157+0100)/",
         "hEURE_SITUATIONField": "/Date(600000+0100)/",
         "nOM_NAVIREField": "NANOU IV",
         "nUMERO_ESCALEField": 201471040,
@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "VEDETTES"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 88.24594265444442,
+      "anchorage_hours": 90.73501475694442,
       "berth_hours": 0.0,
       "first_seen": "2026-07-13T14:20:41.558622+00:00",
-      "last_updated": "2026-07-17T06:35:26.952178+00:00",
-      "last_seen": "2026-07-17T06:35:26.952178+00:00"
+      "last_updated": "2026-07-17T09:04:47.611747+00:00",
+      "last_seen": "2026-07-17T09:04:47.611747+00:00"
     },
     "9382164-201471124": {
       "entry": {
@@ -31,7 +31,7 @@
         "cODE_SOCIETEField": "18",
         "cONSIGNATAIREField": "SOCONAV SARL",
         "dATE_SITUATIONField": "/Date(1784329200000+0100)/",
-        "date_SystemeField": "/Date(1784269184017+0100)/",
+        "date_SystemeField": "/Date(1784276202147+0100)/",
         "hEURE_SITUATIONField": "/Date(21619000+0100)/",
         "nOM_NAVIREField": "KASSOS",
         "nUMERO_ESCALEField": 201471124,
@@ -45,8 +45,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-15T09:26:57.674366+00:00",
-      "last_updated": "2026-07-17T06:35:26.952178+00:00",
-      "last_seen": "2026-07-17T06:35:26.952178+00:00"
+      "last_updated": "2026-07-17T09:04:47.611747+00:00",
+      "last_seen": "2026-07-17T09:04:47.611747+00:00"
     },
     "9382164-201471169": {
       "entry": {
@@ -55,7 +55,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1784588400000+0100)/",
-        "date_SystemeField": "/Date(1784269184010+0100)/",
+        "date_SystemeField": "/Date(1784276202140+0100)/",
         "hEURE_SITUATIONField": "/Date(57622000+0100)/",
         "nOM_NAVIREField": "KASSOS",
         "nUMERO_ESCALEField": 201471169,
@@ -69,8 +69,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-16T18:38:09.112020+00:00",
-      "last_updated": "2026-07-17T06:35:26.952178+00:00",
-      "last_seen": "2026-07-17T06:35:26.952178+00:00"
+      "last_updated": "2026-07-17T09:04:47.611747+00:00",
+      "last_seen": "2026-07-17T09:04:47.611747+00:00"
     },
     "9478298-201471170": {
       "entry": {
@@ -79,7 +79,7 @@
         "cODE_SOCIETEField": "17",
         "cONSIGNATAIREField": "SOCONAV",
         "dATE_SITUATIONField": "/Date(1784761200000+0100)/",
-        "date_SystemeField": "/Date(1784269184010+0100)/",
+        "date_SystemeField": "/Date(1784276202140+0100)/",
         "hEURE_SITUATIONField": "/Date(21643000+0100)/",
         "nOM_NAVIREField": "TINA THERESA",
         "nUMERO_ESCALEField": 201471170,
@@ -93,8 +93,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-07-16T19:58:18.026225+00:00",
-      "last_updated": "2026-07-17T06:35:26.952178+00:00",
-      "last_seen": "2026-07-17T06:35:26.952178+00:00"
+      "last_updated": "2026-07-17T09:04:47.611747+00:00",
+      "last_seen": "2026-07-17T09:04:47.611747+00:00"
     },
     "8607177-201471162": {
       "entry": {
