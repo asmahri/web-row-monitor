@@ -18,11 +18,11 @@
         "tYP_NAVIREField": "VEDETTES"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 1029.1241087472224,
+      "anchorage_hours": 1029.5675029038891,
       "berth_hours": 0.0,
       "first_seen": "2026-07-13T14:20:41.558622+00:00",
-      "last_updated": "2026-08-25T11:28:08.350112+00:00",
-      "last_seen": "2026-08-25T11:28:08.350112+00:00"
+      "last_updated": "2026-08-25T11:54:44.569076+00:00",
+      "last_seen": "2026-08-25T11:54:44.569076+00:00"
     },
     "9777541-201472091": {
       "entry": {
@@ -66,11 +66,11 @@
         "tYP_NAVIREField": "TANKER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 0.0,
+      "anchorage_hours": 0.44339415666666665,
       "berth_hours": 0.0,
       "first_seen": "2026-08-21T00:57:45.515247+00:00",
-      "last_updated": "2026-08-25T11:28:08.350112+00:00",
-      "last_seen": "2026-08-25T11:28:08.350112+00:00"
+      "last_updated": "2026-08-25T11:54:44.569076+00:00",
+      "last_seen": "2026-08-25T11:54:44.569076+00:00"
     },
     "9197454-201472144": {
       "entry": {
@@ -90,11 +90,11 @@
         "tYP_NAVIREField": "VRAQUIER"
       },
       "current_status": "EN RADE",
-      "anchorage_hours": 64.1429728261111,
+      "anchorage_hours": 64.58636698277778,
       "berth_hours": 0.0,
       "first_seen": "2026-08-21T16:32:28.588129+00:00",
-      "last_updated": "2026-08-25T11:28:08.350112+00:00",
-      "last_seen": "2026-08-25T11:28:08.350112+00:00"
+      "last_updated": "2026-08-25T11:54:44.569076+00:00",
+      "last_seen": "2026-08-25T11:54:44.569076+00:00"
     },
     "9777541-201472196": {
       "entry": {
@@ -117,8 +117,8 @@
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
       "first_seen": "2026-08-22T23:16:04.394706+00:00",
-      "last_updated": "2026-08-25T11:28:08.350112+00:00",
-      "last_seen": "2026-08-25T11:28:08.350112+00:00"
+      "last_updated": "2026-08-25T11:54:44.569076+00:00",
+      "last_seen": "2026-08-25T11:54:44.569076+00:00"
     },
     "259863-201472221": {
       "entry": {
@@ -188,9 +188,9 @@
       "current_status": "APPAREILLAGE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-08-25T11:28:08.350112+00:00",
-      "last_updated": "2026-08-25T11:28:08.350112+00:00",
-      "last_seen": "2026-08-25T11:28:08.350112+00:00"
+      "first_seen": "2026-08-25T11:54:44.569076+00:00",
+      "last_updated": "2026-08-25T11:54:44.569076+00:00",
+      "last_seen": "2026-08-25T11:54:44.569076+00:00"
     },
     "9508639-201472161": {
       "entry": {
@@ -212,9 +212,9 @@
       "current_status": "APPAREILLAGE",
       "anchorage_hours": 0.0,
       "berth_hours": 0.0,
-      "first_seen": "2026-08-25T11:28:08.350112+00:00",
-      "last_updated": "2026-08-25T11:28:08.350112+00:00",
-      "last_seen": "2026-08-25T11:28:08.350112+00:00"
+      "first_seen": "2026-08-25T11:54:44.569076+00:00",
+      "last_updated": "2026-08-25T11:54:44.569076+00:00",
+      "last_seen": "2026-08-25T11:54:44.569076+00:00"
     }
   },
   "history": [
@@ -3754,6 +3754,24 @@
       "berth_hours": 24.1,
       "arrival": "2026-08-22T00:54:14.070084+00:00",
       "departure": "2026-08-25T11:28:08.350112+00:00"
+    },
+    {
+      "vessel": "STORM I",
+      "agent": "COMANAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "arrival": "2026-08-25T11:28:08.350112+00:00",
+      "departure": "2026-08-25T11:54:44.569076+00:00"
+    },
+    {
+      "vessel": "RIX ONYX",
+      "agent": "SOCONAV",
+      "port": "Laâyoune",
+      "anchorage_hours": 0.0,
+      "berth_hours": 0.0,
+      "arrival": "2026-08-25T11:28:08.350112+00:00",
+      "departure": "2026-08-25T11:54:44.569076+00:00"
     }
   ]
 }
